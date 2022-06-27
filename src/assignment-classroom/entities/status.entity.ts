@@ -3,15 +3,17 @@ import { Classroom } from './classroom.entity';
 
 @Entity()
 export class Status {
- @PrimaryGeneratedColumn()
- id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
- @Column()
- name: string;
+  @Column()
+  name: string;
 
- @OneToMany(type => Classroom, Classroom => Classroom.status) classrooms: Classroom[];  
-    classroom: number;
+  @OneToMany((type) => Classroom, (Classroom) => Classroom.status)
+  classrooms: Classroom[];
+  classroom: number;
 
+  @OneToMany((type) => Schedule, (schedule) => schedule.status)
+  schedules: Schedule[];
+  schedule: number;
 }
-
-

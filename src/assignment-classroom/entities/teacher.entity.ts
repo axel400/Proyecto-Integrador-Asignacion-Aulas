@@ -1,18 +1,29 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { TeacherCareerSubject } from './teacherCareerSubject.entity';
 
 @Entity()
 export class Teacher {
- @PrimaryGeneratedColumn()
- idCard: number;
+  @PrimaryGeneratedColumn()
+  idCard: number;
 
- @Column()
- name: string;
+  @Column()
+  name: string;
 
- @Column()
- email: string;
+  @Column()
+  email: string;
 
- @Column()
- telephone: string;
-
+  @Column()
+  telephone: string;
+  @OneToMany(
+    (type) => TeacherCareerSubject,
+    (teachercareersubject) => teachercareersubject.career,
+  )
+  teachercareersubject: TeacherCareerSubject[];
+  teachercarers: number;
 }

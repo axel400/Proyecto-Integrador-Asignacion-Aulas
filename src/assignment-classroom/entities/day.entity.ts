@@ -1,14 +1,15 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Schedule } from './schedule.entity';
 import { Subject } from './subject.entity';
 
 @Entity()
 export class Day {
- @PrimaryGeneratedColumn()
- id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
- @Column()
- name: string;
+  @Column()
+  name: string;
 
- @OneToMany(type => Subject, subject => subject.day) subjects: Subject[];  
- subject: number;
+  @OneToMany((type) => Subject, (subject) => subject.day) subjects: Subject[];
+  subject: number;
 }
