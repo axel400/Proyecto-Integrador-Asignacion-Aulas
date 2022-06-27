@@ -24,8 +24,8 @@ export class Schedule {
   endTime: Date;
 
   @ManyToOne((type) => Status, (status) => status.schedule) status: Status;
-  @ManyToOne((type) => WeekdayDays, (weekdaydays) => weekdaydays.schedule)
-  weekdaydays: WeekdayDays;
+  // @ManyToOne((type) => WeekdayDays, (weekdaydays) => weekdaydays.schedule)
+  // weekdaydays: WeekdayDays;
 
   @OneToMany(
     (type) => GeneralSchedule,

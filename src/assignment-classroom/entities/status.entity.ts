@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Classroom } from './classroom.entity';
+import { Schedule } from './schedule.entity';
 
 @Entity()
 export class Status {
