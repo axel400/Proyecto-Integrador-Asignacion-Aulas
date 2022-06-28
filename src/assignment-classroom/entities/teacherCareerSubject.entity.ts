@@ -12,11 +12,11 @@ export class TeacherCareerSubject {
   @ManyToOne((type) => Career, (career) => career.teachercarers)
   career: Career;
 
-  @ManyToOne((type) => Teacher, (teacher) => teacher.teachercarers)
-  teacher: Teacher;
+  // @ManyToOne((type) => Teacher, (teacher) => teacher.teachercarers)
+  // teacher: Teacher;
 
-  @ManyToOne((type) => Subject, (subject) => subject.teachercarers)
-  subject: Subject;
+  // @ManyToOne((type) => Subject, (subject) => subject.teachercarers)
+  // subject: Subject;
   @OneToMany(
     (type) => GeneralSchedule,
     (generalschedule) => generalschedule.teachercareersubject,

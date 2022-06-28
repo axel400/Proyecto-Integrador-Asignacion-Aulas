@@ -10,7 +10,10 @@ import { TeacherCareerSubject } from './teacherCareerSubject.entity';
 @Entity()
 export class Teacher {
   @PrimaryGeneratedColumn()
-  idCard: number;
+  id: number;
+
+  @Column()
+  idCard: string;
 
   @Column()
   name: string;
@@ -20,10 +23,10 @@ export class Teacher {
 
   @Column()
   telephone: string;
-  @OneToMany(
-    (type) => TeacherCareerSubject,
-    (teachercareersubject) => teachercareersubject.career,
-  )
-  teachercareersubject: TeacherCareerSubject[];
-  teachercarers: number;
+  // @OneToMany(
+  //   (type) => TeacherCareerSubject,
+  //   (teachercareersubject) => teachercareersubject.career,
+  // )
+  // teachercareersubject: TeacherCareerSubject[];
+  // teachercarers: number;
 }
