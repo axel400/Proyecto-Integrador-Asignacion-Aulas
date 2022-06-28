@@ -10,6 +10,6 @@ export class Day {
   @Column()
   name: string;
 
-  @OneToMany((type) => Subject, (subject) => subject.day) subjects: Subject[];
-  subject: number;
+  // @OneToMany((type) => Subject, (subject) => subject.day) subjects: Subject[];
+  // subject: number;
 }

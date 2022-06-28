@@ -9,7 +9,7 @@ export class WeekdayDays {
   @Column()
   name: string;
 
-//    @OneToMany((type) => Schedule, (schedule) => schedule.weekdaydays)
-//    schedules: Schedule[];
-//    schedule: number;
+  //    @OneToMany((type) => Schedule, (schedule) => schedule.weekdaydays)
+  //    schedules: Schedule[];
+  //    schedule: number;
 }
