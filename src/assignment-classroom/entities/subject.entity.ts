@@ -12,6 +12,7 @@ import { TeacherCareerSubject } from './teacherCareerSubject.entity';
 @Entity()
 export class Subject {
   @PrimaryGeneratedColumn()
+
   id: number;
 
   @Column()
@@ -29,4 +30,5 @@ export class Subject {
   // )
   // teachercareersubjects: TeacherCareerSubject[];
   // teachercarers: number;
+
 }

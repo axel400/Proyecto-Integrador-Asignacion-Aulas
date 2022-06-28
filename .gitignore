@@ -1,6 +1,8 @@
 # compiled output
 /dist
 /node_modules
+/ormconfig.json
+/data-source.ts
 
 # Logs
 logs

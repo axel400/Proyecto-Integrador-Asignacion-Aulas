@@ -8,7 +8,8 @@ export class GeneralSchedule {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne((type) => Classroom, (classroom) => classroom.generalschedule)
+  /*@ManyToOne((type) => Classroom, (classroom) => classroom.generalschedule)
+
   classroom: Classroom;
 
   @ManyToOne(
@@ -18,5 +19,6 @@ export class GeneralSchedule {
   teachercareersubject: TeacherCareerSubject;
 
   @ManyToOne((type) => Schedule, (schedule) => schedule.generalschedule)
-  schedule: Schedule;
+  schedule: Schedule;*/
+
 }

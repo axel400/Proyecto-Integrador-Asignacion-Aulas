@@ -9,6 +9,7 @@ export class SchoolYear {
   @Column()
   name: string;
 
-  @OneToMany((type) => Career, (career) => career.schoolYear) careers: Career[];
-  career: number;
+  /*@OneToMany((type) => Career, (career) => career.schoolYear) careers: Career[];
+  career: number;*/
+
 }

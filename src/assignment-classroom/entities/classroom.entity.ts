@@ -16,12 +16,15 @@ export class Classroom {
   @Column()
   name: string;
 
-  @ManyToOne((type) => Status, (status) => status.classroom) status: Status;
+
+  /*@ManyToOne((type) => Status, (status) => status.classroom) status: Status;
+
 
   @OneToMany(
     (type) => GeneralSchedule,
     (generalschedule) => generalschedule.classroom,
   )
   generalschedules: GeneralSchedule[];
-  generalschedule: number;
+  generalschedule: number;*/
+
 }

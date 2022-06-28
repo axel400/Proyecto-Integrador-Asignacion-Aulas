@@ -15,6 +15,7 @@ export class Schedule {
   id: number;
 
   @Column()
+
   date: string;
 
   @Column()

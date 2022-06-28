@@ -17,4 +17,5 @@ export class Status {
   // @OneToMany((type) => Schedule, (schedule) => schedule.status)
   // schedules: Schedule[];
   // schedule: number;
+
 }
