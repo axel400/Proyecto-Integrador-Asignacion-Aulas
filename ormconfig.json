@@ -3,7 +3,7 @@
     "host": "localhost",
     "port": 5432,
     "username": "postgres",
-    "password": "root",
+    "password": "123",
     "database": "proyecto",
     "entities": ["src/**/*.entity.ts"],
     "synchronize": false,
