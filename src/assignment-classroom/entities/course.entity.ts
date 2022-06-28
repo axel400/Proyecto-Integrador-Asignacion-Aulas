@@ -1,4 +1,6 @@
+
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
+
 import { Level } from './level.entity';
 import { Subject } from './subject.entity';
 
@@ -16,3 +18,4 @@ export class Course {
  subject: number;*/
 
 }
+

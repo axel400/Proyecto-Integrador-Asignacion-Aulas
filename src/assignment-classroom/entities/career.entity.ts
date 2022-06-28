@@ -16,6 +16,7 @@ export class Career {
   @Column()
   name: string;
 
+
   /*@ManyToOne((type) => SchoolYear, (schoolYear) => schoolYear.career)
   schoolYear: SchoolYear;
 
@@ -24,5 +25,7 @@ export class Career {
     (teachercareersubject) => teachercareersubject.career,
   )
   teachercareersubject: TeacherCareerSubject[];
+
   teachercarers: number;*/
+
 }

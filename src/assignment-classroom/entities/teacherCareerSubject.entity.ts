@@ -9,6 +9,7 @@ export class TeacherCareerSubject {
   @PrimaryGeneratedColumn()
   id: number;
 
+
   /*@ManyToOne((type) => Career, (career) => career.teachercarers)
   career: Career;
 
@@ -17,10 +18,13 @@ export class TeacherCareerSubject {
 
   @ManyToOne((type) => Subject, (subject) => subject.teachercarers)
   subject: Subject;
+
   @OneToMany(
     (type) => GeneralSchedule,
     (generalschedule) => generalschedule.teachercareersubject,
   )
   generalschedules: GeneralSchedule[];
+
   generalschedule: number;*/
+
 }

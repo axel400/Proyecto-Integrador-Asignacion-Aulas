@@ -10,11 +10,12 @@ export class Status {
   @Column()
   name: string;
 
-  /*@OneToMany((type) => Classroom, (Classroom) => Classroom.status)
-  classrooms: Classroom[];
-  classroom: number;
+  // @OneToMany((type) => Classroom, (Classroom) => Classroom.status)
+  // classrooms: Classroom[];
+  // classroom: number;
 
-  @OneToMany((type) => Schedule, (schedule) => schedule.status)
-  schedules: Schedule[];
-  schedule: number;*/
+  // @OneToMany((type) => Schedule, (schedule) => schedule.status)
+  // schedules: Schedule[];
+  // schedule: number;
+
 }

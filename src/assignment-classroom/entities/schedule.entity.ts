@@ -15,22 +15,23 @@ export class Schedule {
   id: number;
 
   @Column()
-  date: Date;
+
+  date: string;
 
   @Column()
-  startTime: Date;
+  startTime: string;
 
   @Column()
-  endTime: Date;
+  endTime: string;
 
-  /*@ManyToOne((type) => Status, (status) => status.schedule) status: Status;
+  // @ManyToOne((type) => Status, (status) => status.schedule) status: Status;
   // @ManyToOne((type) => WeekdayDays, (weekdaydays) => weekdaydays.schedule)
   // weekdaydays: WeekdayDays;
 
-  @OneToMany(
-    (type) => GeneralSchedule,
-    (generalschedule) => generalschedule.schedule,
-  )
-  generalschedules: GeneralSchedule[];
-  generalschedule: number;*/
+  // @OneToMany(
+  //   (type) => GeneralSchedule,
+  //   (generalschedule) => generalschedule.schedule,
+  // )
+  // generalschedules: GeneralSchedule[];
+  // generalschedule: number;
 }

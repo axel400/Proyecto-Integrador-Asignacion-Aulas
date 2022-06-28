@@ -12,7 +12,8 @@ import { TeacherCareerSubject } from './teacherCareerSubject.entity';
 @Entity()
 export class Subject {
   @PrimaryGeneratedColumn()
-  idCard: number;
+
+  id: number;
 
   @Column()
   name: string;
@@ -20,13 +21,14 @@ export class Subject {
   @Column()
   description: string;
 
-  /*@ManyToOne((type) => Course, (course) => course.subject) course: Course;*/
+  // @ManyToOne((type) => Course, (course) => course.subject) course: Course;
 
-  /*@ManyToOne((type) => Day, (day) => day.subject) day: Day;*/
-  /*@OneToMany(
-    (type) => TeacherCareerSubject,
-    (teachercareersubject) => teachercareersubject.subject,
-  )
-  teachercareersubjects: TeacherCareerSubject[];
-  teachercarers: number;*/
+  // @ManyToOne((type) => Day, (day) => day.subject) day: Day;
+  // @OneToMany(
+  //   (type) => TeacherCareerSubject,
+  //   (teachercareersubject) => teachercareersubject.subject,
+  // )
+  // teachercareersubjects: TeacherCareerSubject[];
+  // teachercarers: number;
+
 }

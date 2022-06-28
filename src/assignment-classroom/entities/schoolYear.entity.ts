@@ -11,4 +11,5 @@ export class SchoolYear {
 
   /*@OneToMany((type) => Career, (career) => career.schoolYear) careers: Career[];
   career: number;*/
+
 }

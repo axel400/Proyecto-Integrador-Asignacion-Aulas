@@ -9,6 +9,7 @@ export class GeneralSchedule {
   id: number;
 
   /*@ManyToOne((type) => Classroom, (classroom) => classroom.generalschedule)
+
   classroom: Classroom;
 
   @ManyToOne(
@@ -19,4 +20,5 @@ export class GeneralSchedule {
 
   @ManyToOne((type) => Schedule, (schedule) => schedule.generalschedule)
   schedule: Schedule;*/
+
 }

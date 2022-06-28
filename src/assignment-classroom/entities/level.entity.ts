@@ -9,7 +9,8 @@ export class Level {
  @Column()
  name: string;
 
- /*@OneToMany(type => Course, course => course.level) courses: Course[];  
- course: number;*/
+//  @OneToMany(type => Course, course => course.level) courses: Course[];  
+//  course: number;
+
 
 }

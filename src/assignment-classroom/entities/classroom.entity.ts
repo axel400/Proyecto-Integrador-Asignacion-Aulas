@@ -16,7 +16,9 @@ export class Classroom {
   @Column()
   name: string;
 
+
   /*@ManyToOne((type) => Status, (status) => status.classroom) status: Status;
+
 
   @OneToMany(
     (type) => GeneralSchedule,
@@ -24,4 +26,5 @@ export class Classroom {
   )
   generalschedules: GeneralSchedule[];
   generalschedule: number;*/
+
 }
