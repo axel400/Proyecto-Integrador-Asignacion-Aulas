@@ -3,13 +3,13 @@ import { AssignmentClassroomService } from './services/assignment-classroom.serv
 import { AssignmentClassroomController } from './controllers/assignment-classroom.controller';
 import { WeekdaysService } from './services/weekdays/weekdays.service';
 import { WeekdaysController } from './controllers/week/weekdays.controller';
-import { StatusController } from './controllers/statu/status.controller';
-import { StatusService } from './services/statu/status.service';
-import { SchoolYearController } from './controllers/school-year/school-year.controller';
-import { SchoolYearService } from './services/school-year/school-year.service';
+import { TeacherController } from './controllers/teacher/teacher.controller';
+import { TeacherService } from './services/teacher/teacher.service';
+import { SubjectService } from './services/subject/subject.service';
+import { SubjectController } from './controllers/subject/subject.controller';
 
 @Module({
-  providers: [AssignmentClassroomService, WeekdaysService, StatusService, SchoolYearService],
-  controllers: [AssignmentClassroomController, WeekdaysController, StatusController, SchoolYearController]
+  providers: [AssignmentClassroomService, WeekdaysService, TeacherService, SubjectService],
+  controllers: [AssignmentClassroomController, WeekdaysController, TeacherController, SubjectController]
 })
 export class AssignmentClassroomModule {}
