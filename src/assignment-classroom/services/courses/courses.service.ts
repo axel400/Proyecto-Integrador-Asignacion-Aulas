@@ -8,7 +8,7 @@ export class CoursesService {
 
     private courses: Course[] = [{
         id: 1,
-        name: "Lunes"
+        name: "A"
     }]
     /** Buscar todo */
     findAll(): Course[] {
@@ -40,31 +40,34 @@ export class CoursesService {
 
     /**UPDATE */
 
-  update(id: number, payload: UpdateCourseDto) {
+//   update(id: number, payload: UpdateCourseDto) {
 
-   const course = this.findOne(id);
-    if (course) {     
-        const index = this.courses.findIndex((item) => item.id === id);
-        this.courses[index] = {
-        ...course,         
-        ...payload,       
-    };
-       return this.courses[index];
-     }
-    return null;
- }
+//    const course = this.findOne(id);
+//     if (course) {     
+//         const index = this.courses.findIndex((item) => item.id === id);
+//         this.courses[index] = {
+//         ...course,         
+//         ...payload,       
+//     };
+//        return this.courses[index];
+//      }
+//     return null;
+//  }
 
-// update(id: number, body: any) {
-//     let product: WeekdayDays = {
-//       id,
-//       name: body.name,
-      
-//     }
-//     this.weekdays = this.weekdays.map( (item: WeekdayDays) => {
-//       console.log(item, id, item.id == id);
-//       return item.id == id ? product : item;
-//     });
-//   }
+ update(id: number, body: any) {
+    let courses: Course = {
+      id,
+      name: body.name,
+     
+    }
+    this.courses = this.courses.map( (item: Course) => {
+      console.log(item, id, item.id == id);
+      return item.id == id ? courses : item;
+    });
+    return courses
+  }
+
+
     /**DELETE  */
 
     delete(id: number) {

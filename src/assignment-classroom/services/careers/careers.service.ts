@@ -9,7 +9,7 @@ export class CareersService {
 
     private careers: Career[] = [{
         id: 1,
-        name: "Lunes"
+        name: "Desarrollo de software"
     }]
     /** Buscar todo */
     findAll(): Career[] {
@@ -69,7 +69,7 @@ export class CareersService {
     delete(id: number) {
         const indexcareer = this.careers.findIndex((item) => item.id === id);//
         if (indexcareer===-1){
-            throw new NotFoundException(`Producto ${id} no encontrado`)
+            throw new NotFoundException(`Carrera ${id} no encontrado`)
         }
 
        this.careers.splice(indexcareer,1);

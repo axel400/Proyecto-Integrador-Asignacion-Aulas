@@ -42,34 +42,34 @@ export class WeekdaysService {
 
     /**UPDATE */
 
-  update(id: number, payload: UpdateWeekDayDto) {
+//   update(id: number, payload: UpdateWeekDayDto) {
 
-   const week = this.findOne(id);
-    if (week) {     const index = this.weekdays.findIndex((item) => item.id === id);
-     this.weekdays[index] = {
-        ...week,         ...payload,       };
-       return this.weekdays[index];
-     }
-    return null;
- }
+//    const week = this.findOne(id);
+//     if (week) {     const index = this.weekdays.findIndex((item) => item.id === id);
+//      this.weekdays[index] = {
+//         ...week,         ...payload,       };
+//        return this.weekdays[index];
+//      }
+//     return null;
+//  }
 
-// update(id: number, body: any) {
-//     let product: WeekdayDays = {
-//       id,
-//       name: body.name,
+ update(id: number, body: any) {
+     let days: WeekdayDays = {
+       id,
+       name: body.name,
       
-//     }
-//     this.weekdays = this.weekdays.map( (item: WeekdayDays) => {
-//       console.log(item, id, item.id == id);
-//       return item.id == id ? product : item;
-//     });
-//   }
+     }
+     this.weekdays = this.weekdays.map( (item: WeekdayDays) => {
+       console.log(item, id, item.id == id);
+       return item.id == id ? days : item;
+     });
+   }
     /**DELETE  */
 
     delete(id: number) {
         const indexWeek = this.weekdays.findIndex((item) => item.id === id);//
         if (indexWeek===-1){
-            throw new NotFoundException(`Producto ${id} no encontrado`)
+            throw new NotFoundException(`WeekDays${id} no encontrado`)
         }
 
        this.weekdays.splice(indexWeek,1);

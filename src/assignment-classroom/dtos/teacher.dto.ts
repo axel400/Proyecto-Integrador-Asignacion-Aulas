@@ -8,7 +8,7 @@ export class CreateTeacherDto {
   readonly name: string;
   @IsEmail()
   readonly email: string;
-  @IsPhoneNumber()
+  @IsString()
   readonly telephone: string;
 }
 

@@ -2,10 +2,10 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } 
 import { CreateCareerDto, UpdateCareerDto } from 'src/assignment-classroom/dtos/careers.dto';
 import { CareersService } from 'src/assignment-classroom/services/careers/careers.service';
 
-@Controller('careers')
+@Controller('Careers')
 export class CareersController {
 
-    constructor(private weekService: CareersService) {
+    constructor(private careerService: CareersService) {
 
     }
 
@@ -20,13 +20,13 @@ export class CareersController {
     // @Get(':id')//@Get('products/:productId')
     // getProduct(@Param(`id`,ParseIntPipe) id: number) {
     //     // return `product ${productId}`;
-    //     return this.weekService.findOne(id);
+    //     return this.careerService.findOne(id);
 
     // }
 
     @Get(':id')
     find(@Param('id',ParseIntPipe) id: number) {
-        return this.weekService.getId(id);
+        return this.careerService.getId(id);
     }
 
     @Get('')//    @Get('products')
@@ -42,7 +42,7 @@ export class CareersController {
         //     message: `products limit=>${limit} offset=${offset} brand=>${brand}`
         // }
 
-        return this.weekService.findAll()
+        return this.careerService.findAll()
 
     }
 
@@ -54,7 +54,7 @@ export class CareersController {
         //     message:'accion de crear',
         //     payload,
         // }
-        return this.weekService.create(payload);
+        return this.careerService.create(payload);
     }
 
     //************* update******************
@@ -64,21 +64,21 @@ export class CareersController {
     //     //     id,
     //     //     payload,
     //     // }
-    //     return this.weekService.update(id, payload);
+    //     return this.careerService.update(id, payload);
     // }
     @Put(':id')
     update(
         @Param('id') id: number,
         @Body() body: UpdateCareerDto,
     ) {
-        return this.weekService.update(id, body);
+        return this.careerService.update(id, body);
     }
 
     /***DELETE */
     @Delete(':id')
     delete(@Param('id') id: number) {
         // return id;
-        return this.weekService.delete(+id);
+        return this.careerService.delete(+id);
     }
 
 

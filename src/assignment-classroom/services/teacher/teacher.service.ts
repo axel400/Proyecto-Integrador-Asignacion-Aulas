@@ -45,30 +45,34 @@ export class TeacherService {
 
   /**UPDATE */
 
-  update(id: number, payload: UpdateTeacherDto) {
-    const Teacher = this.findOne(id);
-    if (Teacher) {
-      const index = this.teacher.findIndex((item) => item.id === id);
-      this.teacher[index] = {
-        ...Teacher,
-        ...payload,
-      };
-      return this.teacher[index];
-    }
-    return null;
-  }
-
-  // update(id: number, body: any) {
-  //     let product: Teacher = {
-  //       id,
-  //       name: body.name,
-
-  //     }
-  //     this.teacher = this.teacher.map( (item: Teacher) => {
-  //       console.log(item, id, item.id == id);
-  //       return item.id == id ? product : item;
-  //     });
+  // update(id: number, payload: UpdateTeacherDto) {
+  //   const Teacher = this.findOne(id);
+  //   if (Teacher) {
+  //     const index = this.teacher.findIndex((item) => item.id === id);
+  //     this.teacher[index] = {
+  //       ...Teacher,
+  //       ...payload,
+  //     };
+  //     return this.teacher[index];
   //   }
+  //   return null;
+  // }
+
+   update(id: number, body: any) {
+       let teachers: Teacher = {
+         id,
+         name: body.name, 
+         idCard: body.idCard, 
+         email: body.email, 
+         telephone: body.telephone, 
+
+       }
+       this.teacher = this.teacher.map( (item: Teacher) => {
+         console.log(item, id, item.id == id);
+         return item.id == id ? teachers : item;
+       });
+       return teachers
+     }
   /**DELETE  */
 
   delete(id: number) {
