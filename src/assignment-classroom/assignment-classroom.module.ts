@@ -17,12 +17,12 @@ import { LevelsService } from "./level/services/levels.service";
 import { SchedulesController } from "./schedule/controllers/schedules.controller";
 import { ScheduleModule } from "./schedule/schedule.module";
 import { SchedulesService } from "./schedule/services/schedules.service";
-// import { SchoolYearController } from "./school-year/controllers/school-year.controller";
-// import { SchoolYearModule } from "./school-year/school-year.module";
-// import { SchoolYearService } from "./school-year/services/school-year.service";
-// import { StatusController } from "./status/controllers/status.controller";
-// import { StatusService } from "./status/services/status.service";
-// import { StatusModule } from "./status/status.module";
+import { SchoolYearController } from "./school-year/controllers/school-year.controller";
+import { SchoolYearModule } from "./school-year/school-year.module";
+import { SchoolYearService } from "./school-year/services/school-year.service";
+import { StatusController } from "./status/controllers/status.controller";
+import { StatusService } from "./status/services/status.service";
+import { StatusModule } from "./status/status.module";
 import { SubjectController } from "./subject/controllers/subject.controller";
 import { SubjectService } from "./subject/services/subject.service";
 import { SubjectModule } from "./subject/subject.module";
@@ -35,8 +35,8 @@ import { WeekdaysModule } from "./weekdays/weekdays.module";
 import { UserModule } from './user/user.module';
 
 @Module({
-  providers: [WeekdaysService, SchedulesService,SubjectService, CareersService, ClassroomsService, CoursesService, DaysService, LevelsService, TeacherService],
-  controllers: [CareersController,ClassroomController, CoursesController, DaysController, LevelsController, SchedulesController, SubjectController, TeacherController, WeekdaysController],
-  imports: [LevelModule, ScheduleModule, CareerModule, ClassroomModule, CourseModule, DayModule, TeacherModule, SubjectModule, WeekdaysModule, UserModule]
+  providers: [WeekdaysService, SchedulesService,SubjectService, CareersService, ClassroomsService, CoursesService, DaysService, LevelsService, TeacherService, SchoolYearService, StatusService],
+  controllers: [CareersController,ClassroomController, CoursesController, DaysController, LevelsController, SchedulesController, SubjectController, TeacherController, WeekdaysController,SchoolYearController, StatusController],
+  imports: [LevelModule, ScheduleModule, CareerModule, ClassroomModule, CourseModule, DayModule, TeacherModule, SubjectModule, WeekdaysModule, UserModule,SchoolYearModule, StatusModule]
 })
 export class AssignmentClassroomModule {}

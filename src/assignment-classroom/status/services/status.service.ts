@@ -1,57 +1,60 @@
-// import { Injectable, NotFoundException } from '@nestjs/common';
-// import { InjectRepository } from '@nestjs/typeorm';
-// import { CreateStatusDto, UpdateStatusDto } from 'src/assignment-classroom/status/dtos/status.dto';
-// import { Status } from 'src/assignment-classroom/status/entities/status.entity';
-// import { Repository } from 'typeorm';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateStatusDto, UpdateStatusDto } from 'src/assignment-classroom/status/dtos/status.dto';
+import { Status } from 'src/assignment-classroom/status/entities/status.entity';
 
-// @Injectable()
-// export class StatusService {
-//     constructor(
-//         @InjectRepository(Status)
-//         private statuRepository: Repository<Status>,
-//       ) {}
-    
-//       async create(payload: CreateStatusDto) {
-//         const newStatus = this.statuRepository.create(payload);
-    
-//         return await this.statuRepository.save(newStatus);
-//       }
-    
-//       async delete(id: number) {
-//         return await this.statuRepository.softDelete(id);
-//       }
-    
-//       async findAll() {
-//         return await this.statuRepository.find();
-//       }
-    
-//       async findOne(id: number) {
-//         const status = await this.statuRepository.findOne({
-//           where: {
-//             id: id,
-//           },
-//         });
-    
-//         if (status === null) {
-//           throw new NotFoundException('El estado no es encontro');
-//         }
-    
-//         return status;
-//       }
-    
-//       async update(id: number, payload: UpdateStatusDto) {
-//         const status = await this.statuRepository.findOne({
-//           where: {
-//             id: id,
-//           },
-//         });
-    
-//         if (status === null) {
-//           throw new NotFoundException('El estado no se encontro');
-//         }
-    
-//         this.statuRepository.merge(status, payload);
-    
-//         return this.statuRepository.save(status);
-//       }
-// }
+
+@Injectable()
+export class StatusService {
+    private counterId = 1;
+  
+  private status: Status[] = [
+    {
+      id: 1,
+      name: 'Primero',
+    },
+  ];
+
+  findAll() {
+    return this.status;
+  }
+
+  findOne(id: number) {
+    const status = this.status.find((item) => item.id === id);
+    if (!status) {
+      throw new NotFoundException(`Estado #${id} no encontrado`);
+    }
+    return status;
+  }
+
+  create(data: CreateStatusDto) {
+    this.counterId = this.counterId + 1;
+    const newStatus = {
+      id: this.counterId,
+      ...data,
+    };
+    this.status.push(newStatus);
+    return newStatus;
+  }
+
+  update(id: number, payload: UpdateStatusDto) {
+    const status = this.findOne(id);
+    if (status) {
+      const index = this.status.findIndex((item) => item.id === id);
+      this.status[index] = {
+        ...status,
+        ...payload,
+      };
+      return this.status[index];
+    }
+    return null;
+  }
+
+  remove(id: number) {
+    const index = this.status.findIndex((item) => item.id === id);
+    if (index === -1) {
+      throw new NotFoundException(`Estado #${id} no encontrado`);
+    }
+    this.status.splice(index, 1);
+    return true;
+  }
+}

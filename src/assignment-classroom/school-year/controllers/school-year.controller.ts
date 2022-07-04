@@ -1,70 +1,44 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CreateSchoolYearDto, UpdateSchoolYearDto } from 'src/assignment-classroom/school-year/dtos/schoolYear.dto';
 import { SchoolYearService } from '../services/school-year.service';
 
 @Controller('school-year')
 export class SchoolYearController {
 
-    constructor(private schoolYearService: SchoolYearService) {}
+  constructor(private schoolYearService: SchoolYearService) {}
 
-    @Get('')
-    @HttpCode(HttpStatus.OK)
-    findAll(@Query() params: any){
-        const response = this.schoolYearService.findAll();
-        return response;
-            //data: response,
-            //message: 'index'
-        //};
+    //Traer todo
+    @Get()
+    findAll() {
+      return this.schoolYearService.findAll();
     }
 
+    //Traer por id
     @Get(':id')
-    @HttpCode(HttpStatus.OK)
-    findOne(@Param('id', ParseIntPipe) id: number) {
-      const response = this.schoolYearService.findOne(id);
-  
-      return  response;
-    //   {
-    //     data: response,
-    //     message: `show`,
-    //   };
-   }
+    find(@Param('id',ParseIntPipe) id: number) {
+        return this.schoolYearService.findOne(id);
+    }
 
-   @Post('')
-  @HttpCode(HttpStatus.CREATED)
-  create(@Body() payload:CreateSchoolYearDto) {
-    const response = this.schoolYearService.create(payload);
-  return response;
-  
-    //   return {
-  //     data: response,
-  //     message: `created`,
-  //   };
-  }
+    //Crear
+    @Post()
+    create(@Body() payload:  CreateSchoolYearDto) {
+        return this.schoolYearService.create(payload);
+    }
 
-  @Put(':id')
-  @HttpCode(HttpStatus.CREATED)
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateSchoolYearDto,
-  ) {
-    const response = this.schoolYearService.update(id, payload);
-    return response;
-    // return {
-    //   data: response,
-    //   message: updated ${id},
-    // };
-  }
+    //Actualizar
+    @Put(':id')
+    update(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() body: UpdateSchoolYearDto,
+    ) {
+        return this.schoolYearService.update(id, body);
+    }
+
+    //Eliminar
+    @Delete(':id')
+    remove(@Param('id', ParseIntPipe) id: number) {
+        return this.schoolYearService.remove(+id);
+    }
 
 
-  @Delete(':id')
-  @HttpCode(HttpStatus.CREATED)
-  delete(@Param('id', ParseIntPipe) id: number) {
-    const response = this.schoolYearService.delete(id);
-     
-    return response;
-    // return {
-    //   data: response,
-    //   message: `deleted`,
-    // };
-  }
 }
