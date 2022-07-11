@@ -1,82 +1,66 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCourseDto, UpdateCourseDto } from 'src/assignment-classroom/course/dtos/course.dto';
 import { Course } from 'src/assignment-classroom/course/entities/course.entity';
+import { Level } from 'src/assignment-classroom/level/entities/level.entity';
+import { LevelsService } from 'src/assignment-classroom/level/services/levels.service';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CoursesService {
-    private countIdCourse = 1;
+  constructor(
+    @InjectRepository(Course)
+    private courseRepo: Repository<Course>,
+    private levelService: LevelsService
+  ) { }
 
-    private courses: Course[] = [{
-        id: 1,
-        name: "A"
-    }]
-    /** Buscar todo */
-    findAll(): Course[] {
-        return this.courses;
-    }
-
-    /**Buscar por id */
-
-    findOne(id: number) {
-
-        return this.courses.find((item) => item.id);
-    }
-    /**Create */
-    getId(id: number): Course {
-        return this.courses.find( (item: Course) => item.id == id);
-      }
-
-    create(payload: CreateCourseDto) {
-
-        this.countIdCourse = this.countIdCourse + 1;
-        const newCourse = {
-            id: this.countIdCourse,
-            ...payload,
-        };
-        this.courses.push(newCourse);
-        return newCourse;
-
-    }
-
-    /**UPDATE */
-
-//   update(id: number, payload: UpdateCourseDto) {
-
-//    const course = this.findOne(id);
-//     if (course) {     
-//         const index = this.courses.findIndex((item) => item.id === id);
-//         this.courses[index] = {
-//         ...course,         
-//         ...payload,       
-//     };
-//        return this.courses[index];
-//      }
-//     return null;
-//  }
-
- update(id: number, body: any) {
-    let courses: Course = {
-      id,
-      name: body.name,
-     
-    }
-    this.courses = this.courses.map( (item: Course) => {
-      console.log(item, id, item.id == id);
-      return item.id == id ? courses : item;
-    });
-    return courses
+  //Traer todo
+  async findAll() {
+    return await this.courseRepo.find();
   }
 
+  //Traer por id
+  async findOne(id: number) {
+    const course = await this.courseRepo.findOne({ where: { id: id } });
 
-    /**DELETE  */
-
-    delete(id: number) {
-        const indexCourse = this.courses.findIndex((item) => item.id === id);//
-        if (indexCourse===-1){
-            throw new NotFoundException(`Producto ${id} no encontrado`)
-        }
-
-       this.courses.splice(indexCourse,1);
-       return true;
+    if (!course) {
+      throw new NotFoundException(`Curso #${id} no encontrado`);
     }
+
+    return course;
+  }
+
+  //Crear
+  async create(payload: CreateCourseDto) {
+    const newCourse = this.courseRepo.create(payload);
+
+    newCourse.level = await this.levelService.findOne(payload.level.id);
+
+    return await this.courseRepo.save(newCourse);
+  }
+
+  //Editar
+  async update(id: number, payload: UpdateCourseDto) {
+    const course = await this.courseRepo.findOne({ where: { id: id } });
+
+    if (course === null) {
+      throw new NotFoundException(`Curso #${id} no encontrado`);
+    }
+
+    this.courseRepo.merge(course, payload);
+
+    return await this.courseRepo.save(course);
+  }
+
+  //Eliminar
+  async remove(id: number) {
+    const course = await this.courseRepo.findOne({ where: { id } });
+
+    if (!course) {
+      throw new NotFoundException(`Curso #${id} no encontrado`);
+    }
+
+    return await this.courseRepo.softDelete(id);
+  }
+
 }

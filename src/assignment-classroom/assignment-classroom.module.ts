@@ -1,42 +1,42 @@
-import { Module } from "@nestjs/common";
-import { CareerModule } from "./career/career.module";
-import { CareersController } from "./career/controllers/careers.controller";
-import { CareersService } from "./career/services/careers.service";
-import { ClassroomModule } from "./classroom/classroom.module";
-import { ClassroomController } from "./classroom/controllers/classroom.controller";
-import { ClassroomsService } from "./classroom/services/classrooms.service";
-import { CoursesController } from "./course/controllers/courses.controller";
-import { CourseModule } from "./course/course.module";
-import { CoursesService } from "./course/services/courses.service";
-import { DaysController } from "./day/controllers/days.controller";
-import { DayModule } from "./day/day.module";
-import { DaysService } from "./day/services/days.service";
-import { LevelsController } from "./level/controllers/levels.controller";
-import { LevelModule } from "./level/level.module";
-import { LevelsService } from "./level/services/levels.service";
-import { SchedulesController } from "./schedule/controllers/schedules.controller";
-import { ScheduleModule } from "./schedule/schedule.module";
-import { SchedulesService } from "./schedule/services/schedules.service";
-import { SchoolYearController } from "./school-year/controllers/school-year.controller";
-import { SchoolYearModule } from "./school-year/school-year.module";
-import { SchoolYearService } from "./school-year/services/school-year.service";
-import { StatusController } from "./status/controllers/status.controller";
-import { StatusService } from "./status/services/status.service";
-import { StatusModule } from "./status/status.module";
-import { SubjectController } from "./subject/controllers/subject.controller";
-import { SubjectService } from "./subject/services/subject.service";
-import { SubjectModule } from "./subject/subject.module";
-import { TeacherController } from "./teacher/controllers/teacher.controller";
-import { TeacherService } from "./teacher/services/teacher.service";
-import { TeacherModule } from "./teacher/teacher.module";
-import { WeekdaysController } from "./weekdays/controllers/weekdays.controller";
-import { WeekdaysService } from "./weekdays/services/weekdays.service";
-import { WeekdaysModule } from "./weekdays/weekdays.module";
-import { UserModule } from './user/user.module';
-
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+//import { CareersController } from './career/controllers/careers.controller';
+import { Career } from './career/entities/career.entity';
+//
+import { ClassroomController } from './classroom/controllers/classroom.controller';
+import { Classroom } from './classroom/entities/classroom.entity';
+import { ClassroomsService } from './classroom/services/classrooms.service';
+import { CoursesController } from './course/controllers/courses.controller';
+import { Course } from './course/entities/course.entity';
+import { CoursesService } from './course/services/courses.service';
+import { DaysController } from './day/controllers/days.controller';
+import { Day } from './day/entities/day.entity';
+import { DaysService } from './day/services/days.service';
+import { LevelsController } from './level/controllers/levels.controller';
+import { Level } from './level/entities/level.entity';
+import { LevelsService } from './level/services/levels.service';
+import { SchedulesController } from './schedule/controllers/schedules.controller';
+import { Schedule } from './schedule/entities/schedule.entity';
+import { SchedulesService } from './schedule/services/schedules.service';
+//import { SchoolYearController } from './school-year/controllers/school-year.controller';
+import { SchoolYear } from './school-year/entities/school-year.entity';
+//import { SchoolYearService } from './school-year/services/school-year.service';
+import { Status } from './status/entities/status.entity';
+import { StatusService } from './status/services/status.service';
+import { SubjectController } from './subject/controllers/subject.controller';
+import { Subject } from './subject/entities/subject.entity';
+import { SubjectService } from './subject/services/subject.service';
+import { TeacherController } from './teacher/controllers/teacher.controller';
+import { Teacher } from './teacher/entities/teacher.entity';
+import { TeacherService } from './teacher/services/teacher.service';
+import { User } from './user/entities/user.entity';
+import { UsersService } from './user/services/user.service';
+import { WeekdaysController } from './weekdays/controllers/weekdays.controller';
+import { WeekdayDays } from './weekdays/entities/weekdays.entity';
+import { WeekdaysService } from './weekdays/services/weekdays.service';
 @Module({
-  providers: [WeekdaysService, SchedulesService,SubjectService, CareersService, ClassroomsService, CoursesService, DaysService, LevelsService, TeacherService, SchoolYearService, StatusService],
-  controllers: [CareersController,ClassroomController, CoursesController, DaysController, LevelsController, SchedulesController, SubjectController, TeacherController, WeekdaysController,SchoolYearController, StatusController],
-  imports: [LevelModule, ScheduleModule, CareerModule, ClassroomModule, CourseModule, DayModule, TeacherModule, SubjectModule, WeekdaysModule, UserModule,SchoolYearModule, StatusModule]
+  providers: [ClassroomsService, CoursesService, DaysService, SchedulesService, StatusService, SubjectService, TeacherService, UsersService, WeekdaysService, LevelsService],
+  controllers: [ClassroomController, DaysController, SchedulesController, SubjectController, TeacherController, WeekdaysController, DaysController, CoursesController, CoursesController, LevelsController],
+  imports: [TypeOrmModule.forFeature([Career, Classroom, Course, Day, Level, Schedule, SchoolYear, Status, Subject, Teacher, User, WeekdayDays])],
 })
-export class AssignmentClassroomModule {}
+export class AssignmentClassroomModule { }

@@ -1,60 +1,62 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Course } from 'src/assignment-classroom/course/entities/course.entity';
 import { CreateLevelDto, UpdateLevelDto } from 'src/assignment-classroom/level/dtos/level.dto';
 import { Level } from 'src/assignment-classroom/level/entities/level.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class LevelsService {
+  [x: string]: any;
 
-  private counterId = 1;
-  
-  private levels: Level[] = [
-    {
-      id: 1,
-      name: 'Primero',
-    },
-  ];
+  constructor(
+    @InjectRepository(Level) private levelsRepo: Repository<Level>,
+  ) { }
 
-  findAll() {
-    return this.levels;
+  //Traer todo
+  async findAll() {
+    return await this.levelsRepo.find();
   }
 
-  findOne(id: number) {
-    const level = this.levels.find((item) => item.id === id);
+  //Traer por id
+  async findOne(id: number) {
+    const level = await this.levelsRepo.findOne({ where: { id } });
+
     if (!level) {
       throw new NotFoundException(`Nivel #${id} no encontrado`);
     }
+
     return level;
   }
 
-  create(data: CreateLevelDto) {
-    this.counterId = this.counterId + 1;
-    const newLevel = {
-      id: this.counterId,
-      ...data,
-    };
-    this.levels.push(newLevel);
-    return newLevel;
+  //Crear
+  async create(payload: CreateLevelDto) {
+    const newLevel = this.levelsRepo.create(payload);
+
+    return await this.levelsRepo.save(newLevel);
   }
 
-  update(id: number, payload: UpdateLevelDto) {
-    const level = this.findOne(id);
-    if (level) {
-      const index = this.levels.findIndex((item) => item.id === id);
-      this.levels[index] = {
-        ...level,
-        ...payload,
-      };
-      return this.levels[index];
-    }
-    return null;
-  }
+  //Editar
+  async update(id: number, payload: UpdateLevelDto) {
+    const level = await this.levelsRepo.findOne({ where: { id } });
 
-  remove(id: number) {
-    const index = this.levels.findIndex((item) => item.id === id);
-    if (index === -1) {
+    if (!level) {
       throw new NotFoundException(`Nivel #${id} no encontrado`);
     }
-    this.levels.splice(index, 1);
-    return true;
+
+    await this.levelsRepo.merge(level, payload);
+
+    return await this.levelsRepo.save(level);
+  }
+
+  //Eliminar
+  async remove(id: number) {
+    const level = await this.levelsRepo.findOne({ where: { id } });
+
+    if (!level) {
+      throw new NotFoundException(`Nivel #${id} no encontrado`);
+    }
+
+    return await this.levelsRepo.softDelete(id);
   }
 }

@@ -5,17 +5,17 @@ import { LevelsService } from '../services/levels.service';
 @Controller('levels')
 export class LevelsController {
 
-    constructor(private levelService: LevelsService) {}
+    constructor(private levelService: LevelsService) { }
 
     //Traer todo
     @Get()
     findAll() {
-      return this.levelService.findAll();
+        return this.levelService.findAll();
     }
 
     //Traer por id
     @Get(':id')
-    find(@Param('id',ParseIntPipe) id: number) {
+    findOne(@Param('id', ParseIntPipe) id: number) {
         return this.levelService.findOne(id);
     }
 
@@ -25,19 +25,19 @@ export class LevelsController {
         return this.levelService.create(payload);
     }
 
-    //Actualizar
+    //Editar
     @Put(':id')
     update(
         @Param('id', ParseIntPipe) id: number,
-        @Body() body: UpdateLevelDto,
+        @Body() payload: UpdateLevelDto,
     ) {
-        return this.levelService.update(id, body);
+        return this.levelService.update(id, payload);
     }
 
     //Eliminar
     @Delete(':id')
     remove(@Param('id', ParseIntPipe) id: number) {
-        return this.levelService.remove(+id);
+        return this.levelService.remove(id);
     }
 
 }

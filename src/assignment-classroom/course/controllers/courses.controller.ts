@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Req } from '@nestjs/common';
 import { CreateCourseDto, UpdateCourseDto } from 'src/assignment-classroom/course/dtos/course.dto';
 import { CoursesService } from '../services/courses.service';
 
@@ -6,79 +6,37 @@ import { CoursesService } from '../services/courses.service';
 @Controller('courses')
 export class CoursesController {
     constructor(private courseService: CoursesService) {
-
     }
 
-    /**RUTAS  NO DINAMICAS */
-    @Get('filter')//@Get('products/filter')
-    getDayFilter() {
-        return `Hola Mundo `;
-
+    //Traer todo
+    @Get()
+    findAll() {
+        return this.courseService.findAll();
     }
 
-    /**RUTAS   DINAMICAS */
-    // @Get(':id')//@Get('products/:productId')
-    // getProduct(@Param(`id`,ParseIntPipe) id: number) {
-    //     // return `product ${productId}`;
-    //     return this.weekService.findOne(id);
-
-    // }
-
+    //Traer por id
     @Get(':id')
-    find(@Param('id',ParseIntPipe) id: number) {
-        return this.courseService.getId(id);
+    findOne(@Param('id', ParseIntPipe) id: number) {
+        return this.courseService.findOne(id);
     }
 
-    @Get('')//    @Get('products')
-    getProducts(
-        // @Query(`limit`) limit: number =10,
-        @Query(`limit`) limit = 10,
-        @Query(`offset`) offset = 0,
-        @Query(`brand`) brand: string,) {
-        // const{limit,offset}=params;){
-        // return `products:=>${limit} offset=${offset}`;
-        // return `products limit=>${limit} offset=${offset} brand=>${brand}`
-        // return {
-        //     message: `products limit=>${limit} offset=${offset} brand=>${brand}`
-        // }
-
-        return this.courseService.findAll()
-
-    }
-
-
-    //crear*******************
+    //Crear
     @Post()
     create(@Body() payload: CreateCourseDto) {
-        // return {
-        //     message:'accion de crear',
-        //     payload,
-        // }
         return this.courseService.create(payload);
     }
 
-    //************* update******************
-    // @Put(':id')
-    // update(@Param('id') id: number, @Body() payload: UpdateWeekDayDto) {
-    //     // return {
-    //     //     id,
-    //     //     payload,
-    //     // }
-    //     return this.weekService.update(id, payload);
-    // }
+    //Editar
     @Put(':id')
     update(
-        @Param('id') id: number,
-        @Body() body: UpdateCourseDto,
-    ) {
-        return this.courseService.update(id, body);
+        @Param('id', ParseIntPipe) id: number, @Body() payload: UpdateCourseDto) {
+        return this.courseService.update(id, payload);
     }
 
-    /***DELETE */
+    //Eliminar
     @Delete(':id')
-    delete(@Param('id') id: number) {
-        // return id;
-        return this.courseService.delete(+id);
+    remove(@Param('id', ParseIntPipe) id: number) {
+        return this.courseService.remove(id);
     }
 
 }
