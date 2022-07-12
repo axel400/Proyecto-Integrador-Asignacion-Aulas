@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCareerDto, UpdateCareerDto } from 'src/assignment-classroom/career/dtos/career.dto';
 import { Career } from 'src/assignment-classroom/career/entities/career.entity';
+import { Level } from 'src/assignment-classroom/level/entities/level.entity';
 import { SchoolYearService } from 'src/assignment-classroom/school-year/services/school-year.service';
 import { Repository } from 'typeorm';
 
@@ -41,6 +42,8 @@ export class CareersService {
     //Editar
     async update(id: number, payload: UpdateCareerDto) {
         const career = await this.careerRepo.findOne({ where: { id: id } });
+
+        career.schoolYear = await this.schoolYearService.findOne(payload.schoolYear.id);
 
         if (career === null) {
             throw new NotFoundException(`Carrera #${id} no encontrada`);

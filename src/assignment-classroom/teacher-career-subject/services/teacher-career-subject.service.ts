@@ -49,6 +49,10 @@ export class TeacherCareerSubjectService {
   async update(id: number, payload: UpdateTeacherCareerSubjectDto) {
     const teacherCareerSubject = await this.teacherCareerSubjectRepo.findOne({ where: { id: id } });
 
+    teacherCareerSubject.teacher = await this.teacherService.findOne(payload.teacher.id);
+    teacherCareerSubject.career = await this.careerService.findOne(payload.career.id);
+    teacherCareerSubject.subject = await this.subjectService.findOne(payload.subject.id);
+
     if (teacherCareerSubject === null) {
       throw new NotFoundException(`Tabla #${id} no encontrada`);
     }

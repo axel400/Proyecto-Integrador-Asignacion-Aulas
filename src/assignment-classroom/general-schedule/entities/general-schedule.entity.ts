@@ -1,6 +1,7 @@
 import { Classroom } from "../../classroom/entities/classroom.entity";
 import { CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Schedule } from "../../schedule/entities/schedule.entity";
+import { TeacherCareerSubject } from "../../teacher-career-subject/entities/teacher-career-subject.entity";
 
 @Entity()
 export class GeneralSchedule {
@@ -33,4 +34,8 @@ export class GeneralSchedule {
     @ManyToOne(() => Schedule, (schedule) => schedule.generalSchedules)
     @JoinColumn({ name: 'schedule_id' })
     schedule: Schedule;
+
+    @ManyToOne(() => TeacherCareerSubject, (teacherCareerSubject) => teacherCareerSubject.generalSchedules)
+    @JoinColumn({ name: 'teacherCareerSubject_id' })
+    teacherCareerSubject: TeacherCareerSubject;
 }

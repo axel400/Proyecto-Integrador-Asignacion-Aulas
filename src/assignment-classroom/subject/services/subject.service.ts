@@ -46,6 +46,9 @@ export class SubjectService {
   async update(id: number, payload: UpdateSubjectDto) {
     const subject = await this.subjectRepo.findOne({ where: { id: id } });
 
+    subject.journey = await this.journeyService.findOne(payload.journey.id);
+    subject.course = await this.courseService.findOne(payload.course.id);
+
     if (subject === null) {
       throw new NotFoundException(`Asignatura #${id} no encontrada`);
     }

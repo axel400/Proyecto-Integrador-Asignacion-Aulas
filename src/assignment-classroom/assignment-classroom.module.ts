@@ -39,11 +39,12 @@ import { TeacherCareerSubjectService } from './teacher-career-subject/services/t
 import { TeacherController } from './teacher/controllers/teacher.controller';
 import { Teacher } from './teacher/entities/teacher.entity';
 import { TeacherService } from './teacher/services/teacher.service';
+import { UsersController } from './user/controllers/user.controller';
 import { User } from './user/entities/user.entity';
 import { UsersService } from './user/services/user.service';
 @Module({
   providers: [CoursesService, SubjectService, TeacherService, UsersService, LevelsService, CareersService, DaysService, SchoolYearService,StatusService, ClassroomsService, SchedulesService, JourneysService,GeneralScheduleService, TeacherCareerSubjectService],
-  controllers: [SubjectController, TeacherController, CoursesController, CoursesController, LevelsController, CareersController, DaysController, SchoolYearController, StatusController, ClassroomController, SchedulesController,JourneysController,GeneralScheduleController,TeacherCareerSubjectController],
+  controllers: [SubjectController, TeacherController, CoursesController, CoursesController, LevelsController, CareersController, DaysController, SchoolYearController, StatusController, ClassroomController, SchedulesController,JourneysController,GeneralScheduleController,TeacherCareerSubjectController, UsersController],
   imports: [TypeOrmModule.forFeature([Career, Classroom, Course, Day, Level, Schedule, SchoolYear, Status, Subject, Teacher, User,Journey, GeneralSchedule,TeacherCareerSubject])],
 })
 export class AssignmentClassroomModule { }

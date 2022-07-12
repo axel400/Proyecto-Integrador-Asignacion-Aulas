@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClassroomsService } from 'src/assignment-classroom/classroom/services/classrooms.service';
 import { SchedulesService } from 'src/assignment-classroom/schedule/services/schedules.service';
+import { TeacherCareerSubjectService } from 'src/assignment-classroom/teacher-career-subject/services/teacher-career-subject.service';
 import { Repository } from 'typeorm';
 import { CreateGeneralScheduleDto, UpdateGeneralScheduleDto } from '../dtos/general-schedule.dto';
 import { GeneralSchedule } from '../entities/general-schedule.entity';
@@ -13,7 +14,8 @@ export class GeneralScheduleService {
     @InjectRepository(GeneralSchedule)
     private gneralScheduleRepo: Repository<GeneralSchedule>,
     private classroomService: ClassroomsService,
-    private scheduleService: SchedulesService
+    private scheduleService: SchedulesService,
+    private teacherCareerSubjectService: TeacherCareerSubjectService
   ) { }
 
   //Traer todo
@@ -38,6 +40,7 @@ export class GeneralScheduleService {
 
     newGeneralSchedule.classroom = await this.classroomService.findOne(payload.classroom.id);
     newGeneralSchedule.schedule = await this.scheduleService.findOne(payload.schedule.id);
+    newGeneralSchedule.teacherCareerSubject = await this.teacherCareerSubjectService.findOne(payload.teacherCareerSubject.id);
 
     return await this.gneralScheduleRepo.save(newGeneralSchedule);
   }
@@ -45,6 +48,10 @@ export class GeneralScheduleService {
   //Editar
   async update(id: number, payload: UpdateGeneralScheduleDto) {
     const generalSchedule = await this.gneralScheduleRepo.findOne({ where: { id: id } });
+
+    generalSchedule.schedule = await this.scheduleService.findOne(payload.schedule.id);
+    generalSchedule.teacherCareerSubject = await this.teacherCareerSubjectService.findOne(payload.teacherCareerSubject.id);
+    generalSchedule.classroom = await this.classroomService.findOne(payload.classroom.id);
 
     if (generalSchedule === null) {
       throw new NotFoundException(`Horario general #${id} no encontrado`);

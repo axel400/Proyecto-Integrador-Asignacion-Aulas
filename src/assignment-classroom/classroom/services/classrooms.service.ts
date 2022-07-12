@@ -44,6 +44,8 @@ export class ClassroomsService {
   async update(id: number, payload: UpdateClassroomDto) {
     const classroom = await this.classroomRepo.findOne({ where: { id: id } });
 
+    classroom.status = await this.statusService.findOne(payload.status.id);
+
     if (classroom === null) {
       throw new NotFoundException(`Aula #${id} no encontrada`);
     }

@@ -43,6 +43,8 @@ export class CoursesService {
   async update(id: number, payload: UpdateCourseDto) {
     const course = await this.courseRepo.findOne({ where: { id: id } });
 
+    course.level = await this.levelService.findOne(payload.level.id)
+
     if (course === null) {
       throw new NotFoundException(`Curso #${id} no encontrado`);
     }

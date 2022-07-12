@@ -45,6 +45,9 @@ export class SchedulesService {
     async update(id: number, payload: UpdateScheduleDto) {
         const schedule = await this.scheduleRepo.findOne({ where: { id: id } });
 
+        schedule.day = await this.dayService.findOne(payload.day.id);
+        schedule.status = await this.statusService.findOne(payload.status.id);
+
         if (schedule === null) {
             throw new NotFoundException(`Horario #${id} no encontrado`);
         }
