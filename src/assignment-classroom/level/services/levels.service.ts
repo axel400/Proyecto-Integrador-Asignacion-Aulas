@@ -1,13 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Course } from 'src/assignment-classroom/course/entities/course.entity';
 import { CreateLevelDto, UpdateLevelDto } from 'src/assignment-classroom/level/dtos/level.dto';
 import { Level } from 'src/assignment-classroom/level/entities/level.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class LevelsService {
-  [x: string]: any;
 
   constructor(
     @InjectRepository(Level) private levelsRepo: Repository<Level>,
@@ -59,4 +57,5 @@ export class LevelsService {
 
     return await this.levelsRepo.softDelete(id);
   }
+  
 }

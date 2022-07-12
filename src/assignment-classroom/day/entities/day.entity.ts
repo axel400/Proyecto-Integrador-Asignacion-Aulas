@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { Schedule } from '../../schedule/entities/schedule.entity';
 import { Subject } from '../../subject/entities/subject.entity';
 
@@ -10,7 +10,24 @@ export class Day {
   @Column()
   name: string;
 
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+  })
+  createAt: Date;
 
-  // @OneToMany((type) => Subject, (subject) => subject.day) subjects: Subject[];
-  // subject: number;
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+  })
+  updateAt: Date;
+
+  @DeleteDateColumn({
+    name: 'delete_at',
+    type: 'timestamptz',
+  })
+  deleteAt: Date;
+
+  @OneToMany(() => Schedule, (schedule) => schedule.day)
+  schedules: Schedule[];
 }

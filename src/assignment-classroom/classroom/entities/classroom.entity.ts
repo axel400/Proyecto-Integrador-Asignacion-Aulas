@@ -1,10 +1,6 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Status } from '../../status/entities/status.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { GeneralSchedule } from '../../general-schedule/entities/general-schedule.entity';
 
 @Entity()
 export class Classroom {
@@ -14,15 +10,29 @@ export class Classroom {
   @Column()
   name: string;
 
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+  })
+  createAt: Date;
 
-  /*@ManyToOne((type) => Status, (status) => status.classroom) status: Status;
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+  })
+  updateAt: Date;
 
+  @DeleteDateColumn({
+    name: 'delete_at',
+    type: 'timestamptz',
+  })
+  deleteAt: Date;
 
-  @OneToMany(
-    (type) => GeneralSchedule,
-    (generalschedule) => generalschedule.classroom,
-  )
-  generalschedules: GeneralSchedule[];
-  generalschedule: number;*/
+  @ManyToOne(() => Status, (status) => status.classrooms)
+  @JoinColumn({ name: 'status_id' })
+  status: Status;
+
+  @OneToMany(() => GeneralSchedule, (generalSchedule) => generalSchedule.classroom)
+  generalSchedules: GeneralSchedule[];
 
 }

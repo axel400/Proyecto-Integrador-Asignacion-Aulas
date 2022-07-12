@@ -1,81 +1,69 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import {
-  CreateSubjectDto,
-  UpdateSubjectDto,
-} from 'src/assignment-classroom/subject/dtos/subject.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CoursesService } from 'src/assignment-classroom/course/services/courses.service';
+import { JourneysService } from 'src/assignment-classroom/journey/services/journeys.service';
+import { CreateSubjectDto, UpdateSubjectDto } from 'src/assignment-classroom/subject/dtos/subject.dto';
 import { Subject } from 'src/assignment-classroom/subject/entities/subject.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SubjectService {
-  private countIdSubject = 1;
 
-  private subject: Subject[] = [
-    {
-      id: 1,
-      name: 'Desarrollo',
-      description: 'Desarrollo',
-    },
-  ];
-  /** Buscar todo */
-  findAll(): Subject[] {
-    return this.subject;
+  constructor(
+    @InjectRepository(Subject)
+    private subjectRepo: Repository<Subject>,
+    private journeyService: JourneysService,
+    private courseService: CoursesService,
+  ) { }
+
+  //Traer todo
+  async findAll() {
+    return await this.subjectRepo.find();
   }
 
-  /**Buscar por id */
+  //Traer por id
+  async findOne(id: number) {
+    const subject = await this.subjectRepo.findOne({ where: { id: id } });
 
-  findOne(id: number) {
-    return this.subject.find((item) => item.id);
-  }
-  /**Create */
-  getId(id: number): Subject {
-    return this.subject.find((item: Subject) => item.id == id);
-  }
-
-  create(payload: CreateSubjectDto) {
-    this.countIdSubject = this.countIdSubject + 1;
-    const newSubject = {
-      id: this.countIdSubject,
-      ...payload,
-    };
-    this.subject.push(newSubject);
-    return newSubject;
-  }
-
-  /**UPDATE */
-
-  update(id: number, payload: UpdateSubjectDto) {
-    const subject = this.findOne(id);
-    if (subject) {
-      const index = this.subject.findIndex((item) => item.id === id);
-      this.subject[index] = {
-        ...subject,
-        ...payload,
-      };
-      return this.subject[index];
-    }
-    return null;
-  }
-
-  // update(id: number, body: any) {
-  //     let product: Subject = {
-  //       id,
-  //       name: body.name,
-
-  //     }
-  //     this.subject = this.subject.map( (item: Subject) => {
-  //       console.log(item, id, item.id == id);
-  //       return item.id == id ? product : item;
-  //     });
-  //   }
-  /**DELETE  */
-
-  delete(id: number) {
-    const indexSubject = this.subject.findIndex((item) => item.id === id); //
-    if (indexSubject === -1) {
-      throw new NotFoundException(`Materia ${id} no encontrado`);
+    if (!subject) {
+      throw new NotFoundException(`Asignatura #${id} no encontrada`);
     }
 
-    this.subject.splice(indexSubject, 1);
-    return true;
+    return subject;
   }
+
+  //Crear
+  async create(payload: CreateSubjectDto) {
+    const newSubject = this.subjectRepo.create(payload);
+
+    newSubject.journey = await this.journeyService.findOne(payload.journey.id);
+    newSubject.course = await this.courseService.findOne(payload.course.id);
+
+    return await this.subjectRepo.save(newSubject);
+  }
+
+  //Editar
+  async update(id: number, payload: UpdateSubjectDto) {
+    const subject = await this.subjectRepo.findOne({ where: { id: id } });
+
+    if (subject === null) {
+      throw new NotFoundException(`Asignatura #${id} no encontrada`);
+    }
+
+    this.subjectRepo.merge(subject, payload);
+
+    return await this.subjectRepo.save(subject);
+  }
+
+  //Eliminar
+  async remove(id: number) {
+    const subject = await this.subjectRepo.findOne({ where: { id } });
+
+    if (!subject) {
+      throw new NotFoundException(`Asignatura #${id} no encontrada`);
+    }
+
+    return await this.subjectRepo.softDelete(id);
+  }
+
 }

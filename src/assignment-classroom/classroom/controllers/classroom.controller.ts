@@ -5,81 +5,37 @@ import { ClassroomsService } from '../services/classrooms.service';
 @Controller('classrooms')
 export class ClassroomController {
 
-    constructor(private classroomService: ClassroomsService) {
+    constructor(private classroomService: ClassroomsService) { }
 
+    //Traer todo
+    @Get()
+    findAll() {
+        return this.classroomService.findAll();
     }
 
-    /**RUTAS  NO DINAMICAS */
-    @Get('filter')//@Get('products/filter')
-    getProductFilter() {
-        return `Hola Mundo `;
-
-    }
-
-    /**RUTAS   DINAMICAS */
-    // @Get(':id')//@Get('products/:productId')
-    // getProduct(@Param(`id`,ParseIntPipe) id: number) {
-    //     // return `product ${productId}`;
-    //     return this.classroomService.findOne(id);
-
-    // }
-
+    //Traer por id
     @Get(':id')
-    find(@Param('id',ParseIntPipe) id: number) {
-        return this.classroomService.getId(id);
+    findOne(@Param('id', ParseIntPipe) id: number) {
+        return this.classroomService.findOne(id);
     }
 
-    @Get('')//    @Get('products')
-    getProducts(
-        // @Query(`limit`) limit: number =10,
-        @Query(`limit`) limit = 10,
-        @Query(`offset`) offset = 0,
-        @Query(`brand`) brand: string,) {
-        // const{limit,offset}=params;){
-        // return `products:=>${limit} offset=${offset}`;
-        // return `products limit=>${limit} offset=${offset} brand=>${brand}`
-        // return {
-        //     message: `products limit=>${limit} offset=${offset} brand=>${brand}`
-        // }
-
-        return this.classroomService.findAll()
-
-    }
-
-
-    //crear*******************
+    //Crear
     @Post()
     create(@Body() payload: CreateClassroomDto) {
-        // return {
-        //     message:'accion de crear',
-        //     payload,
-        // }
         return this.classroomService.create(payload);
     }
 
-    //************* update******************
-    // @Put(':id')
-    // update(@Param('id') id: number, @Body() payload: UpdateclassroomDayDto) {
-    //     // return {
-    //     //     id,
-    //     //     payload,
-    //     // }
-    //     return this.classroomService.update(id, payload);
-    // }
+    //Editar
     @Put(':id')
     update(
-        @Param('id') id: number,
-        @Body() body: UpdateClassroomDto,
-    ) {
-        return this.classroomService.update(id, body);
+        @Param('id', ParseIntPipe) id: number, @Body() payload: UpdateClassroomDto) {
+        return this.classroomService.update(id, payload);
     }
 
-    /***DELETE */
+    //Eliminar
     @Delete(':id')
-    delete(@Param('id') id: number) {
-        // return id;
-        return this.classroomService.delete(+id);
+    remove(@Param('id', ParseIntPipe) id: number) {
+        return this.classroomService.remove(id);
     }
-
 
 }

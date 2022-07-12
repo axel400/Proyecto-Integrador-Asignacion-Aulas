@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Classroom } from '../../classroom/entities/classroom.entity';
 import { Schedule } from '../../schedule/entities/schedule.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { Classroom } from '../../classroom/entities/classroom.entity';
 
 @Entity()
 export class Status {
@@ -10,12 +10,28 @@ export class Status {
   @Column()
   name: string;
 
-  // @OneToMany((type) => Classroom, (Classroom) => Classroom.status)
-  // classrooms: Classroom[];
-  // classroom: number;
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+  })
+  createAt: Date;
 
-  // @OneToMany((type) => Schedule, (schedule) => schedule.status)
-  // schedules: Schedule[];
-  // schedule: number;
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+  })
+  updateAt: Date;
+
+  @DeleteDateColumn({
+    name: 'delete_at',
+    type: 'timestamptz',
+  })
+  deleteAt: Date;
+
+  @OneToMany(() => Classroom, (classroom) => classroom.status)
+  classrooms: Classroom[];
+
+  @OneToMany(() => Schedule, (schedule) => schedule.status)
+  schedules: Schedule[];
 
 }

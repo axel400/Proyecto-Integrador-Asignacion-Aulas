@@ -1,60 +1,61 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateStatusDto, UpdateStatusDto } from 'src/assignment-classroom/status/dtos/status.dto';
 import { Status } from 'src/assignment-classroom/status/entities/status.entity';
+import { Repository } from 'typeorm';
 
 
 @Injectable()
 export class StatusService {
-    private counterId = 1;
-  
-  private status: Status[] = [
-    {
-      id: 1,
-      name: 'Primero',
-    },
-  ];
 
-  findAll() {
-    return this.status;
-  }
+    constructor(
+        @InjectRepository(Status) private statusRepo: Repository<Status>,
+    ) { }
 
-  findOne(id: number) {
-    const status = this.status.find((item) => item.id === id);
-    if (!status) {
-      throw new NotFoundException(`Estado #${id} no encontrado`);
+    //Traer todo
+    async findAll() {
+        return await this.statusRepo.find();
     }
-    return status;
-  }
 
-  create(data: CreateStatusDto) {
-    this.counterId = this.counterId + 1;
-    const newStatus = {
-      id: this.counterId,
-      ...data,
-    };
-    this.status.push(newStatus);
-    return newStatus;
-  }
+    //Traer por id
+    async findOne(id: number) {
+        const status = await this.statusRepo.findOne({ where: { id } });
 
-  update(id: number, payload: UpdateStatusDto) {
-    const status = this.findOne(id);
-    if (status) {
-      const index = this.status.findIndex((item) => item.id === id);
-      this.status[index] = {
-        ...status,
-        ...payload,
-      };
-      return this.status[index];
+        if (!status) {
+            throw new NotFoundException(`Estado #${id} no encontrado`);
+        }
+
+        return status;
     }
-    return null;
-  }
 
-  remove(id: number) {
-    const index = this.status.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw new NotFoundException(`Estado #${id} no encontrado`);
+    //Crear
+    async create(payload: CreateStatusDto) {
+        const newStatus = this.statusRepo.create(payload);
+
+        return await this.statusRepo.save(newStatus);
     }
-    this.status.splice(index, 1);
-    return true;
-  }
+
+    //Editar
+    async update(id: number, payload: UpdateStatusDto) {
+        const status = await this.statusRepo.findOne({ where: { id } });
+
+        if (!status) {
+            throw new NotFoundException(`Estado #${id} no encontrado`);
+        }
+
+        await this.statusRepo.merge(status, payload);
+
+        return await this.statusRepo.save(status);
+    }
+
+    //Eliminar
+    async remove(id: number) {
+        const status = await this.statusRepo.findOne({ where: { id } });
+
+        if (!status) {
+            throw new NotFoundException(`Estado #${id} no encontrado`);
+        }
+
+        return await this.statusRepo.softDelete(id);
+    }
 }

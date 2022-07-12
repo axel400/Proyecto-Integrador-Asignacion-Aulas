@@ -1,62 +1,67 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateScheduleDto, UpdateScheduleDto } from 'src/assignment-classroom/schedule/dtos/schedule.dto';
-import { Schedule } from 'src/assignment-classroom/schedule/entities/schedule.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DaysService } from 'src/assignment-classroom/day/services/days.service';
+import { StatusService } from 'src/assignment-classroom/status/services/status.service';
+import { Repository } from 'typeorm';
+import { CreateScheduleDto, UpdateScheduleDto } from '../dtos/schedule.dto';
+import { Schedule } from '../entities/schedule.entity';
 
 @Injectable()
 export class SchedulesService {
+    constructor(
+        @InjectRepository(Schedule)
+        private scheduleRepo: Repository<Schedule>,
+        private dayService: DaysService,
+        private statusService: StatusService
+    ) { }
 
-  private counterId = 1;
-  
-  private schedules: Schedule[] = [
-    {
-      id: 1,
-      date: '2020/01/02',
-      startTime: '10:00',
-      endTime: '12:00',
-    },
-  ];
-
-  findAll() {
-    return this.schedules;
-  }
-
-  findOne(id: number) {
-    const schedule = this.schedules.find((item) => item.id === id);
-    if (!schedule) {
-      throw new NotFoundException(`Horario #${id} no encontrado`);
+    //Traer todo
+    async findAll() {
+        return await this.scheduleRepo.find();
     }
-    return schedule;
-  }
 
-  create(data: CreateScheduleDto) {
-    this.counterId = this.counterId + 1;
-    const newLevel = {
-      id: this.counterId,
-      ...data,
-    };
-    this.schedules.push(newLevel);
-    return newLevel;
-  }
+    //Traer por id
+    async findOne(id: number) {
+        const schedule = await this.scheduleRepo.findOne({ where: { id: id } });
 
-  update(id: number, payload: UpdateScheduleDto) {
-    const schedule = this.findOne(id);
-    if (schedule) {
-      const index = this.schedules.findIndex((item) => item.id === id);
-      this.schedules[index] = {
-        ...schedule,
-        ...payload,
-      };
-      return this.schedules[index];
+        if (!schedule) {
+            throw new NotFoundException(`Horario #${id} no encontrado`);
+        }
+
+        return schedule;
     }
-    return null;
-  }
 
-  remove(id: number) {
-    const index = this.schedules.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw new NotFoundException(`Horario #${id} no encontrado`);
+    //Crear
+    async create(payload: CreateScheduleDto) {
+        const newSchedule = this.scheduleRepo.create(payload);
+
+        newSchedule.day = await this.dayService.findOne(payload.day.id);
+        newSchedule.status = await this.statusService.findOne(payload.status.id);
+
+        return await this.scheduleRepo.save(newSchedule);
     }
-    this.schedules.splice(index, 1);
-    return true;
-  }
+
+    //Editar
+    async update(id: number, payload: UpdateScheduleDto) {
+        const schedule = await this.scheduleRepo.findOne({ where: { id: id } });
+
+        if (schedule === null) {
+            throw new NotFoundException(`Horario #${id} no encontrado`);
+        }
+
+        this.scheduleRepo.merge(schedule, payload);
+
+        return await this.scheduleRepo.save(schedule);
+    }
+
+    //Eliminar
+    async remove(id: number) {
+        const schedule = await this.scheduleRepo.findOne({ where: { id } });
+
+        if (!schedule) {
+            throw new NotFoundException(`Horario #${id} no encontrado`);
+        }
+
+        return await this.scheduleRepo.softDelete(id);
+    }
 }

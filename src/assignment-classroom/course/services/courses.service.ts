@@ -2,12 +2,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCourseDto, UpdateCourseDto } from 'src/assignment-classroom/course/dtos/course.dto';
 import { Course } from 'src/assignment-classroom/course/entities/course.entity';
-import { Level } from 'src/assignment-classroom/level/entities/level.entity';
 import { LevelsService } from 'src/assignment-classroom/level/services/levels.service';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class CoursesService {
+  
   constructor(
     @InjectRepository(Course)
     private courseRepo: Repository<Course>,

@@ -1,78 +1,64 @@
-// import { Injectable, NotFoundException } from '@nestjs/common';
-// import { CreateCareerDto, UpdateCareerDto } from 'src/assignment-classroom/career/dtos/career.dto';
-// import { Career } from 'src/assignment-classroom/career/entities/career.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateCareerDto, UpdateCareerDto } from 'src/assignment-classroom/career/dtos/career.dto';
+import { Career } from 'src/assignment-classroom/career/entities/career.entity';
+import { SchoolYearService } from 'src/assignment-classroom/school-year/services/school-year.service';
+import { Repository } from 'typeorm';
 
-// @Injectable()
-// export class CareersService {
+@Injectable()
+export class CareersService {
+    constructor(
+        @InjectRepository(Career)
+        private careerRepo: Repository<Career>,
+        private schoolYearService: SchoolYearService
+    ) { }
 
-//     private countIdCareer = 1;
+    //Traer todo
+    async findAll() {
+        return await this.careerRepo.find();
+    }
 
-//     private careers: Career[] = [{
-//         id: 1,
-//         name: "Desarrollo de software"
-//     }]
-//     /** Buscar todo */
-//     findAll(): Career[] {
+    //Traer por id
+    async findOne(id: number) {
+        const career = await this.careerRepo.findOne({ where: { id: id } });
 
-//         return this.careers;
-//     }
+        if (!career) {
+            throw new NotFoundException(`Carrera #${id} no encontrada`);
+        }
 
-//     /**Buscar por id */
+        return career;
+    }
 
-//     findOne(id: number) {
+    //Crear
+    async create(payload: CreateCareerDto) {
+        const newCareer = this.careerRepo.create(payload);
 
-//         return this.careers.find((item) => item.id);
-//     }
-//     /**Create */
-//     getId(id: number): Career {
-//         return this.careers.find( (item: Career) => item.id == id);
-//       }
+        newCareer.schoolYear = await this.schoolYearService.findOne(payload.schoolYear.id);
 
-//     create(payload: CreateCareerDto) {
+        return await this.careerRepo.save(newCareer);
+    }
 
-//         this.countIdCareer = this.countIdCareer + 1;
-//         const newCareer = {
-//             id: this.countIdCareer,
-//             ...payload,
-//         };
-//         this.careers.push(newCareer);
-//         return newCareer;
+    //Editar
+    async update(id: number, payload: UpdateCareerDto) {
+        const career = await this.careerRepo.findOne({ where: { id: id } });
 
-//     }
+        if (career === null) {
+            throw new NotFoundException(`Carrera #${id} no encontrada`);
+        }
 
-//     /**UPDATE */
+        this.careerRepo.merge(career, payload);
 
-//   update(id: number, payload: UpdateCareerDto) {
+        return await this.careerRepo.save(career);
+    }
 
-//    const career = this.findOne(id);
-//     if (career) {     const index = this.careers.findIndex((item) => item.id === id);
-//      this.careers[index] = {
-//         ...career,         ...payload,       };
-//        return this.careers[index];
-//      }
-//     return null;
-//  }
+    //Eliminar
+    async remove(id: number) {
+        const career = await this.careerRepo.findOne({ where: { id } });
 
-// // update(id: number, body: any) {
-// //     let product: Careers = {
-// //       id,
-// //       name: body.name,
-      
-// //     }
-// //     this.careerdays = this.careerdays.map( (item: Careers) => {
-// //       console.log(item, id, item.id == id);
-// //       return item.id == id ? product : item;
-// //     });
-// //   }
-//     /**DELETE  */
+        if (!career) {
+            throw new NotFoundException(`Carrera #${id} no encontrada`);
+        }
 
-//     delete(id: number) {
-//         const indexcareer = this.careers.findIndex((item) => item.id === id);//
-//         if (indexcareer===-1){
-//             throw new NotFoundException(`Carrera ${id} no encontrado`)
-//         }
-
-//        this.careers.splice(indexcareer,1);
-//        return true;
-//     }
-// }
+        return await this.careerRepo.softDelete(id);
+    }
+}

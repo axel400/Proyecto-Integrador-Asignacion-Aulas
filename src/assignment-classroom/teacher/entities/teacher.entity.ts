@@ -1,10 +1,5 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { TeacherCareerSubject } from '../../teacher-career-subject/entities/teacher-career-subject.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity()
 export class Teacher {
@@ -25,11 +20,25 @@ export class Teacher {
   @Column()
   telephone: string;
 
-  // @OneToMany(
-  //   (type) => TeacherCareerSubject,
-  //   (teachercareersubject) => teachercareersubject.career,
-  // )
-  // teachercareersubject: TeacherCareerSubject[];
-  // teachercarers: number;
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+  })
+  createAt: Date;
+
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+  })
+  updateAt: Date;
+
+  @DeleteDateColumn({
+    name: 'delete_at',
+    type: 'timestamptz',
+  })
+  deleteAt: Date;
+
+  @OneToMany(() => TeacherCareerSubject, (teacherCareerSubject) => teacherCareerSubject.teacher)
+  teacherCareerSubjects: TeacherCareerSubject[];
 
 }

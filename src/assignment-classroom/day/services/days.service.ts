@@ -1,79 +1,60 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateDayDto, UpdateDayDto } from 'src/assignment-classroom/day/dtos/days.dto';
 import { Day } from 'src/assignment-classroom/day/entities/day.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class DaysService {
-    private countIdDay = 1;
 
-    private days: Day[] = [{
-        id: 1,
-        name: "Lunes"
-    }]
-    /** Buscar todo */
-    findAll(): Day[] {
-        return this.days;
+    constructor(
+        @InjectRepository(Day) private dayRepo: Repository<Day>,
+    ) { }
+
+    //Traer todo
+    async findAll() {
+        return await this.dayRepo.find();
     }
 
-    /**Buscar por id */
+    //Traer por id
+    async findOne(id: number) {
+        const day = await this.dayRepo.findOne({ where: { id } });
 
-    findOne(id: number) {
-
-        return this.days.find((item) => item.id);
-    }
-    /**Create */
-    getId(id: number): Day {
-        return this.days.find( (item: Day) => item.id == id);
-      }
-
-    create(payload: CreateDayDto) {
-
-        this.countIdDay = this.countIdDay + 1;
-        const newDay = {
-            id: this.countIdDay,
-            ...payload,
-        };
-        this.days.push(newDay);
-        return newDay;
-
-    }
-
-    /**UPDATE */
-
-  update(id: number, payload: UpdateDayDto) {
-
-   const day = this.findOne(id);
-    if (day) {     
-        const index = this.days.findIndex((item) => item.id === id);
-        this.days[index] = {
-        ...day,         
-        ...payload,       
-    };
-       return this.days[index];
-     }
-    return null;
- }
-
-// update(id: number, body: any) {
-//     let product: WeekdayDays = {
-//       id,
-//       name: body.name,
-      
-//     }
-//     this.weekdays = this.weekdays.map( (item: WeekdayDays) => {
-//       console.log(item, id, item.id == id);
-//       return item.id == id ? product : item;
-//     });
-//   }
-    /**DELETE  */
-
-    delete(id: number) {
-        const indexDay = this.days.findIndex((item) => item.id === id);//
-        if (indexDay===-1){
-            throw new NotFoundException(`Producto ${id} no encontrado`)
+        if (!day) {
+            throw new NotFoundException(`Día #${id} no encontrado`);
         }
 
-       this.days.splice(indexDay,1);
-       return true;
+        return day;
+    }
+
+    //Crear
+    async create(payload: CreateDayDto) {
+        const newDay = this.dayRepo.create(payload);
+
+        return await this.dayRepo.save(newDay);
+    }
+
+    //Editar
+    async update(id: number, payload: UpdateDayDto) {
+        const day = await this.dayRepo.findOne({ where: { id } });
+
+        if (!day) {
+            throw new NotFoundException(`Día #${id} no encontrado`);
+        }
+
+        await this.dayRepo.merge(day, payload);
+
+        return await this.dayRepo.save(day);
+    }
+
+    //Eliminar
+    async remove(id: number) {
+        const day = await this.dayRepo.findOne({ where: { id } });
+
+        if (!day) {
+            throw new NotFoundException(`Día #${id} no encontrado`);
+        }
+
+        return await this.dayRepo.softDelete(id);
     }
 }

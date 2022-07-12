@@ -1,73 +1,61 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
 
-  //constructor(private productsService: ProductsService) {}
+  constructor(
+    @InjectRepository(User) private usersRepo: Repository<User>,
+  ) { }
 
-  private counterId = 1;
-  
-  private users: User[] = [
-    {
-      id: 1,
-      email: 'ejemplo@gmail.com',
-      password: '12345',
-      role: 'admin',
-    },
-  ];
-
-  findAll() {
-    return this.users;
+  //Traer todo
+  async findAll() {
+    return await this.usersRepo.find();
   }
 
-  findOne(id: number) {
-    const user = this.users.find((item) => item.id === id);
+  //Traer por id
+  async findOne(id: number) {
+    const user = await this.usersRepo.findOne({ where: { id } });
+
     if (!user) {
       throw new NotFoundException(`Usuario #${id} no encontrado`);
     }
+
     return user;
   }
 
-  create(data: CreateUserDto) {
-    this.counterId = this.counterId + 1;
-    const newUser = {
-      id: this.counterId,
-      ...data,
-    };
-    this.users.push(newUser);
-    return newUser;
+  //Crear
+  async create(payload: CreateUserDto) {
+    const newUser = this.usersRepo.create(payload);
+
+    return await this.usersRepo.save(newUser);
   }
 
-  update(id: number, payload: UpdateUserDto) {
-    const user = this.findOne(id);
-    if (user) {
-      const index = this.users.findIndex((item) => item.id === id);
-      this.users[index] = {
-        ...user,
-        ...payload,
-      };
-      return this.users[index];
-    }
-    return null;
-  }
+  //Editar
+  async update(id: number, payload: UpdateUserDto) {
+    const user = await this.usersRepo.findOne({ where: { id } });
 
-  remove(id: number) {
-    const index = this.users.findIndex((item) => item.id === id);
-    if (index === -1) {
+    if (!user) {
       throw new NotFoundException(`Usuario #${id} no encontrado`);
     }
-    this.users.splice(index, 1);
-    return true;
+
+    await this.usersRepo.merge(user, payload);
+
+    return await this.usersRepo.save(user);
   }
 
-  // getOrderByUser(id: number): Order { 
-  //   const user = this.findOne(id);
-  //   return {
-  //     date: new Date(),
-  //     user,
-  //     products: this.productsService.findAll(),
-  //   };
-  // }
+  //Eliminar
+  async remove(id: number) {
+    const user = await this.usersRepo.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException(`Usuario #${id} no encontrado`);
+    }
+
+    return await this.usersRepo.softDelete(id);
+  }
+  
 }

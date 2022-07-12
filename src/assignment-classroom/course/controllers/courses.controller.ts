@@ -5,8 +5,8 @@ import { CoursesService } from '../services/courses.service';
 
 @Controller('courses')
 export class CoursesController {
-    constructor(private courseService: CoursesService) {
-    }
+
+    constructor(private courseService: CoursesService) { }
 
     //Traer todo
     @Get()

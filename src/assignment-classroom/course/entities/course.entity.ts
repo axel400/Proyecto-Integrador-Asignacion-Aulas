@@ -34,8 +34,8 @@ export class Course {
   @JoinColumn({ name: 'level_id' })
   level: Level;
 
-  /*@OneToMany(type => Subject, subject => subject.day) subjects: Subject[];  
-  subject: number;*/
+  @OneToMany(() => Subject, (subject) => subject.course)
+  subjects: Subject[];
 
 }
 

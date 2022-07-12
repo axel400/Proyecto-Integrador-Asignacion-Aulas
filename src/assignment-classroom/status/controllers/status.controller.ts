@@ -4,40 +4,40 @@ import { StatusService } from '../services/status.service';
 
 @Controller('status')
 export class StatusController {
-    
-    constructor(private statusService: StatusService) {}
+
+    constructor(private statusService: StatusService) { }
 
     //Traer todo
     @Get()
     findAll() {
-      return this.statusService.findAll();
+        return this.statusService.findAll();
     }
 
     //Traer por id
     @Get(':id')
-    find(@Param('id',ParseIntPipe) id: number) {
+    findOne(@Param('id', ParseIntPipe) id: number) {
         return this.statusService.findOne(id);
     }
 
     //Crear
     @Post()
-    create(@Body() payload:  CreateStatusDto) {
+    create(@Body() payload: CreateStatusDto) {
         return this.statusService.create(payload);
     }
 
-    //Actualizar
+    //Editar
     @Put(':id')
     update(
         @Param('id', ParseIntPipe) id: number,
-        @Body() body: UpdateStatusDto,
+        @Body() payload: UpdateStatusDto,
     ) {
-        return this.statusService.update(id, body);
+        return this.statusService.update(id, payload);
     }
 
     //Eliminar
     @Delete(':id')
     remove(@Param('id', ParseIntPipe) id: number) {
-        return this.statusService.remove(+id);
+        return this.statusService.remove(id);
     }
 
 }

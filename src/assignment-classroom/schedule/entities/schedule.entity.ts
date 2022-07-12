@@ -1,12 +1,7 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToOne,
-} from 'typeorm';
+import { Day } from '../../day/entities/day.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, JoinColumn, OneToMany } from 'typeorm';
 import { Status } from '../../status/entities/status.entity';
-import { WeekdayDays } from '../../weekdays/entities/weekdays.entity';
+import { GeneralSchedule } from '../../general-schedule/entities/general-schedule.entity';
 
 @Entity()
 export class Schedule {
@@ -22,14 +17,32 @@ export class Schedule {
   @Column()
   endTime: string;
 
-  // @ManyToOne((type) => Status, (status) => status.schedule) status: Status;
-  // @ManyToOne((type) => WeekdayDays, (weekdaydays) => weekdaydays.schedule)
-  // weekdaydays: WeekdayDays;
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+  })
+  createAt: Date;
 
-  // @OneToMany(
-  //   (type) => GeneralSchedule,
-  //   (generalschedule) => generalschedule.schedule,
-  // )
-  // generalschedules: GeneralSchedule[];
-  // generalschedule: number;
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+  })
+  updateAt: Date;
+
+  @DeleteDateColumn({
+    name: 'delete_at',
+    type: 'timestamptz',
+  })
+  deleteAt: Date;
+
+  @ManyToOne(() => Day, (day) => day.schedules)
+  @JoinColumn({ name: 'day_id' })
+  day: Day;
+
+  @ManyToOne(() => Status, (status) => status.schedules)
+  @JoinColumn({ name: 'status_id' })
+  status: Status;
+
+  @OneToMany(() => GeneralSchedule, (generalSchedule) => generalSchedule.schedule)
+  generalSchedules: GeneralSchedule[];
 }
