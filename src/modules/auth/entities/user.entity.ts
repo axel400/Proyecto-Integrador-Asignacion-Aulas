@@ -14,7 +14,7 @@ import {
 import * as Bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 
-@Entity('users', { schema: 'auth' })
+@Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
