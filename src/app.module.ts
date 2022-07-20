@@ -25,6 +25,8 @@ import { DatabaseModule } from './database/database.module';
         DB_NAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_PORT: Joi.number().required(),
+        // DB_SCHEMA_AUTH: Joi.string().required(),
+        // DB_SCHEMA_CORE: Joi.string().required(),
         DB_USER: Joi.string().required(),
       }),
     }),

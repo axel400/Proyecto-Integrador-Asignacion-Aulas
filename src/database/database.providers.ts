@@ -17,6 +17,7 @@ export const databaseProviders = [
         username,
         password,
         database,
+        //schema: schemaAuth,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         // entities: [UserEntity, StudentEntity, CatalogueEntity],
         // migrations: ['src/database/migrations/*.ts'],
