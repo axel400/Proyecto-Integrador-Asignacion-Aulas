@@ -3,6 +3,7 @@ import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { enviroments } from './enviroments';
+import { DatabasesModule } from './databases/databases.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from '@auth/modules';
@@ -10,7 +11,6 @@ import { CoreModule } from '@core/modules';
 import config from './config/config';
 import { AccessControlModule } from 'nest-access-control';
 import { roles } from './app.roles';
-import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -25,13 +25,11 @@ import { DatabaseModule } from './database/database.module';
         DB_NAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_PORT: Joi.number().required(),
-        // DB_SCHEMA_AUTH: Joi.string().required(),
-        // DB_SCHEMA_CORE: Joi.string().required(),
         DB_USER: Joi.string().required(),
       }),
     }),
     HttpModule,
-    DatabaseModule,
+    DatabasesModule,
     AccessControlModule.forRoles(roles),
     AuthModule,
     CoreModule,

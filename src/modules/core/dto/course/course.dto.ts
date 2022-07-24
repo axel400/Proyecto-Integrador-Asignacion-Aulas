@@ -1,15 +1,21 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { LevelEntity } from '@core/entities';
+import { CareerEntity, LevelEntity, ParallelEntity, SchoolDayEntity } from '@core/entities';
+import { messageIsNotEmpty } from '@shared/validation';
 
 export class CreateCourseDto {
-    @IsNotEmpty({ message: 'El campo name es obligatorio' })
-    @IsString({ message: 'El campo name debe ser un string' })
-    readonly name: string;
 
-    @IsNotEmpty({ message: 'El campo level es obligatorio' })
+    @IsNotEmpty(messageIsNotEmpty())
     readonly level: LevelEntity;
 
+    @IsNotEmpty(messageIsNotEmpty())
+    readonly schoolDay: SchoolDayEntity;
+
+    @IsNotEmpty(messageIsNotEmpty())
+    readonly parallel: ParallelEntity;
+
+    @IsNotEmpty(messageIsNotEmpty())
+    readonly career: CareerEntity;
 }
 
 export class UpdateCourseDto extends PartialType(CreateCourseDto) { }

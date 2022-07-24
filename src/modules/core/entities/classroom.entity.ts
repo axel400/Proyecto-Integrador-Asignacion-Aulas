@@ -1,10 +1,17 @@
-import { GeneralScheduleEntity, StatusEntity } from '@core/entities';
+import { LocationEntity, ScheduleConfigurationEntity} from '@core/entities';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
-@Entity('classrooms')
+@Entity('classrooms', { schema: 'core' })
 export class ClassroomEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => LocationEntity, { nullable: true })
+  @JoinColumn({ name: 'location_id' })
+  location: LocationEntity;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.classroom)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -12,6 +19,13 @@ export class ClassroomEntity {
     name: 'name',
   })
   name: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Capacidad del aula',
+    name: 'capacity',
+  })
+  capacity: number;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -36,12 +50,4 @@ export class ClassroomEntity {
     comment: 'Fecha de eliminacion del aula',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => StatusEntity, { nullable: true })
-  @JoinColumn({ name: 'status_id' })
-  status: StatusEntity;
-
-  @OneToMany(() => GeneralScheduleEntity, (generalSchedule) => generalSchedule.classroom)
-  generalSchedules: GeneralScheduleEntity[];
-
 }

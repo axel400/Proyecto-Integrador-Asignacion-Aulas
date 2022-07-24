@@ -13,8 +13,9 @@ import {
 } from 'typeorm';
 import * as Bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
+import { CatalogueEntity } from '@core/entities';
 
-@Entity('users')
+@Entity('users', { schema: 'auth' })
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -43,6 +44,30 @@ export class UserEntity {
   @Column('simple-array', { comment: '', nullable: true })
   roles: string[];
 
+  @ManyToOne(() => CatalogueEntity, { nullable: true })
+  @JoinColumn({ name: 'blood_type_id' })
+  bloodType: CatalogueEntity;
+
+  @ManyToOne(() => CatalogueEntity, { nullable: true })
+  @JoinColumn({ name: 'ethnic_origin_id' })
+  ethnicOrigin: CatalogueEntity;
+
+  @ManyToOne(() => CatalogueEntity, { nullable: true })
+  @JoinColumn({ name: 'identification_type_id' })
+  identificationType: CatalogueEntity;
+
+  @ManyToOne(() => CatalogueEntity, { nullable: true })
+  @JoinColumn({ name: 'gender_id' })
+  gender: CatalogueEntity;
+
+  @ManyToOne(() => CatalogueEntity, { nullable: true })
+  @JoinColumn({ name: 'marital_status_id' })
+  maritalStatus: CatalogueEntity;
+
+  @ManyToOne(() => CatalogueEntity, { nullable: true })
+  @JoinColumn({ name: 'sex_id' })
+  sex: CatalogueEntity;
+
   @Column('date', {
     name: 'birthdate',
     nullable: true,
@@ -64,6 +89,15 @@ export class UserEntity {
     comment: 'Correo Electronico',
   })
   emailVerifiedAt: Date;
+
+  @Column('varchar', {
+    name: 'identification',
+    length: 255,
+    unique: true,
+    nullable: true,
+    comment: 'Numero de documento puede ser la cedula',
+  })
+  identification: string;
 
   @Column('varchar', { name: 'lastname', length: 255, comment: 'Apellidos' })
   lastname: string;

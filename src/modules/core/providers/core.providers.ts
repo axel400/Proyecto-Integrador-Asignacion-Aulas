@@ -1,10 +1,15 @@
 import { DataSource } from 'typeorm';
-import {
-  CareerEntity, ClassroomEntity, CourseEntity, DayEntity, GeneralScheduleEntity, JourneyEntity, LevelEntity, ScheduleEntity, SchoolYearEntity, StatusEntity, SubjectEntity, TeacherCareerSubjectEntity, TeacherEntity,
-} from '@core/entities';
+import { CatalogueEntity, CareerEntity, ClassroomEntity, CourseEntity, DayEntity, LevelEntity, SchoolYearEntity, StateEntity, SubjectEntity, TeacherEntity, HourEntity, LocationEntity, ParallelEntity, RequestEntity, ScheduleConfigurationEntity, SchoolDayEntity, TeacherDistributionEntity, TimeSettingEntity, } from '@core/entities';
 import { DataSourceEnum, RepositoryEnum } from '@shared/enums';
+import { SchedulePositionEntity } from '../entities/schedule-position.entity';
 
 export const coreProviders = [
+  {
+    provide: RepositoryEnum.CATALOGUE_REPOSITORY,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(CatalogueEntity),
+    inject: [DataSourceEnum.PG_DATA_SOURCE],
+  },
   {
     provide: RepositoryEnum.CAREER_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
@@ -13,6 +18,12 @@ export const coreProviders = [
   },
   {
     provide: RepositoryEnum.CLASSROOM_REPOSITORY,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(ClassroomEntity),
+    inject: [DataSourceEnum.PG_DATA_SOURCE],
+  },
+  {
+    provide: RepositoryEnum.COLOR_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
       dataSource.getRepository(ClassroomEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
@@ -30,15 +41,9 @@ export const coreProviders = [
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
-    provide: RepositoryEnum.GENERAL_SCHEDULE_REPOSITORY,
+    provide: RepositoryEnum.HOUR_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(GeneralScheduleEntity),
-    inject: [DataSourceEnum.PG_DATA_SOURCE],
-  },
-  {
-    provide: RepositoryEnum.JOURNEY_REPOSITORY,
-    useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(JourneyEntity),
+      dataSource.getRepository(HourEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
@@ -48,9 +53,39 @@ export const coreProviders = [
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
-    provide: RepositoryEnum.SCHEDULE_REPOSITORY,
+    provide: RepositoryEnum.LOCATION_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(ScheduleEntity),
+      dataSource.getRepository(LocationEntity),
+    inject: [DataSourceEnum.PG_DATA_SOURCE],
+  },
+  {
+    provide: RepositoryEnum.PARALLEL_REPOSITORY,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(ParallelEntity),
+    inject: [DataSourceEnum.PG_DATA_SOURCE],
+  },
+  {
+    provide: RepositoryEnum.REQUEST_REPOSITORY,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(RequestEntity),
+    inject: [DataSourceEnum.PG_DATA_SOURCE],
+  },
+  {
+    provide: RepositoryEnum.SCHEDULE_CONFIGURATION_REPOSITORY,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(ScheduleConfigurationEntity),
+    inject: [DataSourceEnum.PG_DATA_SOURCE],
+  },
+  {
+    provide: RepositoryEnum.SCHEDULE_POSITION_REPOSITORY,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(SchedulePositionEntity),
+    inject: [DataSourceEnum.PG_DATA_SOURCE],
+  },
+  {
+    provide: RepositoryEnum.SCHOOL_DAY_REPOSITORY,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(SchoolDayEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
@@ -60,9 +95,9 @@ export const coreProviders = [
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
-    provide: RepositoryEnum.STATUS_REPOSITORY,
+    provide: RepositoryEnum.STATE_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(StatusEntity),
+      dataSource.getRepository(StateEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
@@ -72,15 +107,21 @@ export const coreProviders = [
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
-    provide: RepositoryEnum.TEACHER_CAREER_SUBJECT_REPOSITORY,
+    provide: RepositoryEnum.TEACHER_DISTRIBUTION_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(TeacherCareerSubjectEntity),
+      dataSource.getRepository(TeacherDistributionEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
     provide: RepositoryEnum.TEACHER_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
       dataSource.getRepository(TeacherEntity),
+    inject: [DataSourceEnum.PG_DATA_SOURCE],
+  },
+  {
+    provide: RepositoryEnum.TIME_SETTING_REPOSITORY,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(TimeSettingEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
 ];

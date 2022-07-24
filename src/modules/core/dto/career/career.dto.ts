@@ -1,11 +1,10 @@
-import { SchoolYearEntity } from '@core/entities';
+import { PartialType } from '@nestjs/swagger';
+import { messageIsNotEmpty, messageIsString } from '@shared/validation';
 import { IsString, IsNotEmpty } from 'class-validator';
 
 export class CreateCareerDto {
-    @IsNotEmpty({ message: 'El campo name es obligatorio' })
-    @IsString({ message: 'El campo name debe ser un string' })
+    @IsNotEmpty(messageIsNotEmpty())
+    @IsString(messageIsString())
     readonly name: string;
-
-    @IsNotEmpty({ message: 'El campo schoolYear es obligatorio' })
-    readonly schoolYear: SchoolYearEntity;
 }
+export class UpdateCareerDto extends PartialType(CreateCareerDto) { }

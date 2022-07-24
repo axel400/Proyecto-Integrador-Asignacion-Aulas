@@ -1,17 +1,31 @@
-import { TeacherCareerSubjectEntity } from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { StateEntity, TeacherDistributionEntity } from '@core/entities';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 
-@Entity('teachers')
+@Entity('teachers', { schema: 'core' })
 export class TeacherEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ManyToOne(() => StateEntity, { nullable: true })
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.teacher)
+  teacherDistributions: TeacherDistributionEntity[];
+
   @Column('varchar', {
     length: 255,
     comment: 'Tarjeta de identificacion del docente',
-    name: 'idCard',
+    name: 'id_card',
   })
   idCard: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Nombre del docente',
+    name: 'name',
+  })
+  name: string;
 
   @Column('varchar', {
     length: 255,
@@ -26,13 +40,6 @@ export class TeacherEntity {
     name: 'telephone',
   })
   telephone: string;
-
-  @Column('varchar', {
-    length: 255,
-    comment: 'Nombre del docente',
-    name: 'name',
-  })
-  name: string;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -57,8 +64,4 @@ export class TeacherEntity {
     comment: 'Fecha de eliminacion del docente',
   })
   deletedAt: Date;
-
-  @OneToMany(() => TeacherCareerSubjectEntity, (teacherCareerSubject) => teacherCareerSubject.teacher)
-  teacherCareerSubjects: TeacherCareerSubjectEntity[];
-
 }

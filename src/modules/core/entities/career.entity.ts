@@ -1,10 +1,20 @@
-import { SchoolYearEntity, TeacherCareerSubjectEntity } from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import { CourseEntity, SubjectEntity, TimeSettingEntity } from '@core/entities';
 
-@Entity('careers')
+@Entity('careers', { schema: 'core' })
 export class CareerEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  //descomentar despues 
+  @OneToMany(() => SubjectEntity, (subject) => subject.career)
+  subjects: SubjectEntity[];
+
+  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.career)
+  timeSettings: TimeSettingEntity[];
+
+  @OneToMany(() => CourseEntity, (course) => course.career)
+  courses: CourseEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -36,12 +46,4 @@ export class CareerEntity {
     comment: 'Fecha de eliminacion de la carrera',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => SchoolYearEntity, { nullable: true })
-  @JoinColumn({ name: 'schoolYear_id' })
-  schoolYear: SchoolYearEntity;
-
-  @OneToMany(() => TeacherCareerSubjectEntity, (teacherCareerSubject) => teacherCareerSubject.career)
-  teacherCareerSubjects: TeacherCareerSubjectEntity[];
-
 }

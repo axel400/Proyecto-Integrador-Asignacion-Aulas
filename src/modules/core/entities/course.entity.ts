@@ -1,19 +1,31 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
-import { LevelEntity, SubjectEntity } from '@core/entities';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { CareerEntity, LevelEntity, ParallelEntity, SchoolDayEntity, TeacherDistributionEntity } from '@core/entities';
 
-@Entity('courses')
+@Entity('courses', { schema: 'core' })
 export class CourseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', {
-    length: 255,
-    comment: 'Nombre del curso',
-    name: 'name',
-  })
-  name: string;
+  @ManyToOne(() => LevelEntity, { nullable: true })
+  @JoinColumn({ name: 'level_id' })
+  level: LevelEntity;
+
+  @ManyToOne(() => SchoolDayEntity, { nullable: true })
+  @JoinColumn({ name: 'school_day_id' })
+  schoolDay: SchoolDayEntity;
+
+  @ManyToOne(() => ParallelEntity, { nullable: true })
+  @JoinColumn({ name: '	parallel_id' })
+  parallel: ParallelEntity;
+
+  @ManyToOne(() => CareerEntity, { nullable: true })
+  @JoinColumn({ name: '	career_id' })
+  career: CareerEntity;
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.course)
+  teacherDistributions: TeacherDistributionEntity[];
 
   @CreateDateColumn({
     name: 'created_at',
@@ -38,13 +50,5 @@ export class CourseEntity {
     comment: 'Fecha de eliminacion del curso',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => LevelEntity, { nullable: true })
-  @JoinColumn({ name: 'level_id' })
-  level: LevelEntity;
-
-  @OneToMany(() => SubjectEntity, (subject) => subject.course)
-  subjects: SubjectEntity[];
-
 }
 

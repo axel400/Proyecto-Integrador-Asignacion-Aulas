@@ -6,7 +6,12 @@ export class FilterSubjectDto extends PaginationDto {
   @IsOptional()
   readonly name: string;
 
-  @IsString({ message: 'El campo description debe ser un string' })
   @IsOptional()
-  readonly description: string;
+  readonly code: string;
+
+  @IsOptional()
+  readonly theoreticalHours: string;
+
+  @IsOptional()
+  readonly practicalHours: string;
 }

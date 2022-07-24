@@ -1,10 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
-import { CareerEntity } from '@core/entities';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { RequestEntity, StateEntity, TeacherDistributionEntity } from '@core/entities';
 
-@Entity('schoolYears')
+
+@Entity('schoolYears', { schema: 'core' })
 export class SchoolYearEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => StateEntity, { nullable: true })
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => RequestEntity, (request) => request.schoolYear)
+  requests: RequestEntity[];
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.schoolDay)
+  teacherDistributions: TeacherDistributionEntity[];
+
 
   @Column('varchar', {
     length: 255,
@@ -12,6 +24,20 @@ export class SchoolYearEntity {
     name: 'name',
   })
   name: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Fecha inicio',
+    name: 'start_date',
+  })
+  startDate: Date;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Fecha final',
+    name: 'end_date',
+  })
+  endDate: Date;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -36,8 +62,4 @@ export class SchoolYearEntity {
     comment: 'Fecha de eliminacion del año lectivo',
   })
   deletedAt: Date;
-
-  @OneToMany(() => CareerEntity, (career) => career.schoolYear)
-  careers: CareerEntity[];
-
 }

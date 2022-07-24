@@ -1,10 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
-import { ScheduleEntity } from '@core/entities';
+import { ScheduleConfigurationEntity } from '@core/entities';
 
-@Entity('days')
+@Entity('days', { schema: 'core' })
 export class DayEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.day)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -36,7 +39,4 @@ export class DayEntity {
     comment: 'Fecha de eliminacion del día',
   })
   deletedAt: Date;
-
-  @OneToMany(() => ScheduleEntity, (schedule) => schedule.day)
-  schedules: ScheduleEntity[];
 }

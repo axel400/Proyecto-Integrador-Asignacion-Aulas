@@ -1,17 +1,24 @@
-import { CourseEntity, JourneyEntity, TeacherCareerSubjectEntity } from '@core/entities';
+import { CareerEntity, TeacherDistributionEntity, } from '@core/entities';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, JoinColumn, OneToMany } from 'typeorm';
 
-@Entity('subjects')
+@Entity('subjects', { schema: 'core' })
 export class SubjectEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ManyToOne(() => CareerEntity, { nullable: true })
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.subject)
+  teacherDistributions: TeacherDistributionEntity[];
+
   @Column('varchar', {
     length: 255,
-    comment: 'Descripción de la materia',
-    name: 'description',
+    comment: 'Codigo de la materia',
+    name: 'code',
   })
-  description: string;
+  code: string;
 
   @Column('varchar', {
     length: 255,
@@ -19,6 +26,20 @@ export class SubjectEntity {
     name: 'name',
   })
   name: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Horas teóricas',
+    name: 'theoretical_hours',
+  })
+  theoreticalHours: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Horas prácticas',
+    name: 'practical_hours',
+  })
+  practicalHours: string;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -43,16 +64,4 @@ export class SubjectEntity {
     comment: 'Fecha de eliminacion de la materia',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => JourneyEntity, { nullable: true })
-  @JoinColumn({ name: 'journey_id' })
-  journey: JourneyEntity;
-
-  @ManyToOne(() => CourseEntity, { nullable: true })
-  @JoinColumn({ name: 'course_id' })
-  course: CourseEntity;
-
-  @OneToMany(() => TeacherCareerSubjectEntity, (teacherCareerSubject) => teacherCareerSubject.subject)
-  teacherCareerSubjects: TeacherCareerSubjectEntity[];
-
 }

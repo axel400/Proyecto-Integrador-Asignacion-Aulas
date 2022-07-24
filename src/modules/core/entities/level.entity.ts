@@ -1,14 +1,17 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { CourseEntity } from '@core/entities';
 
-@Entity('levels')
+@Entity('levels', { schema: 'core' })
 export class LevelEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @OneToMany(() => CourseEntity, (course) => course.level)
+  courses: CourseEntity[];
+
   @Column('varchar', {
     length: 255,
-    comment: 'Nombre de la carrera',
+    comment: 'Nombre del nivel',
     name: 'name',
   })
   name: string;
@@ -17,7 +20,7 @@ export class LevelEntity {
     name: 'created_at',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
-    comment: 'Fecha de creacion de la carrera',
+    comment: 'Fecha de creacion del nivel',
   })
   createdAt: Date;
 
@@ -25,7 +28,7 @@ export class LevelEntity {
     name: 'updated_at',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
-    comment: 'Fecha de actualizacion de la carrera',
+    comment: 'Fecha de actualizacion del nivel',
   })
   updatedAt: Date;
 
@@ -33,11 +36,7 @@ export class LevelEntity {
     name: 'deleted_at',
     type: 'timestamptz',
     nullable: true,
-    comment: 'Fecha de eliminacion de la carrera',
+    comment: 'Fecha de eliminacion del nivel',
   })
   deletedAt: Date;
-
-  @OneToMany(() => CourseEntity, (course) => course.level)
-  courses: CourseEntity[];
-
 }
