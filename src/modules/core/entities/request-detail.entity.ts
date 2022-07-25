@@ -1,5 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { RequestEntity, StateEntity, TeacherDistributionEntity, } from '@core/entities';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import {
+  RequestEntity,
+  StateEntity,
+  TeacherDistributionEntity,
+} from '@core/entities';
 
 @Entity('requestDetails', { schema: 'core' })
 export class RequestDetailEntity {
@@ -23,14 +36,14 @@ export class RequestDetailEntity {
     comment: 'Fecha inicio',
     name: 'start_date',
   })
-  startDate: Date;
+  startDate: string;
 
   @Column('varchar', {
     length: 255,
     comment: 'Fecha final',
     name: 'end_date',
   })
-  endDate: Date;
+  endDate: string;
 
   @CreateDateColumn({
     name: 'created_at',

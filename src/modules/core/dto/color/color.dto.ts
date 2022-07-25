@@ -1,12 +1,12 @@
 import { PartialType } from '@nestjs/swagger';
-import { messageIsNotEmpty } from '@shared/validation';
+import { isNotEmptyValidationOptions } from '@shared/validation';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateColorDto {
-    @IsNotEmpty(messageIsNotEmpty())
-    readonly code: string;
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly code: string;
 
-    @IsNotEmpty(messageIsNotEmpty())
-    readonly image: string;
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly image: string;
 }
-export class UpdateColorDto extends PartialType(CreateColorDto) { }
+export class UpdateColorDto extends PartialType(CreateColorDto) {}

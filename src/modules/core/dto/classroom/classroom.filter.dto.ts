@@ -5,4 +5,8 @@ export class FilterClassroomDto extends PaginationDto {
   @IsString({ message: 'El campo name debe ser un string' })
   @IsOptional()
   readonly name: string;
+
+  @IsString({ message: 'El campo name debe ser un string' })
+  @IsOptional()
+  readonly capacity: string;
 }

@@ -1,17 +1,21 @@
-import { IsNotEmpty, IsString, } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { messageIsNotEmpty, messageIsString } from '@shared/validation';
+import { isNotEmptyValidationOptions, isStringValidationOptions } from '@shared/validation';
+import { StateEntity } from '../../entities/state.entity';
 
 export class CreateSchoolYearDto {
-    @IsNotEmpty(messageIsNotEmpty())
-    @IsString(messageIsString())
-    readonly name: string;
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  @IsString(isStringValidationOptions())
+  readonly name: string;
 
-    @IsNotEmpty(messageIsNotEmpty())
-    readonly startDate: string;
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly startDate: string;
 
-    @IsNotEmpty(messageIsNotEmpty())
-    readonly endDate: string;
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly endDate: string;
+
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly state: StateEntity;
 }
 
-export class UpdateSchoolYearDto extends PartialType(CreateSchoolYearDto) { }
+export class UpdateSchoolYearDto extends PartialType(CreateSchoolYearDto) {}

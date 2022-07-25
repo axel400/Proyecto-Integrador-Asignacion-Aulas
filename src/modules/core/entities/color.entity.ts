@@ -1,12 +1,23 @@
 import { ScheduleConfigurationEntity } from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity('colors', { schema: 'core' })
 export class ColorEntity {
   @PrimaryGeneratedColumn()
   id: number;
- 
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.color)
+
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.color,
+  )
   scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
@@ -22,7 +33,6 @@ export class ColorEntity {
     name: 'image',
   })
   image: string;
-
 
   @CreateDateColumn({
     name: 'created_at',

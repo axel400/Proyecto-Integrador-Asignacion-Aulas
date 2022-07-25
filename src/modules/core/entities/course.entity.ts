@@ -1,10 +1,23 @@
-
-import { Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
-import { CareerEntity, LevelEntity, ParallelEntity, SchoolDayEntity, TeacherDistributionEntity } from '@core/entities';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
+import {
+  CareerEntity,
+  LevelEntity,
+  ParallelEntity,
+  SchoolDayEntity,
+  TeacherDistributionEntity,
+} from '@core/entities';
 
 @Entity('courses', { schema: 'core' })
 export class CourseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,7 +37,10 @@ export class CourseEntity {
   @JoinColumn({ name: '	career_id' })
   career: CareerEntity;
 
-  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.course)
+  @OneToMany(
+    () => TeacherDistributionEntity,
+    (teacherDistribution) => teacherDistribution.course,
+  )
   teacherDistributions: TeacherDistributionEntity[];
 
   @CreateDateColumn({
@@ -51,4 +67,3 @@ export class CourseEntity {
   })
   deletedAt: Date;
 }
-

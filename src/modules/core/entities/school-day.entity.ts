@@ -1,5 +1,13 @@
 import { CourseEntity, TimeSettingEntity } from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity('schoolDays', { schema: 'core' })
 export class SchoolDayEntity {

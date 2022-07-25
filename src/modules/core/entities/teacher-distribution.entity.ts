@@ -1,5 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { CourseEntity, RequestDetailEntity, ScheduleConfigurationEntity, SchoolDayEntity, SubjectEntity, TeacherEntity } from '@core/entities';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import {
+  CourseEntity,
+  RequestDetailEntity,
+  ScheduleConfigurationEntity,
+  SchoolDayEntity,
+  SubjectEntity,
+  TeacherEntity,
+} from '@core/entities';
 
 @Entity('teacherDistributions', { schema: 'core' })
 export class TeacherDistributionEntity {
@@ -22,10 +38,16 @@ export class TeacherDistributionEntity {
   @JoinColumn({ name: 'teacher_id' })
   teacher: TeacherEntity;
 
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.teacherDistribution)
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.teacherDistribution,
+  )
   scheduleConfigurations: ScheduleConfigurationEntity[];
 
-  @OneToMany(() => RequestDetailEntity, (requestDetail) => requestDetail.teacherDistribution)
+  @OneToMany(
+    () => RequestDetailEntity,
+    (requestDetail) => requestDetail.teacherDistribution,
+  )
   requestDetails: RequestDetailEntity[];
 
   @CreateDateColumn({

@@ -1,5 +1,18 @@
-import { RequestDetailEntity, ScheduleConfigurationEntity, SchoolYearEntity, TeacherEntity } from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+  RequestDetailEntity,
+  ScheduleConfigurationEntity,
+  SchoolYearEntity,
+  TeacherEntity,
+} from '@core/entities';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity('statues', { schema: 'core' })
 export class StateEntity {
@@ -15,7 +28,10 @@ export class StateEntity {
   @OneToMany(() => RequestDetailEntity, (requestDetail) => requestDetail.state)
   requestDetails: RequestDetailEntity[];
 
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.state)
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.state,
+  )
   scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {

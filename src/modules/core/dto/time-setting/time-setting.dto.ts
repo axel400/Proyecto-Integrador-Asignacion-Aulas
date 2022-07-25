@@ -1,17 +1,17 @@
 import { IsNotEmpty } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { CareerEntity, SchoolDayEntity, } from '@core/entities';
-import { messageIsNotEmpty } from '@shared/validation';
+import { CareerEntity, SchoolDayEntity } from '@core/entities';
+import { isNotEmptyValidationOptions } from '@shared/validation';
 
 export class CreateTimeSettingDto {
-  @IsNotEmpty(messageIsNotEmpty())
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly weeklyHours: string;
 
-  @IsNotEmpty(messageIsNotEmpty())
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly career: CareerEntity;
 
-  @IsNotEmpty(messageIsNotEmpty())
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly schoolDay: SchoolDayEntity;
 }
 
-export class UpdateTimeSettingDto extends PartialType(CreateTimeSettingDto) { }
+export class UpdateTimeSettingDto extends PartialType(CreateTimeSettingDto) {}

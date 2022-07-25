@@ -1,9 +1,11 @@
 import { IsNotEmpty } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { messageIsNotEmpty } from '@shared/validation';
+import { isNotEmptyValidationOptions } from '@shared/validation';
 
 export class CreateSchedulePositionDto {
-    @IsNotEmpty(messageIsNotEmpty())
-    readonly code: string;
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly code: string;
 }
-export class UpdateSchedulePositionDto extends PartialType(CreateSchedulePositionDto) { }
+export class UpdateSchedulePositionDto extends PartialType(
+  CreateSchedulePositionDto,
+) {}

@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { CourseEntity, SubjectEntity, TimeSettingEntity } from '@core/entities';
 
 @Entity('careers', { schema: 'core' })
@@ -6,7 +14,6 @@ export class CareerEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  //descomentar despues 
   @OneToMany(() => SubjectEntity, (subject) => subject.career)
   subjects: SubjectEntity[];
 

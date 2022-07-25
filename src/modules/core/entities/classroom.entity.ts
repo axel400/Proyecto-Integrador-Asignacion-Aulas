@@ -1,5 +1,15 @@
-import { LocationEntity, ScheduleConfigurationEntity} from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { LocationEntity, ScheduleConfigurationEntity } from '@core/entities';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity('classrooms', { schema: 'core' })
 export class ClassroomEntity {
@@ -10,7 +20,10 @@ export class ClassroomEntity {
   @JoinColumn({ name: 'location_id' })
   location: LocationEntity;
 
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.classroom)
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.classroom,
+  )
   scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
@@ -25,7 +38,7 @@ export class ClassroomEntity {
     comment: 'Capacidad del aula',
     name: 'capacity',
   })
-  capacity: number;
+  capacity: string;
 
   @CreateDateColumn({
     name: 'created_at',

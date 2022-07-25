@@ -1,25 +1,25 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { messageIsNotEmpty, messageIsString } from '@shared/validation';
+import { isNotEmptyValidationOptions, isStringValidationOptions } from '@shared/validation';
 import { StateEntity } from '@core/entities';
 
 export class CreateTeacherDto {
   @IsString()
-  @IsNotEmpty(messageIsNotEmpty())
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly idCard: string;
 
-  @IsNotEmpty(messageIsNotEmpty())
-  @IsString(messageIsString())
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  @IsString(isStringValidationOptions())
   readonly name: string;
 
-  @IsNotEmpty(messageIsNotEmpty())
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly email: string;
 
-  @IsNotEmpty(messageIsNotEmpty())
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly telephone: string;
-
-  @IsNotEmpty(messageIsNotEmpty())
+  
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly state: StateEntity;
 }
 
-export class UpdateTeacherDto extends PartialType(CreateTeacherDto) { }
+export class UpdateTeacherDto extends PartialType(CreateTeacherDto) {}

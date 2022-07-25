@@ -1,5 +1,15 @@
-import { CareerEntity, TeacherDistributionEntity, } from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, JoinColumn, OneToMany } from 'typeorm';
+import { CareerEntity, TeacherDistributionEntity } from '@core/entities';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 
 @Entity('subjects', { schema: 'core' })
 export class SubjectEntity {
@@ -10,7 +20,10 @@ export class SubjectEntity {
   @JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
-  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.subject)
+  @OneToMany(
+    () => TeacherDistributionEntity,
+    (teacherDistribution) => teacherDistribution.subject,
+  )
   teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {

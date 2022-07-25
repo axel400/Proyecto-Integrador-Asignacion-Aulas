@@ -1,5 +1,15 @@
 import { StateEntity, TeacherDistributionEntity } from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('teachers', { schema: 'core' })
 export class TeacherEntity {
@@ -10,7 +20,10 @@ export class TeacherEntity {
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
-  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.teacher)
+  @OneToMany(
+    () => TeacherDistributionEntity,
+    (teacherDistribution) => teacherDistribution.teacher,
+  )
   teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {

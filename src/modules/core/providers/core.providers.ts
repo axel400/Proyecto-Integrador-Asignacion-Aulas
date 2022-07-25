@@ -1,7 +1,27 @@
 import { DataSource } from 'typeorm';
-import { CatalogueEntity, CareerEntity, ClassroomEntity, CourseEntity, DayEntity, LevelEntity, SchoolYearEntity, StateEntity, SubjectEntity, TeacherEntity, HourEntity, LocationEntity, ParallelEntity, RequestEntity, ScheduleConfigurationEntity, SchoolDayEntity, TeacherDistributionEntity, TimeSettingEntity, } from '@core/entities';
+import {
+  CatalogueEntity,
+  CareerEntity,
+  ClassroomEntity,
+  CourseEntity,
+  DayEntity,
+  LevelEntity,
+  SchoolYearEntity,
+  StateEntity,
+  SubjectEntity,
+  TeacherEntity,
+  HourEntity,
+  LocationEntity,
+  ParallelEntity,
+  RequestEntity,
+  ScheduleConfigurationEntity,
+  SchoolDayEntity,
+  TeacherDistributionEntity,
+  TimeSettingEntity,
+  ColorEntity,
+  SchedulePositionEntity,
+} from '@core/entities';
 import { DataSourceEnum, RepositoryEnum } from '@shared/enums';
-import { SchedulePositionEntity } from '../entities/schedule-position.entity';
 
 export const coreProviders = [
   {
@@ -25,7 +45,7 @@ export const coreProviders = [
   {
     provide: RepositoryEnum.COLOR_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(ClassroomEntity),
+      dataSource.getRepository(ColorEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {
@@ -36,8 +56,8 @@ export const coreProviders = [
   },
   {
     provide: RepositoryEnum.DAY_REPOSITORY,
-    useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(DayEntity),
+    useFactory: (dataSource: DataSource) => 
+    dataSource.getRepository(DayEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {

@@ -1,5 +1,15 @@
-import { ScheduleConfigurationEntity,} from '@core/entities';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { ScheduleConfigurationEntity } from '@core/entities';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { SchedulePositionEntity } from './schedule-position.entity';
 
 @Entity('hours', { schema: 'core' })
@@ -10,8 +20,11 @@ export class HourEntity {
   @ManyToOne(() => SchedulePositionEntity, { nullable: true })
   @JoinColumn({ name: 'schedulePosition_id' })
   schedulePosition: SchedulePositionEntity;
-  
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.hour)
+
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.hour,
+  )
   scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {

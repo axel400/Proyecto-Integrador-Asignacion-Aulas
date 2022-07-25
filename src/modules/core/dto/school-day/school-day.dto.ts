@@ -1,11 +1,11 @@
-import { IsNotEmpty, IsString, } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { messageIsNotEmpty, messageIsString } from '@shared/validation';
+import { isNotEmptyValidationOptions, isStringValidationOptions } from '@shared/validation';
 
 export class CreateSchoolDayDto {
-    @IsNotEmpty(messageIsNotEmpty())
-    @IsString(messageIsString())
-    readonly name: string;
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  @IsString(isStringValidationOptions())
+  readonly name: string;
 }
 
-export class UpdateSchoolDayDto extends PartialType(CreateSchoolDayDto) { }
+export class UpdateSchoolDayDto extends PartialType(CreateSchoolDayDto) {}

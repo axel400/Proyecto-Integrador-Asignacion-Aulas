@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 import { ScheduleConfigurationEntity } from '@core/entities';
 
 @Entity('days', { schema: 'core' })
@@ -6,7 +14,10 @@ export class DayEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.day)
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.day,
+  )
   scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {

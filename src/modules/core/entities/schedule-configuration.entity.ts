@@ -1,5 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { ClassroomEntity, ColorEntity, DayEntity, HourEntity, StateEntity, TeacherDistributionEntity } from '@core/entities';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import {
+  ClassroomEntity,
+  ColorEntity,
+  DayEntity,
+  HourEntity,
+  StateEntity,
+  TeacherDistributionEntity,
+} from '@core/entities';
 
 @Entity('scheduleConfigurations', { schema: 'core' })
 export class ScheduleConfigurationEntity {

@@ -1,6 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { RequestEntity, StateEntity, TeacherDistributionEntity } from '@core/entities';
-
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import {
+  RequestEntity,
+  StateEntity,
+  TeacherDistributionEntity,
+} from '@core/entities';
 
 @Entity('schoolYears', { schema: 'core' })
 export class SchoolYearEntity {
@@ -14,9 +27,11 @@ export class SchoolYearEntity {
   @OneToMany(() => RequestEntity, (request) => request.schoolYear)
   requests: RequestEntity[];
 
-  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.schoolDay)
+  @OneToMany(
+    () => TeacherDistributionEntity,
+    (teacherDistribution) => teacherDistribution.schoolDay,
+  )
   teacherDistributions: TeacherDistributionEntity[];
-
 
   @Column('varchar', {
     length: 255,
