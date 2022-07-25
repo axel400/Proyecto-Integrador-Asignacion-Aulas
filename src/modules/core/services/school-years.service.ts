@@ -75,6 +75,7 @@ export class SchoolYearsService {
         `El periodo lectivo con id:  ${id} no se encontro`,
       );
     }
+    schoolYear.state = await this.statusService.findOne(payload.state.id);
     this.schoolYearRepository.merge(schoolYear, payload);
     const schoolYearUpdated = await this.schoolYearRepository.save(schoolYear);
     return { data: schoolYearUpdated };

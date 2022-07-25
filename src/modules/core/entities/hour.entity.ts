@@ -17,15 +17,15 @@ export class HourEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchedulePositionEntity, { nullable: true })
+  @ManyToOne(() => SchedulePositionEntity, { nullable: false })
   @JoinColumn({ name: 'schedulePosition_id' })
   schedulePosition: SchedulePositionEntity;
 
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.hour,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
+  // @OneToMany(
+  //   () => ScheduleConfigurationEntity,
+  //   (scheduleConfiguration) => scheduleConfiguration.hour,
+  // )
+  // scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -53,7 +53,7 @@ export class HourEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
+    nullable: false,
     comment: 'Fecha de eliminacion de la hora',
   })
   deletedAt: Date;

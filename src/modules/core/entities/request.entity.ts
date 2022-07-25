@@ -16,15 +16,15 @@ export class RequestEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchoolYearEntity, { nullable: true })
+  @ManyToOne(() => SchoolYearEntity, { nullable: false })
   @JoinColumn({ name: 'school_year_id' })
   schoolYear: SchoolYearEntity;
 
-  @OneToMany(
-    () => RequestDetailEntity,
-    (requestDetail) => requestDetail.teacherDistribution,
-  )
-  requestDetails: RequestDetailEntity[];
+  // @OneToMany(
+  //   () => RequestDetailEntity,
+  //   (requestDetail) => requestDetail.teacherDistribution,
+  // )
+  // requestDetails: RequestDetailEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -66,7 +66,7 @@ export class RequestEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
+    nullable: false,
     comment: 'Fecha de eliminacion de la solicitud',
   })
   deletedAt: Date;

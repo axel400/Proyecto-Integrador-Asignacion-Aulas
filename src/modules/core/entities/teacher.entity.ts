@@ -16,15 +16,15 @@ export class TeacherEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => StateEntity, { nullable: true })
+  @ManyToOne(() => StateEntity, { nullable: false })
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
-  @OneToMany(
-    () => TeacherDistributionEntity,
-    (teacherDistribution) => teacherDistribution.teacher,
-  )
-  teacherDistributions: TeacherDistributionEntity[];
+  // @OneToMany(
+  //   () => TeacherDistributionEntity,
+  //   (teacherDistribution) => teacherDistribution.teacher,
+  // )
+  // teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -73,7 +73,7 @@ export class TeacherEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
+    nullable: false,
     comment: 'Fecha de eliminacion del docente',
   })
   deletedAt: Date;

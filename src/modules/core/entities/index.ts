@@ -7,7 +7,6 @@ export * from './school-year.entity';
 export * from './state.entity';
 export * from './subject.entity';
 export * from './teacher.entity';
-export * from './catalogue.entity';
 export * from './school-day.entity';
 export * from './parallel.entity';
 export * from './time-setting.entity';

@@ -34,8 +34,7 @@ export class RequestDetailsService {
       payload.request.id,
     );
 
-    newRequestDetail.teacherDistribution =
-      await this.teacherDistributionsService.findOne(
+    newRequestDetail.teacherDistribution = await this.teacherDistributionsService.findOne(
         payload.teacherDistribution.id,
       );
 
@@ -90,6 +89,15 @@ export class RequestDetailsService {
         `El detalle de la solicitud con id:  ${id} no se encontro`,
       );
     }
+    requestDetail.request = await this.requestsService.findOne(
+      payload.request.id,
+    );
+
+    requestDetail.teacherDistribution = await this.teacherDistributionsService.findOne(
+        payload.teacherDistribution.id,
+      );
+
+    requestDetail.state = await this.statusService.findOne(payload.state.id);
     this.requestDetailRepository.merge(requestDetail, payload);
     const requestDetailUpdated = await this.requestDetailRepository.save(
       requestDetail,

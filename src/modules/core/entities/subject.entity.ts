@@ -20,11 +20,11 @@ export class SubjectEntity {
   @JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
-  @OneToMany(
-    () => TeacherDistributionEntity,
-    (teacherDistribution) => teacherDistribution.subject,
-  )
-  teacherDistributions: TeacherDistributionEntity[];
+  // @OneToMany(
+  //   () => TeacherDistributionEntity,
+  //   (teacherDistribution) => teacherDistribution.subject,
+  // )
+  // teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {
     length: 255,

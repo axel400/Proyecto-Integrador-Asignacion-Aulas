@@ -14,14 +14,14 @@ export class CareerEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => SubjectEntity, (subject) => subject.career)
-  subjects: SubjectEntity[];
+  // @OneToMany(() => SubjectEntity, (subject) => subject.career)
+  // subjects: SubjectEntity[];
 
-  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.career)
-  timeSettings: TimeSettingEntity[];
+  // @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.career)
+  // timeSettings: TimeSettingEntity[];
 
-  @OneToMany(() => CourseEntity, (course) => course.career)
-  courses: CourseEntity[];
+  // @OneToMany(() => CourseEntity, (course) => course.career)
+  // courses: CourseEntity[];
 
   @Column('varchar', {
     length: 255,

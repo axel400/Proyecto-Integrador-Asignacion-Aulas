@@ -82,6 +82,13 @@ export class TimeSettingsService {
         `La configuracion del horario con id:  ${id} no se encontro`,
       );
     }
+    timeSetting.career = await this.careersService.findOne(
+      payload.career.id,
+    );
+
+    timeSetting.schoolDay = await this.schoolDaysService.findOne(
+      payload.schoolDay.id,
+    );
     this.timeSettingRepository.merge(timeSetting, payload);
     const timeSettingUpdated = await this.timeSettingRepository.save(
       timeSetting,

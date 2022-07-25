@@ -14,8 +14,8 @@ export class LocationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => ClassroomEntity, (classroom) => classroom.location)
-  classrooms: ClassroomEntity[];
+  // @OneToMany(() => ClassroomEntity, (classroom) => classroom.location)
+  // classrooms: ClassroomEntity[];
 
   @Column('varchar', {
     length: 255,

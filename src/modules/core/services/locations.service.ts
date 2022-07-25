@@ -7,7 +7,6 @@ import {
   UpdateLocationDto,
 } from '@core/dto';
 import { LocationEntity } from '@core/entities';
-import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
 

@@ -22,33 +22,33 @@ export class TeacherDistributionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchoolDayEntity, { nullable: true })
+  @ManyToOne(() => SchoolDayEntity, { nullable: false })
   @JoinColumn({ name: 'school_day_id' })
   schoolDay: SchoolDayEntity;
 
-  @ManyToOne(() => SubjectEntity, { nullable: true })
+  @ManyToOne(() => SubjectEntity, { nullable: false })
   @JoinColumn({ name: 'subject_id' })
   subject: SubjectEntity;
 
-  @ManyToOne(() => CourseEntity, { nullable: true })
+  @ManyToOne(() => CourseEntity, { nullable: false })
   @JoinColumn({ name: 'course_id' })
   course: CourseEntity;
 
-  @ManyToOne(() => TeacherEntity, { nullable: true })
+  @ManyToOne(() => TeacherEntity, { nullable: false })
   @JoinColumn({ name: 'teacher_id' })
   teacher: TeacherEntity;
 
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.teacherDistribution,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
+  // @OneToMany(
+  //   () => ScheduleConfigurationEntity,
+  //   (scheduleConfiguration) => scheduleConfiguration.teacherDistribution,
+  // )
+  // scheduleConfigurations: ScheduleConfigurationEntity[];
 
-  @OneToMany(
-    () => RequestDetailEntity,
-    (requestDetail) => requestDetail.teacherDistribution,
-  )
-  requestDetails: RequestDetailEntity[];
+  // @OneToMany(
+  //   () => RequestDetailEntity,
+  //   (requestDetail) => requestDetail.teacherDistribution,
+  // )
+  // requestDetails: RequestDetailEntity[];
 
   @CreateDateColumn({
     name: 'created_at',
@@ -69,7 +69,7 @@ export class TeacherDistributionEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
+    nullable: false,
     comment: 'Fecha de eliminacion de la distribucion de docentes',
   })
   deletedAt: Date;

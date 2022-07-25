@@ -14,8 +14,8 @@ export class LevelEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => CourseEntity, (course) => course.level)
-  courses: CourseEntity[];
+  // @OneToMany(() => CourseEntity, (course) => course.level)
+  // courses: CourseEntity[];
 
   @Column('varchar', {
     length: 255,

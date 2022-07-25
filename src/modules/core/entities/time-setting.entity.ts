@@ -16,11 +16,11 @@ export class TimeSettingEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => CareerEntity, { nullable: true })
+  @ManyToOne(() => CareerEntity, { nullable: false })
   @JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
-  @ManyToOne(() => SchoolDayEntity, { nullable: true })
+  @ManyToOne(() => SchoolDayEntity, { nullable: false })
   @JoinColumn({ name: 'schoolDay_id' })
   schoolDay: SchoolDayEntity;
 
@@ -50,7 +50,7 @@ export class TimeSettingEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
+    nullable: false,
     comment: 'Fecha de eliminacion de la configuracion de tiempo',
   })
   deletedAt: Date;

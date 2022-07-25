@@ -9,30 +9,8 @@ import {
   MaxLength,
   IsDate,
 } from 'class-validator';
-import { CatalogueEntity } from '@core/entities';
 
 export class UserDto {
-  @IsOptional()
-  readonly bloodType: CatalogueEntity;
-
-  @IsOptional()
-  readonly ethnicOrigin: CatalogueEntity;
-
-  @IsOptional()
-  readonly identificationType: CatalogueEntity;
-
-  @IsOptional()
-  readonly gender: CatalogueEntity;
-
-  @IsOptional()
-  readonly maritalStatus: CatalogueEntity;
-
-  @IsOptional()
-  readonly sex: CatalogueEntity;
-  @IsOptional()
-  @IsDate({ message: 'El campo birthdate debe ser una fecha válida' })
-  readonly birthdate: Date;
-
   @IsNotEmpty({ message: 'El campo identification es obligatorio' })
   @IsString({ message: 'El campo identification debe ser un string' })
   readonly identification: string;

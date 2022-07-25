@@ -126,6 +126,30 @@ export class ScheduleConfigurationsService {
         `La configuracion del horario con id:  ${id} no se encontro`,
       );
     }
+    scheduleConfiguration.classroom = await this.classroomsService.findOne(
+      payload.classroom.id,
+    );
+
+    scheduleConfiguration.day = await this.daysService.findOne(
+      payload.day.id,
+    );
+
+    scheduleConfiguration.hour = await this.hoursService.findOne(
+      payload.hour.id,
+    );
+
+    scheduleConfiguration.teacherDistribution =
+      await this.teacherDistributionsService.findOne(
+        payload.teacherDistribution.id,
+      );
+
+    scheduleConfiguration.color = await this.colorsService.findOne(
+      payload.color.id,
+    );
+
+    scheduleConfiguration.state = await this.statusService.findOne(
+      payload.state.id,
+    );
     this.scheduleConfigurationRepository.merge(scheduleConfiguration, payload);
     const scheduleConfigurationUpdated =
       await this.scheduleConfigurationRepository.save(scheduleConfiguration);

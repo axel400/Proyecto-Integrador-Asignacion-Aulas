@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm';
 import {
-  CatalogueEntity,
   CareerEntity,
   ClassroomEntity,
   CourseEntity,
@@ -24,12 +23,6 @@ import {
 import { DataSourceEnum, RepositoryEnum } from '@shared/enums';
 
 export const coreProviders = [
-  {
-    provide: RepositoryEnum.CATALOGUE_REPOSITORY,
-    useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(CatalogueEntity),
-    inject: [DataSourceEnum.PG_DATA_SOURCE],
-  },
   {
     provide: RepositoryEnum.CAREER_REPOSITORY,
     useFactory: (dataSource: DataSource) =>
@@ -56,8 +49,8 @@ export const coreProviders = [
   },
   {
     provide: RepositoryEnum.DAY_REPOSITORY,
-    useFactory: (dataSource: DataSource) => 
-    dataSource.getRepository(DayEntity),
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(DayEntity),
     inject: [DataSourceEnum.PG_DATA_SOURCE],
   },
   {

@@ -20,18 +20,18 @@ export class SchoolYearEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => StateEntity, { nullable: true })
+  @ManyToOne(() => StateEntity, { nullable: false })
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
-  @OneToMany(() => RequestEntity, (request) => request.schoolYear)
-  requests: RequestEntity[];
+  // @OneToMany(() => RequestEntity, (request) => request.schoolYear)
+  // requests: RequestEntity[];
 
-  @OneToMany(
-    () => TeacherDistributionEntity,
-    (teacherDistribution) => teacherDistribution.schoolDay,
-  )
-  teacherDistributions: TeacherDistributionEntity[];
+  // @OneToMany(
+  //   () => TeacherDistributionEntity,
+  //   (teacherDistribution) => teacherDistribution.schoolDay,
+  // )
+  // teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -73,7 +73,7 @@ export class SchoolYearEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
+    nullable: false,
     comment: 'Fecha de eliminacion del año lectivo',
   })
   deletedAt: Date;

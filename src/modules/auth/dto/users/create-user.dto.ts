@@ -9,5 +9,4 @@ export class CreateUserDto extends PickType(UserDto, [
   'lastname',
   'username',
   'roles',
-  'bloodType',
 ]) {}

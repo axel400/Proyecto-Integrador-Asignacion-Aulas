@@ -67,6 +67,9 @@ export class RequestsService {
     if (!request) {
       throw new NotFoundException(`La solicitud con id:  ${id} no se encontro`);
     }
+    request.schoolYear = await this.schoolYearsService.findOne(
+      payload.schoolYear.id,
+    );
     this.requestsRepository.merge(request, payload);
     const requestUpdated = await this.requestsRepository.save(request);
     return { data: requestUpdated };

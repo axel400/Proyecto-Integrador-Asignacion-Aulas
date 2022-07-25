@@ -16,15 +16,15 @@ export class ClassroomEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => LocationEntity, { nullable: true })
+  @ManyToOne(() => LocationEntity, { nullable: false })
   @JoinColumn({ name: 'location_id' })
   location: LocationEntity;
 
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.classroom,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
+  // @OneToMany(
+  //   () => ScheduleConfigurationEntity,
+  //   (scheduleConfiguration) => scheduleConfiguration.classroom,
+  // )
+  // scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -59,7 +59,7 @@ export class ClassroomEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
+    nullable: false,
     comment: 'Fecha de eliminacion del aula',
   })
   deletedAt: Date;

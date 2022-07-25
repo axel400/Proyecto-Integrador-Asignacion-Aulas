@@ -45,6 +45,7 @@ export class ClassroomsService {
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
+    //return { data: data[0], pagination: { totalItems: data[1], limit: 10 } };
   }
 
   async findOne(id: number): Promise<any> {
@@ -69,6 +70,9 @@ export class ClassroomsService {
     if (!classroom) {
       throw new NotFoundException(`El aula con id:  ${id} no se encontro`);
     }
+    classroom.location = await this.locationsService.findOne(
+      payload.location.id,
+    );
     this.classroomRepository.merge(classroom, payload);
     const classroomUpdated = await this.classroomRepository.save(classroom);
     return { data: classroomUpdated };

@@ -64,6 +64,9 @@ export class HoursService {
     if (!hour) {
       throw new NotFoundException(`La hora con id:  ${id} no se encontro`);
     }
+    hour.schedulePosition = await this.schedulePositionsService.findOne(
+      payload.schedulePosition.id,
+    );
     this.hourRepository.merge(hour, payload);
     const hourUpdated = await this.hourRepository.save(hour);
     return { data: hourUpdated };

@@ -69,6 +69,7 @@ export class SubjectsService {
         `La asignatura con id:  ${id} no se encontro`,
       );
     }
+    subject.career = await this.careersService.findOne(payload.career.id);
     this.subjectRepository.merge(subject, payload);
     const subjectUpdated = await this.subjectRepository.save(subject);
     return { data: subjectUpdated };

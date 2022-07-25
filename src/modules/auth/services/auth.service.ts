@@ -75,14 +75,6 @@ export class AuthService {
   async findProfile(id: number): Promise<ServiceResponseHttpModel> {
     const user = await this.repository.findOne({
       where: { id },
-      relations: {
-        bloodType: true,
-        ethnicOrigin: true,
-        identificationType: true,
-        gender: true,
-        maritalStatus: true,
-        sex: true,
-      },
     });
 
     if (!user) {

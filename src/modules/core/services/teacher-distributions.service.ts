@@ -95,6 +95,21 @@ export class TeacherDistributionsService {
         `La distribucion de docentes con id:  ${id} no se encontro`,
       );
     }
+    teacherDistribution.schoolDay = await this.schoolDaysService.findOne(
+      payload.schoolDay.id,
+    );
+
+    teacherDistribution.subject = await this.subjectsService.findOne(
+      payload.subject.id,
+    );
+
+    teacherDistribution.course = await this.coursesService.findOne(
+      payload.course.id,
+    );
+
+    teacherDistribution.teacher = await this.teachersService.findOne(
+      payload.teacher.id,
+    );
     this.teacherDistributionRepository.merge(teacherDistribution, payload);
     const teacherDistributionUpdated =
       await this.teacherDistributionRepository.save(teacherDistribution);

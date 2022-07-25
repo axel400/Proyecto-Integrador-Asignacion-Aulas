@@ -13,7 +13,6 @@ import {
 } from 'typeorm';
 import * as Bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
-import { CatalogueEntity, } from '@core/entities';
 
 @Entity('users', { schema: 'auth' })
 export class UserEntity {
@@ -43,30 +42,6 @@ export class UserEntity {
 
   @Column('simple-array', { comment: '', nullable: true })
   roles: string[];
-
-  @ManyToOne(() => CatalogueEntity, { nullable: true })
-  @JoinColumn({ name: 'blood_type_id' })
-  bloodType: CatalogueEntity;
-
-  @ManyToOne(() => CatalogueEntity, { nullable: true })
-  @JoinColumn({ name: 'ethnic_origin_id' })
-  ethnicOrigin: CatalogueEntity;
-
-  @ManyToOne(() => CatalogueEntity, { nullable: true })
-  @JoinColumn({ name: 'identification_type_id' })
-  identificationType: CatalogueEntity;
-
-  @ManyToOne(() => CatalogueEntity, { nullable: true })
-  @JoinColumn({ name: 'gender_id' })
-  gender: CatalogueEntity;
-
-  @ManyToOne(() => CatalogueEntity, { nullable: true })
-  @JoinColumn({ name: 'marital_status_id' })
-  maritalStatus: CatalogueEntity;
-
-  @ManyToOne(() => CatalogueEntity, { nullable: true })
-  @JoinColumn({ name: 'sex_id' })
-  sex: CatalogueEntity;
 
   @Column('date', {
     name: 'birthdate',

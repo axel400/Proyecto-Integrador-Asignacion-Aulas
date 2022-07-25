@@ -65,6 +65,7 @@ export class TeachersService {
     if (!teacher) {
       throw new NotFoundException(`El docente con id:  ${id} no se encontro`);
     }
+    teacher.state = await this.statussService.findOne(payload.state.id);
     this.teacherRepository.merge(teacher, payload);
     const teacherUpdated = await this.teacherRepository.save(teacher);
     return { data: teacherUpdated };

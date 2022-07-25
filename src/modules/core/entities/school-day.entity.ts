@@ -14,11 +14,11 @@ export class SchoolDayEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => CourseEntity, (course) => course.schoolDay)
-  courses: CourseEntity[];
+  // @OneToMany(() => CourseEntity, (course) => course.schoolDay)
+  // courses: CourseEntity[];
 
-  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.schoolDay)
-  timeSettings: TimeSettingEntity[];
+  // @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.schoolDay)
+  // timeSettings: TimeSettingEntity[];
 
   @Column('varchar', {
     length: 255,

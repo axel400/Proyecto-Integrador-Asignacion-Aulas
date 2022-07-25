@@ -1,4 +1,3 @@
-export * from './catalogues.service';
 export * from './careers.service';
 export * from './classrooms.service';
 export * from './colors.service';

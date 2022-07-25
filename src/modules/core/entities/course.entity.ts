@@ -21,27 +21,27 @@ export class CourseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => LevelEntity, { nullable: true })
+  @ManyToOne(() => LevelEntity, { nullable: false })
   @JoinColumn({ name: 'level_id' })
   level: LevelEntity;
 
-  @ManyToOne(() => SchoolDayEntity, { nullable: true })
+  @ManyToOne(() => SchoolDayEntity, { nullable: false })
   @JoinColumn({ name: 'school_day_id' })
   schoolDay: SchoolDayEntity;
 
-  @ManyToOne(() => ParallelEntity, { nullable: true })
+  @ManyToOne(() => ParallelEntity, { nullable: false })
   @JoinColumn({ name: '	parallel_id' })
   parallel: ParallelEntity;
 
-  @ManyToOne(() => CareerEntity, { nullable: true })
+  @ManyToOne(() => CareerEntity, { nullable: false })
   @JoinColumn({ name: '	career_id' })
   career: CareerEntity;
 
-  @OneToMany(
-    () => TeacherDistributionEntity,
-    (teacherDistribution) => teacherDistribution.course,
-  )
-  teacherDistributions: TeacherDistributionEntity[];
+  // @OneToMany(
+  //   () => TeacherDistributionEntity,
+  //   (teacherDistribution) => teacherDistribution.course,
+  // )
+  // teacherDistributions: TeacherDistributionEntity[];
 
   @CreateDateColumn({
     name: 'created_at',
@@ -62,7 +62,7 @@ export class CourseEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
+    nullable: false,
     comment: 'Fecha de eliminacion del curso',
   })
   deletedAt: Date;

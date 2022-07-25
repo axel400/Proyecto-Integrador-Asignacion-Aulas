@@ -32,13 +32,9 @@ export class CoursesService {
 
     newCourse.level = await this.levelsService.findOne(payload.level.id);
 
-    newCourse.parallel = await this.parallelsService.findOne(
-      payload.parallel.id,
-    );
+    newCourse.parallel = await this.parallelsService.findOne(payload.parallel.id);
 
-    newCourse.schoolDay = await this.schoolDaysService.findOne(
-      payload.schoolDay.id,
-    );
+    newCourse.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
 
     newCourse.career = await this.careersService.findOne(payload.career.id);
 
@@ -78,6 +74,13 @@ export class CoursesService {
     if (!course) {
       throw new NotFoundException(`El curso con id:  ${id} no se encontro`);
     }
+    course.level = await this.levelsService.findOne(payload.level.id);
+
+    course.parallel = await this.parallelsService.findOne(payload.parallel.id);
+
+    course.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
+
+    course.career = await this.careersService.findOne(payload.career.id);
     this.courseRepository.merge(course, payload);
     const courseUpdated = await this.courseRepository.save(course);
     return { data: courseUpdated };
