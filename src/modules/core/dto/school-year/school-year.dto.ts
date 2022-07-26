@@ -1,9 +1,12 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 import { isNotEmptyValidationOptions, isStringValidationOptions } from '@shared/validation';
-import { StateEntity } from '../../entities/state.entity';
+import { StateEntity } from '@core/entities';
 
 export class CreateSchoolYearDto {
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly state: StateEntity;
+
   @IsNotEmpty(isNotEmptyValidationOptions())
   @IsString(isStringValidationOptions())
   readonly name: string;
@@ -14,8 +17,6 @@ export class CreateSchoolYearDto {
   @IsNotEmpty(isNotEmptyValidationOptions())
   readonly endDate: string;
 
-  @IsNotEmpty(isNotEmptyValidationOptions())
-  readonly state: StateEntity;
 }
 
 export class UpdateSchoolYearDto extends PartialType(CreateSchoolYearDto) {}

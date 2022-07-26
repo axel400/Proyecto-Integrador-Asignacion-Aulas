@@ -17,7 +17,7 @@ export class ClassroomEntity {
   id: number;
 
   @ManyToOne(() => LocationEntity, { nullable: false })
-  @JoinColumn({ name: 'location_id' })
+  //@JoinColumn({ name: 'location_id' })
   location: LocationEntity;
 
   // @OneToMany(

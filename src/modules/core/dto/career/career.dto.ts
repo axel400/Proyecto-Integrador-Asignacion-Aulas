@@ -7,4 +7,5 @@ export class CreateCareerDto {
   @IsString(isStringValidationOptions())
   readonly name: string;
 }
+
 export class UpdateCareerDto extends PartialType(CreateCareerDto) {}

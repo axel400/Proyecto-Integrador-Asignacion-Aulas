@@ -11,17 +11,17 @@ import {
 } from 'typeorm';
 import { CareerEntity, SchoolDayEntity } from '@core/entities';
 
-@Entity('timeSettings', { schema: 'core' })
+@Entity('time_settings', { schema: 'core' })
 export class TimeSettingEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => CareerEntity, { nullable: false })
-  @JoinColumn({ name: 'career_id' })
+  //@JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
   @ManyToOne(() => SchoolDayEntity, { nullable: false })
-  @JoinColumn({ name: 'schoolDay_id' })
+  //@JoinColumn({ name: 'schoolDay_id' })
   schoolDay: SchoolDayEntity;
 
   @Column('varchar', {

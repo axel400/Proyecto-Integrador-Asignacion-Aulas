@@ -17,7 +17,7 @@ export class SubjectEntity {
   id: number;
 
   @ManyToOne(() => CareerEntity, { nullable: true })
-  @JoinColumn({ name: 'career_id' })
+  //@JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
   // @OneToMany(

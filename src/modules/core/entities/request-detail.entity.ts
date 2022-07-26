@@ -14,21 +14,21 @@ import {
   TeacherDistributionEntity,
 } from '@core/entities';
 
-@Entity('requestDetails', { schema: 'core' })
+@Entity('request_details', { schema: 'core' })
 export class RequestDetailEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => RequestEntity, { nullable: true })
-  @JoinColumn({ name: 'request_id' })
+  //@JoinColumn({ name: 'request_id' })
   request: RequestEntity;
 
   @ManyToOne(() => TeacherDistributionEntity, { nullable: true })
-  @JoinColumn({ name: 'teacher_distribution_id' })
+  //@JoinColumn({ name: 'teacher_distribution_id' })
   teacherDistribution: TeacherDistributionEntity;
 
   @ManyToOne(() => StateEntity, { nullable: true })
-  @JoinColumn({ name: 'state_id' })
+  //@JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
   @Column('varchar', {

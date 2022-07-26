@@ -15,13 +15,13 @@ import {
   TeacherDistributionEntity,
 } from '@core/entities';
 
-@Entity('schoolYears', { schema: 'core' })
+@Entity('school_year', { schema: 'core' })
 export class SchoolYearEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => StateEntity, { nullable: false })
-  @JoinColumn({ name: 'state_id' })
+  //@JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
   // @OneToMany(() => RequestEntity, (request) => request.schoolYear)

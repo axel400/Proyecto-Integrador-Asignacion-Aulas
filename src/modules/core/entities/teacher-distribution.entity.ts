@@ -17,25 +17,25 @@ import {
   TeacherEntity,
 } from '@core/entities';
 
-@Entity('teacherDistributions', { schema: 'core' })
+@Entity('teacher_distributions', { schema: 'core' })
 export class TeacherDistributionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => SchoolDayEntity, { nullable: false })
-  @JoinColumn({ name: 'school_day_id' })
+  //@JoinColumn({ name: 'school_day_id' })
   schoolDay: SchoolDayEntity;
 
   @ManyToOne(() => SubjectEntity, { nullable: false })
-  @JoinColumn({ name: 'subject_id' })
+  //@JoinColumn({ name: 'subject_id' })
   subject: SubjectEntity;
 
   @ManyToOne(() => CourseEntity, { nullable: false })
-  @JoinColumn({ name: 'course_id' })
+  //@JoinColumn({ name: 'course_id' })
   course: CourseEntity;
 
   @ManyToOne(() => TeacherEntity, { nullable: false })
-  @JoinColumn({ name: 'teacher_id' })
+  //@JoinColumn({ name: 'teacher_id' })
   teacher: TeacherEntity;
 
   // @OneToMany(

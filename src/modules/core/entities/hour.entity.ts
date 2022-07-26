@@ -18,7 +18,7 @@ export class HourEntity {
   id: number;
 
   @ManyToOne(() => SchedulePositionEntity, { nullable: false })
-  @JoinColumn({ name: 'schedulePosition_id' })
+  //@JoinColumn({ name: 'schedulePosition_id' })
   schedulePosition: SchedulePositionEntity;
 
   // @OneToMany(

@@ -17,7 +17,7 @@ export class TeacherEntity {
   id: number;
 
   @ManyToOne(() => StateEntity, { nullable: false })
-  @JoinColumn({ name: 'state_id' })
+  //@JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
   // @OneToMany(

@@ -22,19 +22,19 @@ export class CourseEntity {
   id: number;
 
   @ManyToOne(() => LevelEntity, { nullable: false })
-  @JoinColumn({ name: 'level_id' })
+  //@JoinColumn({ name: 'level_id' })
   level: LevelEntity;
 
   @ManyToOne(() => SchoolDayEntity, { nullable: false })
-  @JoinColumn({ name: 'school_day_id' })
+  //@JoinColumn({ name: 'school_day_id' })
   schoolDay: SchoolDayEntity;
 
   @ManyToOne(() => ParallelEntity, { nullable: false })
-  @JoinColumn({ name: '	parallel_id' })
+  //@JoinColumn({ name: '	parallel_id' })
   parallel: ParallelEntity;
 
   @ManyToOne(() => CareerEntity, { nullable: false })
-  @JoinColumn({ name: '	career_id' })
+  //@JoinColumn({ name: '	career_id' })
   career: CareerEntity;
 
   // @OneToMany(
