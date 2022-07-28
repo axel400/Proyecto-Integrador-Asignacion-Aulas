@@ -23,32 +23,32 @@ export class TeacherDistributionEntity {
   id: number;
 
   @ManyToOne(() => SchoolDayEntity, { nullable: false })
-  //@JoinColumn({ name: 'school_day_id' })
+  @JoinColumn({ name: 'school_day_id' })
   schoolDay: SchoolDayEntity;
 
   @ManyToOne(() => SubjectEntity, { nullable: false })
-  //@JoinColumn({ name: 'subject_id' })
+  @JoinColumn({ name: 'subject_id' })
   subject: SubjectEntity;
 
   @ManyToOne(() => CourseEntity, { nullable: false })
-  //@JoinColumn({ name: 'course_id' })
+  @JoinColumn({ name: 'course_id' })
   course: CourseEntity;
 
   @ManyToOne(() => TeacherEntity, { nullable: false })
-  //@JoinColumn({ name: 'teacher_id' })
+  @JoinColumn({ name: 'teacher_id' })
   teacher: TeacherEntity;
 
-  // @OneToMany(
-  //   () => ScheduleConfigurationEntity,
-  //   (scheduleConfiguration) => scheduleConfiguration.teacherDistribution,
-  // )
-  // scheduleConfigurations: ScheduleConfigurationEntity[];
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.teacherDistribution,
+  )
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
-  // @OneToMany(
-  //   () => RequestDetailEntity,
-  //   (requestDetail) => requestDetail.teacherDistribution,
-  // )
-  // requestDetails: RequestDetailEntity[];
+  @OneToMany(
+    () => RequestDetailEntity,
+    (requestDetail) => requestDetail.teacherDistribution,
+  )
+  requestDetails: RequestDetailEntity[];
 
   @CreateDateColumn({
     name: 'created_at',

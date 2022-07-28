@@ -7,21 +7,20 @@ import {
   UpdateScheduleConfigurationDto,
 } from '@core/dto';
 import { ScheduleConfigurationEntity } from '@core/entities';
-import {
-  ClassroomsService,
-  ColorsService,
-  DaysService,
-  HoursService,
-  StatusService,
-  TeacherDistributionsService,
-} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { ClassroomsService } from './classrooms.service';
+import { DaysService } from './days.service';
+import { HoursService } from './hours.service';
+import { TeacherDistributionsService } from './teacher-distributions.service';
+import { ColorsService } from './colors.service';
+import { StatusService } from './status.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ScheduleConfigurationsService {
   constructor(
-    @Inject(RepositoryEnum.SCHEDULE_CONFIGURATION_REPOSITORY)
+    @InjectRepository(ScheduleConfigurationEntity)
     private scheduleConfigurationRepository: Repository<ScheduleConfigurationEntity>,
     private classroomsService: ClassroomsService,
     private daysService: DaysService,

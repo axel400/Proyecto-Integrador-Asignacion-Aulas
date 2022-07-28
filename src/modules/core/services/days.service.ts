@@ -10,11 +10,12 @@ import { DayEntity } from '@core/entities';
 import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DaysService {
   constructor(
-    @Inject(RepositoryEnum.DAY_REPOSITORY)
+    @InjectRepository(DayEntity)
     private dayRepository: Repository<DayEntity>,
   ) {}
 

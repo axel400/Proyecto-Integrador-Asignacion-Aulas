@@ -21,17 +21,17 @@ export class SchoolYearEntity {
   id: number;
 
   @ManyToOne(() => StateEntity, { nullable: false })
-  //@JoinColumn({ name: 'state_id' })
+  @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
-  // @OneToMany(() => RequestEntity, (request) => request.schoolYear)
-  // requests: RequestEntity[];
+  @OneToMany(() => RequestEntity, (request) => request.schoolYear)
+  requests: RequestEntity[];
 
-  // @OneToMany(
-  //   () => TeacherDistributionEntity,
-  //   (teacherDistribution) => teacherDistribution.schoolDay,
-  // )
-  // teacherDistributions: TeacherDistributionEntity[];
+  @OneToMany(
+    () => TeacherDistributionEntity,
+    (teacherDistribution) => teacherDistribution.schoolDay,
+  )
+  teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {
     length: 255,

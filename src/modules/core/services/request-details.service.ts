@@ -6,19 +6,18 @@ import {
   PaginationDto,
   UpdateRequestDetailDto,
 } from '@core/dto';
-import { RequestDetailEntity } from '@core/entities';
-import {
-  RequestsService,
-  StatusService,
-  TeacherDistributionsService,
-} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { RequestsService } from './requests.service';
+import { TeacherDistributionsService } from './teacher-distributions.service';
+import { StatusService } from './status.service';
+import { RequestDetailEntity } from '../entities/request-detail.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class RequestDetailsService {
   constructor(
-    @Inject(RepositoryEnum.REQUEST_DETAIL_REPOSITORY)
+    @InjectRepository(RequestDetailEntity)
     private requestDetailRepository: Repository<RequestDetailEntity>,
     private requestsService: RequestsService,
     private teacherDistributionsService: TeacherDistributionsService,

@@ -6,15 +6,16 @@ import {
   PaginationDto,
   UpdateSchoolDayDto,
 } from '@core/dto';
-import { SchoolDayEntity } from '@core/entities';
+import { ScheduleConfigurationEntity, SchoolDayEntity } from '@core/entities';
 import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class SchoolDaysService {
   constructor(
-    @Inject(RepositoryEnum.SCHOOL_DAY_REPOSITORY)
+    @InjectRepository(SchoolDayEntity)
     private schoolDayRepository: Repository<SchoolDayEntity>,
   ) {}
 

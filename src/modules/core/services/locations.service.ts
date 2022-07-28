@@ -9,11 +9,12 @@ import {
 import { LocationEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class LocationsService {
   constructor(
-    @Inject(RepositoryEnum.LOCATION_REPOSITORY)
+    @InjectRepository(LocationEntity)
     private locationRepository: Repository<LocationEntity>,
   ) {}
 

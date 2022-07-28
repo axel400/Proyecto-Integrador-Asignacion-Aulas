@@ -2,16 +2,17 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import { PaginationDto } from '@core/dto';
 import { HourEntity } from '@core/entities';
-import { SchedulePositionsService } from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
 import { CreateHourDto, UpdateHourDto } from '../dto/hour/hour.dto';
 import { FilterHourDto } from '../dto/hour/hour.filter.dto';
+import { SchedulePositionsService } from './schedule-position.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class HoursService {
   constructor(
-    @Inject(RepositoryEnum.HOUR_REPOSITORY)
+    @InjectRepository(HourEntity)
     private hourRepository: Repository<HourEntity>,
     private schedulePositionsService: SchedulePositionsService,
   ) {}

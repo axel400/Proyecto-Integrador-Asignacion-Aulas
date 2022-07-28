@@ -17,11 +17,11 @@ export class TimeSettingEntity {
   id: number;
 
   @ManyToOne(() => CareerEntity, { nullable: false })
-  //@JoinColumn({ name: 'career_id' })
+  @JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
   @ManyToOne(() => SchoolDayEntity, { nullable: false })
-  //@JoinColumn({ name: 'schoolDay_id' })
+  @JoinColumn({ name: 'schoolDay_id' })
   schoolDay: SchoolDayEntity;
 
   @Column('varchar', {

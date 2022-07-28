@@ -19,20 +19,20 @@ export class StateEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @OneToMany(() => SchoolYearEntity, (schoolyear) => schoolyear.state)
-  // schoolyears: SchoolYearEntity[];
+  @OneToMany(() => SchoolYearEntity, (schoolyear) => schoolyear.state)
+  schoolyears: SchoolYearEntity[];
 
-  // @OneToMany(() => TeacherEntity, (teacher) => teacher.state)
-  // teachers: TeacherEntity[];
+  @OneToMany(() => TeacherEntity, (teacher) => teacher.state)
+  teachers: TeacherEntity[];
 
-  // @OneToMany(() => RequestDetailEntity, (requestDetail) => requestDetail.state)
-  // requestDetails: RequestDetailEntity[];
+  @OneToMany(() => RequestDetailEntity, (requestDetail) => requestDetail.state)
+  requestDetails: RequestDetailEntity[];
 
-  // @OneToMany(
-  //   () => ScheduleConfigurationEntity,
-  //   (scheduleConfiguration) => scheduleConfiguration.state,
-  // )
-  // scheduleConfigurations: ScheduleConfigurationEntity[];
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.state,
+  )
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,

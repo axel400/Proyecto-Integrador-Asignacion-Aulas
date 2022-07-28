@@ -10,11 +10,12 @@ import { ColorEntity } from '@core/entities';
 import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ColorsService {
   constructor(
-    @Inject(RepositoryEnum.COLOR_REPOSITORY)
+    @InjectRepository(ColorEntity)
     private colorRepository: Repository<ColorEntity>,
   ) {}
 

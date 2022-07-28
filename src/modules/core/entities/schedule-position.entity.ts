@@ -14,8 +14,8 @@ export class SchedulePositionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @OneToMany(() => HourEntity, (hour) => hour.schedulePosition)
-  // schedulePositions: HourEntity[];
+  @OneToMany(() => HourEntity, (hour) => hour.schedulePosition)
+  schedulePositions: HourEntity[];
 
   @Column('varchar', {
     length: 255,

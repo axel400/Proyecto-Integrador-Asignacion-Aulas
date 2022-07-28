@@ -7,20 +7,18 @@ import {
   UpdateTeacherDistributionDto,
 } from '@core/dto';
 import { TeacherDistributionEntity } from '@core/entities';
-import {
-  CareersService,
-  CoursesService,
-  SchoolDaysService,
-  SubjectsService,
-  TeachersService,
-} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { SchoolDaysService } from './school-days.service';
+import { SubjectsService } from './subjects.service';
+import { CoursesService } from './courses.service';
+import { TeachersService } from './teachers.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TeacherDistributionsService {
   constructor(
-    @Inject(RepositoryEnum.TEACHER_DISTRIBUTION_REPOSITORY)
+    @InjectRepository(TeacherDistributionEntity)
     private teacherDistributionRepository: Repository<TeacherDistributionEntity>,
     private schoolDaysService: SchoolDaysService,
     private subjectsService: SubjectsService,

@@ -7,14 +7,14 @@ import {
   PaginationDto,
 } from '@core/dto';
 import { CareerEntity } from '@core/entities';
-import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CareersService {
   constructor(
-    @Inject(RepositoryEnum.CAREER_REPOSITORY)
+    @InjectRepository(CareerEntity)
     private careerRepository: Repository<CareerEntity>,
   ) {}
 

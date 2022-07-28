@@ -17,14 +17,14 @@ export class TeacherEntity {
   id: number;
 
   @ManyToOne(() => StateEntity, { nullable: false })
-  //@JoinColumn({ name: 'state_id' })
+  @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
-  // @OneToMany(
-  //   () => TeacherDistributionEntity,
-  //   (teacherDistribution) => teacherDistribution.teacher,
-  // )
-  // teacherDistributions: TeacherDistributionEntity[];
+  @OneToMany(
+    () => TeacherDistributionEntity,
+    (teacherDistribution) => teacherDistribution.teacher,
+  )
+  teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {
     length: 255,

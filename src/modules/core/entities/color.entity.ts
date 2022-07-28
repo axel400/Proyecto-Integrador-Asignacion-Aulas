@@ -14,11 +14,11 @@ export class ColorEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @OneToMany(
-  //   () => ScheduleConfigurationEntity,
-  //   (scheduleConfiguration) => scheduleConfiguration.color,
-  // )
-  // scheduleConfigurations: ScheduleConfigurationEntity[];
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.color,
+  )
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,

@@ -7,14 +7,15 @@ import {
   UpdateClassroomDto,
 } from '@core/dto';
 import { ClassroomEntity } from '@core/entities';
-import { LocationsService } from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { LocationsService } from './locations.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ClassroomsService {
   constructor(
-    @Inject(RepositoryEnum.CLASSROOM_REPOSITORY)
+    @InjectRepository(ClassroomEntity)
     private classroomRepository: Repository<ClassroomEntity>,
     private locationsService: LocationsService,
   ) {}

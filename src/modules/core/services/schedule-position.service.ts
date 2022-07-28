@@ -10,11 +10,12 @@ import { SchedulePositionEntity } from '@core/entities';
 import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class SchedulePositionsService {
   constructor(
-    @Inject(RepositoryEnum.SCHEDULE_POSITION_REPOSITORY)
+    @InjectRepository(SchedulePositionEntity)
     private schedulePositionRepository: Repository<SchedulePositionEntity>,
   ) {}
 

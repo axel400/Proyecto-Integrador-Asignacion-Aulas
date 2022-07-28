@@ -18,14 +18,14 @@ export class HourEntity {
   id: number;
 
   @ManyToOne(() => SchedulePositionEntity, { nullable: false })
-  //@JoinColumn({ name: 'schedulePosition_id' })
+  @JoinColumn({ name: 'schedulePosition_id' })
   schedulePosition: SchedulePositionEntity;
 
-  // @OneToMany(
-  //   () => ScheduleConfigurationEntity,
-  //   (scheduleConfiguration) => scheduleConfiguration.hour,
-  // )
-  // scheduleConfigurations: ScheduleConfigurationEntity[];
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.hour,
+  )
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,

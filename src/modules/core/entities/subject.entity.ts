@@ -17,14 +17,14 @@ export class SubjectEntity {
   id: number;
 
   @ManyToOne(() => CareerEntity, { nullable: true })
-  //@JoinColumn({ name: 'career_id' })
+  @JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
-  // @OneToMany(
-  //   () => TeacherDistributionEntity,
-  //   (teacherDistribution) => teacherDistribution.subject,
-  // )
-  // teacherDistributions: TeacherDistributionEntity[];
+  @OneToMany(
+    () => TeacherDistributionEntity,
+    (teacherDistribution) => teacherDistribution.subject,
+  )
+  teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {
     length: 255,

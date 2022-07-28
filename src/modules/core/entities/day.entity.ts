@@ -14,11 +14,11 @@ export class DayEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @OneToMany(
-  //   () => ScheduleConfigurationEntity,
-  //   (scheduleConfiguration) => scheduleConfiguration.day,
-  // )
-  // scheduleConfigurations: ScheduleConfigurationEntity[];
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.day,
+  )
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,

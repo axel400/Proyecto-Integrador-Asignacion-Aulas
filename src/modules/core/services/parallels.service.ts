@@ -10,11 +10,12 @@ import { ParallelEntity } from '@core/entities';
 import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ParallelsService {
   constructor(
-    @Inject(RepositoryEnum.PARALLEL_REPOSITORY)
+    @InjectRepository(ParallelEntity)
     private parallelRepository: Repository<ParallelEntity>,
   ) {}
 

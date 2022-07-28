@@ -17,14 +17,14 @@ export class RequestEntity {
   id: number;
 
   @ManyToOne(() => SchoolYearEntity, { nullable: false })
-  //@JoinColumn({ name: 'school_year_id' })
+  @JoinColumn({ name: 'school_year_id' })
   schoolYear: SchoolYearEntity;
 
-  // @OneToMany(
-  //   () => RequestDetailEntity,
-  //   (requestDetail) => requestDetail.teacherDistribution,
-  // )
-  // requestDetails: RequestDetailEntity[];
+  @OneToMany(
+    () => RequestDetailEntity,
+    (requestDetail) => requestDetail.teacherDistribution,
+  )
+  requestDetails: RequestDetailEntity[];
 
   @Column('varchar', {
     length: 255,

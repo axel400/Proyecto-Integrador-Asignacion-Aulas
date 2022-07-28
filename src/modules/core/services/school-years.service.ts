@@ -7,14 +7,15 @@ import {
   UpdateSchoolYearDto,
 } from '@core/dto';
 import { SchoolYearEntity } from '@core/entities';
-import { StatusService } from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { StatusService } from './status.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class SchoolYearsService {
   constructor(
-    @Inject(RepositoryEnum.SCHOOL_YEAR_REPOSITORY)
+    @InjectRepository(SchoolYearEntity)
     private schoolYearRepository: Repository<SchoolYearEntity>,
     private statusService: StatusService,
   ) {}

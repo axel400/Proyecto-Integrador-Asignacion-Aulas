@@ -10,11 +10,12 @@ import { StateEntity } from '@core/entities';
 import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class StatusService {
   constructor(
-    @Inject(RepositoryEnum.STATE_REPOSITORY)
+    @InjectRepository(StateEntity)
     private stateRepository: Repository<StateEntity>,
   ) {}
 

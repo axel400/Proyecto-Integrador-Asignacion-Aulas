@@ -14,8 +14,8 @@ export class ParallelEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @OneToMany(() => CourseEntity, (course) => course.parallel)
-  // courses: CourseEntity[];
+  @OneToMany(() => CourseEntity, (course) => course.parallel)
+  courses: CourseEntity[];
 
   @Column('varchar', {
     length: 255,

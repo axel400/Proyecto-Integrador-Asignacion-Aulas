@@ -10,11 +10,12 @@ import { LevelEntity } from '@core/entities';
 import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class LevelsService {
   constructor(
-    @Inject(RepositoryEnum.LEVEL_REPOSITORY)
+    @InjectRepository(LevelEntity)
     private levelRepository: Repository<LevelEntity>,
   ) {}
 

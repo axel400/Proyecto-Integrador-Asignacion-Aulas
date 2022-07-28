@@ -7,14 +7,16 @@ import {
   UpdateTimeSettingDto,
 } from '@core/dto';
 import { TimeSettingEntity } from '@core/entities';
-import { CareersService, SchoolDaysService } from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { CareersService } from './careers.service';
+import { SchoolDaysService } from './school-days.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TimeSettingsService {
   constructor(
-    @Inject(RepositoryEnum.TIME_SETTING_REPOSITORY)
+    @InjectRepository(TimeSettingEntity)
     private timeSettingRepository: Repository<TimeSettingEntity>,
     private careersService: CareersService,
     private schoolDaysService: SchoolDaysService,

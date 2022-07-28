@@ -17,14 +17,14 @@ export class ClassroomEntity {
   id: number;
 
   @ManyToOne(() => LocationEntity, { nullable: false })
-  //@JoinColumn({ name: 'location_id' })
+  @JoinColumn({ name: 'location_id' })
   location: LocationEntity;
 
-  // @OneToMany(
-  //   () => ScheduleConfigurationEntity,
-  //   (scheduleConfiguration) => scheduleConfiguration.classroom,
-  // )
-  // scheduleConfigurations: ScheduleConfigurationEntity[];
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.classroom,
+  )
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,

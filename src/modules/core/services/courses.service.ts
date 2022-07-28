@@ -7,19 +7,18 @@ import {
   UpdateCourseDto,
 } from '@core/dto';
 import { CourseEntity } from '@core/entities';
-import {
-  CareersService,
-  LevelsService,
-  ParallelsService,
-  SchoolDaysService,
-} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { RepositoryEnum } from '@shared/enums';
+import { SchoolDaysService } from './school-days.service';
+import { ParallelsService } from './parallels.service';
+import { LevelsService } from './levels.service';
+import { CareersService } from './careers.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CoursesService {
   constructor(
-    @Inject(RepositoryEnum.COURSE_REPOSITORY)
+    @InjectRepository(CourseEntity)
     private courseRepository: Repository<CourseEntity>,
     private schoolDaysService: SchoolDaysService,
     private parallelsService: ParallelsService,
