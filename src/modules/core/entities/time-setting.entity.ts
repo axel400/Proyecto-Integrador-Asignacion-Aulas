@@ -13,7 +13,7 @@ import { CareerEntity, SchoolDayEntity } from '@core/entities';
 
 @Entity('time_settings', { schema: 'course_schema' })
 export class TimeSettingEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => CareerEntity, { nullable: false })

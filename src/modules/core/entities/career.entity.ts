@@ -11,7 +11,7 @@ import { CourseEntity, RequestEntity, SubjectEntity, TimeSettingEntity } from '@
 
 @Entity('careers', { schema: 'course_schema' })
 export class CareerEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(() => SubjectEntity, (subject) => subject.career)

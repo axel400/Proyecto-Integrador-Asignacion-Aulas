@@ -19,7 +19,7 @@ import {
 
 @Entity('schedule_configurations', { schema: 'schedule_configuration_schema' })
 export class ScheduleConfigurationEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => ColorEntity, { nullable: false })

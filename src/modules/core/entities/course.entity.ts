@@ -21,7 +21,7 @@ import {
 
 @Entity('courses', { schema: 'course_schema' })
 export class CourseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => LevelEntity, { nullable: false })

@@ -11,7 +11,7 @@ import {
 
 @Entity('school_days', { schema: 'course_schema' })
 export class SchoolDayEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(() => CourseEntity, (course) => course.schoolDay)

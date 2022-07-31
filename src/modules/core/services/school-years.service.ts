@@ -121,6 +121,8 @@ export class SchoolYearsService {
       page = 0;
       where = [];
       where.push({ name: ILike(`%${search}%`) });
+      where.push({ startDate: ILike(`%${search}%`) });
+      where.push({ endDate: ILike(`%${search}%`) });
     }
 
     const response = await this.schoolYearRepository.findAndCount({

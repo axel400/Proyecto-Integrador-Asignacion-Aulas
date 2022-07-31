@@ -17,7 +17,7 @@ import {
 
 @Entity('teacher_distributions', { schema: 'state_schema' })
 export class TeacherDistributionEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => SchoolYearEntity, { nullable: false })

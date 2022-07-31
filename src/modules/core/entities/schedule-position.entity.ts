@@ -11,7 +11,7 @@ import {
 
 @Entity('schedule_positions', { schema: 'state_schema' })
 export class SchedulePositionEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(() => HourEntity, (hour) => hour.schedulePosition)

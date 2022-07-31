@@ -11,7 +11,7 @@ import { CourseEntity } from '@core/entities';
 
 @Entity('levels', { schema: 'course_schema' })
 export class LevelEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(() => CourseEntity, (course) => course.level)

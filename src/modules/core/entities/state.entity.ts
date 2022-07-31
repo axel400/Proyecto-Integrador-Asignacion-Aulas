@@ -18,7 +18,7 @@ import {
 
 @Entity('statues', { schema: 'state_schema' })
 export class StateEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(() => SchoolYearEntity, (schoolyear) => schoolyear.state)

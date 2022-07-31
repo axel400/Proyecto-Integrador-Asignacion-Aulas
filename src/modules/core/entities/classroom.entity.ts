@@ -13,7 +13,7 @@ import {
 
 @Entity('classrooms', { schema: 'schedule_configuration_schema' })
 export class ClassroomEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => LocationEntity, { nullable: false })

@@ -11,7 +11,7 @@ import {
 
 @Entity('locations', { schema: 'schedule_configuration_schema' })
 export class LocationEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(() => ClassroomEntity, (classroom) => classroom.location)

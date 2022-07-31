@@ -11,7 +11,7 @@ import {
 
 @Entity('parallels', { schema: 'course_schema' })
 export class ParallelEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(() => CourseEntity, (course) => course.parallel)

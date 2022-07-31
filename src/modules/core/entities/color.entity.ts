@@ -11,7 +11,7 @@ import {
 
 @Entity('colors', { schema: 'schedule_configuration_schema' })
 export class ColorEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(

@@ -19,8 +19,8 @@ import { FilterParallelDto } from '../dto/parallel/parallel.filter.dto';
 import { ParallelEntity } from '../entities/parallel.entity';
 import { ParallelsService } from '../services/parallels.service';
 
-@ApiTags('Parallel')
-@Controller('parallel')
+@ApiTags('Parallels')
+@Controller('parallels')
 export class ParallelsController {
     constructor(private parallelsService: ParallelsService) { }
 

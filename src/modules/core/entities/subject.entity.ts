@@ -13,7 +13,7 @@ import {
 
 @Entity('subjects', { schema: 'course_schema' })
 export class SubjectEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => CareerEntity, { nullable: true })

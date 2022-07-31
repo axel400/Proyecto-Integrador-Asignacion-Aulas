@@ -13,7 +13,7 @@ import {
 
 @Entity('teachers', { schema: 'state_schema' })
 export class TeacherEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => StateEntity, { nullable: false })

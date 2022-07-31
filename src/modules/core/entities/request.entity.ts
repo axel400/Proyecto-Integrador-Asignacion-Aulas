@@ -13,7 +13,7 @@ import { CareerEntity, CourseEntity, ScheduleConfigurationEntity, SchoolYearEnti
 
 @Entity('requests', { schema: 'state_schema' })
 export class RequestEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => SchoolYearEntity, { nullable: false })

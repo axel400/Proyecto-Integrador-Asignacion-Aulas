@@ -11,7 +11,7 @@ import { ScheduleConfigurationEntity } from '@core/entities';
 
 @Entity('days', { schema: 'schedule_configuration_schema' })
 export class DayEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @OneToMany(

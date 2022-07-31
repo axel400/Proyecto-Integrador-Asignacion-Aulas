@@ -17,7 +17,7 @@ import {
 
 @Entity('school_year', { schema: 'state_schema' })
 export class SchoolYearEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ManyToOne(() => StateEntity, { nullable: false })
@@ -45,14 +45,14 @@ export class SchoolYearEntity {
     comment: 'Fecha inicio',
     name: 'start_date',
   })
-  startDate: Date;
+  startDate: string;
 
   @Column('varchar', {
     length: 255,
     comment: 'Fecha fin',
     name: 'end_date',
   })
-  endDate: Date;
+  endDate: string;
 
   @CreateDateColumn({
     name: 'created_at',
