@@ -6,8 +6,8 @@ import {
   ColorEntity,
   DayEntity,
   HourEntity,
+  RequestEntity,
   StateEntity,
-  TeacherDistributionEntity,
 } from '@core/entities';
 
 export class CreateScheduleConfigurationDto {
@@ -30,7 +30,7 @@ export class CreateScheduleConfigurationDto {
   readonly state: StateEntity;
 
   @IsNotEmpty(isNotEmptyValidationOptions())
-  readonly teacherDistribution: TeacherDistributionEntity;
+  readonly request: RequestEntity;
 }
 export class UpdateScheduleConfigurationDto extends PartialType(
   CreateScheduleConfigurationDto,

@@ -25,6 +25,7 @@ export class SubjectsService {
     const newSubject = this.subjectRepository.create(payload);
 
     newSubject.career = await this.careersService.findOne(payload.career.id);
+
     newSubject.teacher = await this.teachersService.findOne(payload.teacher.id);
 
     const subjectCreated = await this.subjectRepository.save(newSubject);
@@ -73,6 +74,9 @@ export class SubjectsService {
       );
     }
     subject.career = await this.careersService.findOne(payload.career.id);
+
+    subject.teacher = await this.teachersService.findOne(payload.teacher.id);
+
     this.subjectRepository.merge(subject, payload);
     const subjectUpdated = await this.subjectRepository.save(subject);
     return { data: subjectUpdated };

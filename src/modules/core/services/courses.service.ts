@@ -13,6 +13,7 @@ import { ParallelsService } from './parallels.service';
 import { LevelsService } from './levels.service';
 import { CareersService } from './careers.service';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TeachersService } from './teachers.service';
 
 @Injectable()
 export class CoursesService {
@@ -23,6 +24,7 @@ export class CoursesService {
     private parallelsService: ParallelsService,
     private levelsService: LevelsService,
     private careersService: CareersService,
+    private tutorsService: TeachersService,
   ) { }
 
   async create(payload: CreateCourseDto): Promise<ServiceResponseHttpModel> {
@@ -35,6 +37,8 @@ export class CoursesService {
     newCourse.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
 
     newCourse.career = await this.careersService.findOne(payload.career.id);
+
+    newCourse.tutor = await this.tutorsService.findOne(payload.tutor.id);
 
     const courseCreated = await this.courseRepository.save(newCourse);
 
@@ -84,6 +88,9 @@ export class CoursesService {
     course.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
 
     course.career = await this.careersService.findOne(payload.career.id);
+
+    course.tutor = await this.tutorsService.findOne(payload.tutor.id);
+
     this.courseRepository.merge(course, payload);
     const courseUpdated = await this.courseRepository.save(course);
     return { data: courseUpdated };

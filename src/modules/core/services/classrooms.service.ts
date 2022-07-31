@@ -10,6 +10,7 @@ import { ClassroomEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { LocationsService } from './locations.service';
 import { InjectRepository } from '@nestjs/typeorm';
+import { StatusService } from './status.service';
 
 @Injectable()
 export class ClassroomsService {
@@ -17,6 +18,7 @@ export class ClassroomsService {
     @InjectRepository(ClassroomEntity)
     private classroomRepository: Repository<ClassroomEntity>,
     private locationsService: LocationsService,
+    private statusService: StatusService,
   ) { }
 
   async create(payload: CreateClassroomDto): Promise<ServiceResponseHttpModel> {
@@ -24,6 +26,10 @@ export class ClassroomsService {
 
     newClassroom.location = await this.locationsService.findOne(
       payload.location.id,
+    );
+
+    newClassroom.state = await this.statusService.findOne(
+      payload.state.id,
     );
 
     const classroomCreated = await this.classroomRepository.save(newClassroom);
@@ -41,7 +47,7 @@ export class ClassroomsService {
 
     //All
     const data = await this.classroomRepository.findAndCount({
-      relations: ['location'],
+      relations: ['location','state'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -50,7 +56,7 @@ export class ClassroomsService {
 
   async findOne(id: number): Promise<any> {
     const classroom = await this.classroomRepository.findOne({
-      relations: ['location'],
+      relations: ['location','state'],
       where: {
         id,
       },
@@ -70,9 +76,15 @@ export class ClassroomsService {
     if (!classroom) {
       throw new NotFoundException(`El aula con id:${id} no se encontro`);
     }
+
     classroom.location = await this.locationsService.findOne(
       payload.location.id,
     );
+
+    classroom.state = await this.statusService.findOne(
+      payload.state.id,
+    );
+
     this.classroomRepository.merge(classroom, payload);
     const classroomUpdated = await this.classroomRepository.save(classroom);
     return { data: classroomUpdated };
@@ -120,7 +132,7 @@ export class ClassroomsService {
     }
 
     const response = await this.classroomRepository.findAndCount({
-      relations: ['location'],
+      relations: ['location','state'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),

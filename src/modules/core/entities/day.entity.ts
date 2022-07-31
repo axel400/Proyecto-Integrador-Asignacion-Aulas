@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { ScheduleConfigurationEntity } from '@core/entities';
 
-@Entity('days', { schema: 'core' })
+@Entity('days', { schema: 'schedule_configuration_schema' })
 export class DayEntity {
   @PrimaryGeneratedColumn()
   id: number;

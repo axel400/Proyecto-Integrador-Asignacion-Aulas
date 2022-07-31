@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { LocationEntity } from '@core/entities';
+import { LocationEntity, StateEntity } from '@core/entities';
 import { isNotEmptyValidationOptions, isStringValidationOptions } from '@shared/validation';
 
 export class CreateClassroomDto {
@@ -13,6 +13,9 @@ export class CreateClassroomDto {
 
   @IsNotEmpty(isNotEmptyValidationOptions())
   readonly location: LocationEntity;
+  
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly state: StateEntity;
 }
 
 export class UpdateClassroomDto extends PartialType(CreateClassroomDto) {}

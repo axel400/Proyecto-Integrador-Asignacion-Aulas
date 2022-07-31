@@ -11,10 +11,10 @@ import { ServiceResponseHttpModel } from '@shared/models';
 import { ClassroomsService } from './classrooms.service';
 import { DaysService } from './days.service';
 import { HoursService } from './hours.service';
-import { TeacherDistributionsService } from './teacher-distributions.service';
 import { ColorsService } from './colors.service';
 import { StatusService } from './status.service';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RequestsService } from './requests.service';
 
 @Injectable()
 export class ScheduleConfigurationsService {
@@ -24,7 +24,7 @@ export class ScheduleConfigurationsService {
     private classroomsService: ClassroomsService,
     private daysService: DaysService,
     private hoursService: HoursService,
-    private teacherDistributionsService: TeacherDistributionsService,
+    private requestsService: RequestsService,
     private colorsService: ColorsService,
     private statusService: StatusService,
   ) {}
@@ -47,9 +47,9 @@ export class ScheduleConfigurationsService {
       payload.hour.id,
     );
 
-    newScheduleConfiguration.teacherDistribution =
-      await this.teacherDistributionsService.findOne(
-        payload.teacherDistribution.id,
+    newScheduleConfiguration.request =
+      await this.requestsService.findOne(
+        payload.request.id,
       );
 
     newScheduleConfiguration.color = await this.colorsService.findOne(
@@ -80,7 +80,7 @@ export class ScheduleConfigurationsService {
         'classroom',
         'day',
         'hour',
-        'teacherDistribution',
+        'request',
         'color',
         'state',
       ],
@@ -96,7 +96,7 @@ export class ScheduleConfigurationsService {
           'classroom',
           'day',
           'hour',
-          'teacherDistribution',
+          'request',
           'color',
           'state',
         ],
@@ -136,9 +136,9 @@ export class ScheduleConfigurationsService {
       payload.hour.id,
     );
 
-    scheduleConfiguration.teacherDistribution =
-      await this.teacherDistributionsService.findOne(
-        payload.teacherDistribution.id,
+    scheduleConfiguration.request =
+      await this.requestsService.findOne(
+        payload.request.id,
       );
 
     scheduleConfiguration.color = await this.colorsService.findOne(
@@ -202,7 +202,7 @@ export class ScheduleConfigurationsService {
         'classroom',
         'day',
         'hour',
-        'teacherDistribution',
+        'request',
         'color',
         'state',
       ],

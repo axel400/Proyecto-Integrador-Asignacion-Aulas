@@ -9,7 +9,7 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('colors', { schema: 'core' })
+@Entity('colors', { schema: 'schedule_configuration_schema' })
 export class ColorEntity {
   @PrimaryGeneratedColumn()
   id: number;

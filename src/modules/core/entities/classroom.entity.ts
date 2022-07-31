@@ -1,4 +1,4 @@
-import { LocationEntity, ScheduleConfigurationEntity } from '@core/entities';
+import { LocationEntity, ScheduleConfigurationEntity, StateEntity } from '@core/entities';
 import {
   Entity,
   Column,
@@ -11,7 +11,7 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('classrooms', { schema: 'core' })
+@Entity('classrooms', { schema: 'schedule_configuration_schema' })
 export class ClassroomEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,6 +19,10 @@ export class ClassroomEntity {
   @ManyToOne(() => LocationEntity, { nullable: false })
   @JoinColumn({ name: 'location_id' })
   location: LocationEntity;
+
+  @ManyToOne(() => StateEntity, { nullable: false })
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
 
   @OneToMany(
     () => ScheduleConfigurationEntity,

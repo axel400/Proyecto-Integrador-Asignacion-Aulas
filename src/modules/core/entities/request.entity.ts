@@ -9,7 +9,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { RequestDetailEntity, SchoolYearEntity } from '@core/entities';
+import { RequestDetailEntity, ScheduleConfigurationEntity, SchoolYearEntity } from '@core/entities';
 
 @Entity('requests', { schema: 'core' })
 export class RequestEntity {
@@ -25,6 +25,12 @@ export class RequestEntity {
     (requestDetail) => requestDetail.teacherDistribution,
   )
   requestDetails: RequestDetailEntity[];
+
+  @OneToMany(
+    () => ScheduleConfigurationEntity,
+    (scheduleConfiguration) => scheduleConfiguration.request,
+  )
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,

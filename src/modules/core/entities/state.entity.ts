@@ -1,4 +1,5 @@
 import {
+  ClassroomEntity,
   RequestDetailEntity,
   ScheduleConfigurationEntity,
   SchoolYearEntity,
@@ -27,6 +28,9 @@ export class StateEntity {
 
   @OneToMany(() => RequestDetailEntity, (requestDetail) => requestDetail.state)
   requestDetails: RequestDetailEntity[];
+
+  @OneToMany(() => ClassroomEntity, (classroom) => classroom.state)
+  classrooms: ClassroomEntity[];
 
   @OneToMany(
     () => ScheduleConfigurationEntity,

@@ -13,11 +13,11 @@ import {
   ColorEntity,
   DayEntity,
   HourEntity,
+  RequestEntity,
   StateEntity,
-  TeacherDistributionEntity,
 } from '@core/entities';
 
-@Entity('schedule_configurations', { schema: 'core' })
+@Entity('schedule_configurations', { schema: 'schedule_configuration_schema' })
 export class ScheduleConfigurationEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -42,9 +42,9 @@ export class ScheduleConfigurationEntity {
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
-  @ManyToOne(() => TeacherDistributionEntity, { nullable: false })
-  @JoinColumn({ name: 'teacher_distribution_id' })
-  teacherDistribution: TeacherDistributionEntity;
+  @ManyToOne(() => RequestEntity, { nullable: false })
+  @JoinColumn({ name: 'request_id' })
+  request: RequestEntity;
 
   @Column('varchar', {
     length: 255,

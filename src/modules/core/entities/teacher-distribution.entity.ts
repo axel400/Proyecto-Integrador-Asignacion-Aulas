@@ -39,12 +39,6 @@ export class TeacherDistributionEntity {
   teacher: TeacherEntity;
 
   @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.teacherDistribution,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
-
-  @OneToMany(
     () => RequestDetailEntity,
     (requestDetail) => requestDetail.teacherDistribution,
   )
