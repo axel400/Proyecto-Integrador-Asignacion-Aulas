@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateCourseDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { CourseEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { SchoolDaysService } from './school-days.service';
 import { ParallelsService } from './parallels.service';
 import { LevelsService } from './levels.service';
@@ -24,7 +23,7 @@ export class CoursesService {
     private parallelsService: ParallelsService,
     private levelsService: LevelsService,
     private careersService: CareersService,
-  ) {}
+  ) { }
 
   async create(payload: CreateCourseDto): Promise<ServiceResponseHttpModel> {
     const newCourse = this.courseRepository.create(payload);
@@ -43,6 +42,11 @@ export class CoursesService {
   }
 
   async findAll(params?: FilterCourseDto): Promise<ServiceResponseHttpModel> {
+    // //Pagination & Filter by search
+    if (params.limit > 0 && params.page >= 0) {
+      return await this.paginateAndFilter(params);
+    }
+
     //All
     const data = await this.courseRepository.findAndCount({
       relations: ['level', 'parallel', 'schoolDay', 'career'],
@@ -60,7 +64,7 @@ export class CoursesService {
     });
 
     if (!course) {
-      throw new NotFoundException(`El curso con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El curso con id:${id} no se encontro`);
     }
     return { data: course };
   }
@@ -71,7 +75,7 @@ export class CoursesService {
   ): Promise<ServiceResponseHttpModel> {
     const course = await this.courseRepository.findOneBy({ id });
     if (!course) {
-      throw new NotFoundException(`El curso con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El curso con id:${id} no se encontro`);
     }
     course.level = await this.levelsService.findOne(payload.level.id);
 
@@ -89,7 +93,7 @@ export class CoursesService {
     const course = await this.courseRepository.findOneBy({ id });
 
     if (!course) {
-      throw new NotFoundException(`El curso con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El curso con id:${id} no se encontro`);
     }
 
     const courseDeleted = await this.courseRepository.softRemove(course);
@@ -116,6 +120,7 @@ export class CoursesService {
       search = search.trim();
       page = 0;
       where = [];
+      where.push({ name: ILike(`%${search}%`) });
     }
 
     const response = await this.courseRepository.findAndCount({

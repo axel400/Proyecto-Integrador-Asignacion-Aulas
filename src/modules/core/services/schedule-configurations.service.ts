@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateScheduleConfigurationDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { ScheduleConfigurationEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { ClassroomsService } from './classrooms.service';
 import { DaysService } from './days.service';
 import { HoursService } from './hours.service';
@@ -108,7 +107,7 @@ export class ScheduleConfigurationsService {
 
     if (!scheduleConfiguration) {
       throw new NotFoundException(
-        `La configuracion del horario con id:  ${id} no se encontro`,
+        `La configuracion del horario con id:${id} no se encontro`,
       );
     }
     return { data: scheduleConfiguration };
@@ -122,7 +121,7 @@ export class ScheduleConfigurationsService {
       await this.scheduleConfigurationRepository.findOneBy({ id });
     if (!scheduleConfiguration) {
       throw new NotFoundException(
-        `La configuracion del horario con id:  ${id} no se encontro`,
+        `La configuracion del horario con id:${id} no se encontro`,
       );
     }
     scheduleConfiguration.classroom = await this.classroomsService.findOne(
@@ -161,7 +160,7 @@ export class ScheduleConfigurationsService {
 
     if (!scheduleConfiguration) {
       throw new NotFoundException(
-        `La configuracion del horario con id:  ${id} no se encontro`,
+        `La configuracion del horario con id:${id} no se encontro`,
       );
     }
 

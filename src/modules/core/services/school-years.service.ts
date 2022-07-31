@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateSchoolYearDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { SchoolYearEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { StatusService } from './status.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -18,7 +17,7 @@ export class SchoolYearsService {
     @InjectRepository(SchoolYearEntity)
     private schoolYearRepository: Repository<SchoolYearEntity>,
     private statusService: StatusService,
-  ) {}
+  ) { }
 
   async create(
     payload: CreateSchoolYearDto,
@@ -60,7 +59,7 @@ export class SchoolYearsService {
 
     if (!schoolYear) {
       throw new NotFoundException(
-        `El periodo lectivo con id:  ${id} no se encontro`,
+        `El periodo lectivo con id:${id} no se encontro`,
       );
     }
     return { data: schoolYear };
@@ -73,7 +72,7 @@ export class SchoolYearsService {
     const schoolYear = await this.schoolYearRepository.findOneBy({ id });
     if (!schoolYear) {
       throw new NotFoundException(
-        `El periodo lectivo con id:  ${id} no se encontro`,
+        `El periodo lectivo con id:${id} no se encontro`,
       );
     }
     schoolYear.state = await this.statusService.findOne(payload.state.id);
@@ -87,7 +86,7 @@ export class SchoolYearsService {
 
     if (!schoolYear) {
       throw new NotFoundException(
-        `El periodo lectivo con id:  ${id} no se encontro`,
+        `El periodo lectivo con id:${id} no se encontro`,
       );
     }
 

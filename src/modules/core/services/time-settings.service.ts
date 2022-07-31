@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateTimeSettingDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { TimeSettingEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { CareersService } from './careers.service';
 import { SchoolDaysService } from './school-days.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,7 +19,7 @@ export class TimeSettingsService {
     private timeSettingRepository: Repository<TimeSettingEntity>,
     private careersService: CareersService,
     private schoolDaysService: SchoolDaysService,
-  ) {}
+  ) { }
 
   async create(
     payload: CreateTimeSettingDto,
@@ -68,7 +67,7 @@ export class TimeSettingsService {
 
     if (!timeSetting) {
       throw new NotFoundException(
-        `La configuracion del horario con id:  ${id} no se encontro`,
+        `La configuracion del horario con id:${id} no se encontro`,
       );
     }
     return { data: timeSetting };
@@ -81,7 +80,7 @@ export class TimeSettingsService {
     const timeSetting = await this.timeSettingRepository.findOneBy({ id });
     if (!timeSetting) {
       throw new NotFoundException(
-        `La configuracion del horario con id:  ${id} no se encontro`,
+        `La configuracion del horario con id:${id} no se encontro`,
       );
     }
     timeSetting.career = await this.careersService.findOne(
@@ -103,7 +102,7 @@ export class TimeSettingsService {
 
     if (!timeSetting) {
       throw new NotFoundException(
-        `La configuracion del horario con id:  ${id} no se encontro`,
+        `La configuracion del horario con id:${id} no se encontro`,
       );
     }
 

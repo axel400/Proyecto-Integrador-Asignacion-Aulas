@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateLocationDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { LocationEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -16,7 +15,7 @@ export class LocationsService {
   constructor(
     @InjectRepository(LocationEntity)
     private locationRepository: Repository<LocationEntity>,
-  ) {}
+  ) { }
 
   async create(payload: CreateLocationDto): Promise<ServiceResponseHttpModel> {
     const newLocation = this.locationRepository.create(payload);
@@ -46,7 +45,7 @@ export class LocationsService {
     });
 
     if (!location) {
-      throw new NotFoundException(`La ubicacion con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La ubicacion con id:${id} no se encontro`);
     }
     return { data: location };
   }
@@ -57,7 +56,7 @@ export class LocationsService {
   ): Promise<ServiceResponseHttpModel> {
     const location = await this.locationRepository.findOneBy({ id });
     if (!location) {
-      throw new NotFoundException(`La ubicacion con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La ubicacion con id:${id} no se encontro`);
     }
     this.locationRepository.merge(location, payload);
     const locationUpdated = await this.locationRepository.save(location);
@@ -68,7 +67,7 @@ export class LocationsService {
     const location = await this.locationRepository.findOneBy({ id });
 
     if (!location) {
-      throw new NotFoundException(`La ubicacion con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La ubicacion con id:${id} no se encontro`);
     }
 
     const locationDeleted = await this.locationRepository.softRemove(location);

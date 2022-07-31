@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateParallelDto,
@@ -7,9 +7,7 @@ import {
   UpdateParallelDto,
 } from '@core/dto';
 import { ParallelEntity } from '@core/entities';
-import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class ParallelsService {
   constructor(
     @InjectRepository(ParallelEntity)
     private parallelRepository: Repository<ParallelEntity>,
-  ) {}
+  ) { }
 
   async create(payload: CreateParallelDto): Promise<ServiceResponseHttpModel> {
     const newParallel = this.parallelRepository.create(payload);
@@ -47,7 +45,7 @@ export class ParallelsService {
     });
 
     if (!parallel) {
-      throw new NotFoundException(`El paralelo con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El paralelo con id:${id} no se encontro`);
     }
     return { data: parallel };
   }
@@ -58,7 +56,7 @@ export class ParallelsService {
   ): Promise<ServiceResponseHttpModel> {
     const parallel = await this.parallelRepository.findOneBy({ id });
     if (!parallel) {
-      throw new NotFoundException(`El paralelo con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El paralelo con id:${id} no se encontro`);
     }
     this.parallelRepository.merge(parallel, payload);
     const parallelUpdated = await this.parallelRepository.save(parallel);
@@ -69,7 +67,7 @@ export class ParallelsService {
     const parallel = await this.parallelRepository.findOneBy({ id });
 
     if (!parallel) {
-      throw new NotFoundException(`El paralelo con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El paralelo con id:${id} no se encontro`);
     }
 
     const parallelDeleted = await this.parallelRepository.softRemove(parallel);

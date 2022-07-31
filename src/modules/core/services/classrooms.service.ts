@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   PaginationDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { ClassroomEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { LocationsService } from './locations.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -18,7 +17,7 @@ export class ClassroomsService {
     @InjectRepository(ClassroomEntity)
     private classroomRepository: Repository<ClassroomEntity>,
     private locationsService: LocationsService,
-  ) {}
+  ) { }
 
   async create(payload: CreateClassroomDto): Promise<ServiceResponseHttpModel> {
     const newClassroom = this.classroomRepository.create(payload);
@@ -58,7 +57,7 @@ export class ClassroomsService {
     });
 
     if (!classroom) {
-      throw new NotFoundException(`El aula con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El aula con id:${id} no se encontro`);
     }
     return { data: classroom };
   }
@@ -69,7 +68,7 @@ export class ClassroomsService {
   ): Promise<ServiceResponseHttpModel> {
     const classroom = await this.classroomRepository.findOneBy({ id });
     if (!classroom) {
-      throw new NotFoundException(`El aula con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El aula con id:${id} no se encontro`);
     }
     classroom.location = await this.locationsService.findOne(
       payload.location.id,
@@ -83,7 +82,7 @@ export class ClassroomsService {
     const classroom = await this.classroomRepository.findOneBy({ id });
 
     if (!classroom) {
-      throw new NotFoundException(`El aula con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El aula con id:${id} no se encontro`);
     }
 
     const classroomDeleted = await this.classroomRepository.softRemove(

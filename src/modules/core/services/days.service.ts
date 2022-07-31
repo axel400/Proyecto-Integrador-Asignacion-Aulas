@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateDayDto,
@@ -7,9 +7,7 @@ import {
   UpdateDayDto,
 } from '@core/dto';
 import { DayEntity } from '@core/entities';
-import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class DaysService {
   constructor(
     @InjectRepository(DayEntity)
     private dayRepository: Repository<DayEntity>,
-  ) {}
+  ) { }
 
   async create(payload: CreateDayDto): Promise<ServiceResponseHttpModel> {
     const newDay = this.dayRepository.create(payload);
@@ -47,7 +45,7 @@ export class DaysService {
     });
 
     if (!day) {
-      throw new NotFoundException(`El dia con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El dia con id:${id} no se encontro`);
     }
     return { data: day };
   }
@@ -58,7 +56,7 @@ export class DaysService {
   ): Promise<ServiceResponseHttpModel> {
     const day = await this.dayRepository.findOneBy({ id });
     if (!day) {
-      throw new NotFoundException(`El dia con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El dia con id:${id} no se encontro`);
     }
     this.dayRepository.merge(day, payload);
     const dayUpdated = await this.dayRepository.save(day);
@@ -69,7 +67,7 @@ export class DaysService {
     const day = await this.dayRepository.findOneBy({ id });
 
     if (!day) {
-      throw new NotFoundException(`El dia con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El dia con id:${id} no se encontro`);
     }
 
     const dayDeleted = await this.dayRepository.softRemove(day);

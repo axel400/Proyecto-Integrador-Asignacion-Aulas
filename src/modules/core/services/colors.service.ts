@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateColorDto,
@@ -7,9 +7,7 @@ import {
   UpdateColorDto,
 } from '@core/dto';
 import { ColorEntity } from '@core/entities';
-import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class ColorsService {
   constructor(
     @InjectRepository(ColorEntity)
     private colorRepository: Repository<ColorEntity>,
-  ) {}
+  ) { }
 
   async create(payload: CreateColorDto): Promise<ServiceResponseHttpModel> {
     const newColor = this.colorRepository.create(payload);
@@ -47,7 +45,7 @@ export class ColorsService {
     });
 
     if (!color) {
-      throw new NotFoundException(`El color con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El color con id:${id} no se encontro`);
     }
     return { data: color };
   }
@@ -58,7 +56,7 @@ export class ColorsService {
   ): Promise<ServiceResponseHttpModel> {
     const color = await this.colorRepository.findOneBy({ id });
     if (!color) {
-      throw new NotFoundException(`El color con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El color con id:${id} no se encontro`);
     }
     this.colorRepository.merge(color, payload);
     const colorUpdated = await this.colorRepository.save(color);
@@ -69,7 +67,7 @@ export class ColorsService {
     const color = await this.colorRepository.findOneBy({ id });
 
     if (!color) {
-      throw new NotFoundException(`El color con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El color con id:${id} no se encontro`);
     }
 
     const colorDeleted = await this.colorRepository.softRemove(color);

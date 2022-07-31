@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateStateDto,
@@ -7,9 +7,7 @@ import {
   UpdateStateDto,
 } from '@core/dto';
 import { StateEntity } from '@core/entities';
-import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class StatusService {
   constructor(
     @InjectRepository(StateEntity)
     private stateRepository: Repository<StateEntity>,
-  ) {}
+  ) { }
 
   async create(payload: CreateStateDto): Promise<ServiceResponseHttpModel> {
     const newState = this.stateRepository.create(payload);
@@ -47,7 +45,7 @@ export class StatusService {
     });
 
     if (!state) {
-      throw new NotFoundException(`El estado con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El estado con id:${id} no se encontro`);
     }
     return { data: state };
   }
@@ -58,7 +56,7 @@ export class StatusService {
   ): Promise<ServiceResponseHttpModel> {
     const state = await this.stateRepository.findOneBy({ id });
     if (!state) {
-      throw new NotFoundException(`El estado con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El estado con id:${id} no se encontro`);
     }
     this.stateRepository.merge(state, payload);
     const stateUpdated = await this.stateRepository.save(state);
@@ -69,7 +67,7 @@ export class StatusService {
     const state = await this.stateRepository.findOneBy({ id });
 
     if (!state) {
-      throw new NotFoundException(`El estado con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El estado con id:${id} no se encontro`);
     }
 
     const stateDeleted = await this.stateRepository.softRemove(state);

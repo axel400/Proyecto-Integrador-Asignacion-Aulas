@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateSchedulePositionDto,
@@ -7,9 +7,7 @@ import {
   UpdateSchedulePositionDto,
 } from '@core/dto';
 import { SchedulePositionEntity } from '@core/entities';
-import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class SchedulePositionsService {
   constructor(
     @InjectRepository(SchedulePositionEntity)
     private schedulePositionRepository: Repository<SchedulePositionEntity>,
-  ) {}
+  ) { }
 
   async create(
     payload: CreateSchedulePositionDto,
@@ -54,7 +52,7 @@ export class SchedulePositionsService {
 
     if (!schedulePosition) {
       throw new NotFoundException(
-        `La posicion del horario con id:  ${id} no se encontro`,
+        `La posicion del horario con id:${id} no se encontro`,
       );
     }
     return { data: schedulePosition };
@@ -69,7 +67,7 @@ export class SchedulePositionsService {
     });
     if (!schedulePosition) {
       throw new NotFoundException(
-        `La posicion del horario con id:  ${id} no se encontro`,
+        `La posicion del horario con id:${id} no se encontro`,
       );
     }
     this.schedulePositionRepository.merge(schedulePosition, payload);
@@ -86,7 +84,7 @@ export class SchedulePositionsService {
 
     if (!schedulePosition) {
       throw new NotFoundException(
-        `La posicion del horario con id:  ${id} no se encontro`,
+        `La posicion del horario con id:${id} no se encontro`,
       );
     }
 

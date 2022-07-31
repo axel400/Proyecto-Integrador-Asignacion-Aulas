@@ -1,5 +1,5 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Repository, FindOptionsWhere, ILike } from 'typeorm';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Repository, FindOptionsWhere } from 'typeorm';
 import {
   CreateTeacherDistributionDto,
   FilterTeacherDistributionDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { TeacherDistributionEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { SchoolDaysService } from './school-days.service';
 import { SubjectsService } from './subjects.service';
 import { CoursesService } from './courses.service';
@@ -24,7 +23,7 @@ export class TeacherDistributionsService {
     private subjectsService: SubjectsService,
     private coursesService: CoursesService,
     private teachersService: TeachersService,
-  ) {}
+  ) { }
 
   async create(
     payload: CreateTeacherDistributionDto,
@@ -76,7 +75,7 @@ export class TeacherDistributionsService {
 
     if (!teacherDistribution) {
       throw new NotFoundException(
-        `La distribucion de docentes con id:  ${id} no se encontro`,
+        `La distribucion de docentes con id:${id} no se encontro`,
       );
     }
     return { data: teacherDistribution };
@@ -90,7 +89,7 @@ export class TeacherDistributionsService {
       await this.teacherDistributionRepository.findOneBy({ id });
     if (!teacherDistribution) {
       throw new NotFoundException(
-        `La distribucion de docentes con id:  ${id} no se encontro`,
+        `La distribucion de docentes con id:${id} no se encontro`,
       );
     }
     teacherDistribution.schoolDay = await this.schoolDaysService.findOne(
@@ -120,7 +119,7 @@ export class TeacherDistributionsService {
 
     if (!teacherDistribution) {
       throw new NotFoundException(
-        `La distribucion de docentes con id:  ${id} no se encontro`,
+        `La distribucion de docentes con id:${id} no se encontro`,
       );
     }
 

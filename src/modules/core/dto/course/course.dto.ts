@@ -10,6 +10,9 @@ import { isNotEmptyValidationOptions } from '@shared/validation';
 
 export class CreateCourseDto {
   @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly name: string;
+
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly level: LevelEntity;
 
   @IsNotEmpty(isNotEmptyValidationOptions())
@@ -17,7 +20,7 @@ export class CreateCourseDto {
 
   @IsNotEmpty(isNotEmptyValidationOptions())
   readonly parallel: ParallelEntity;
-  
+
   @IsNotEmpty(isNotEmptyValidationOptions())
   readonly career: CareerEntity;
 }

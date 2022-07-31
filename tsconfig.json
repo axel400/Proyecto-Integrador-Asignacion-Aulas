@@ -55,7 +55,7 @@
         "./src/modules/auth/strategies"
       ],
       "@core/controllers": [
-        "./src/modules/core/controllers"
+        "src/modules/core/controllers"
       ],
       "@core/dto": [
         "./src/modules/core/dto"

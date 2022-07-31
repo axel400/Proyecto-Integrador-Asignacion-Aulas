@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateRequestDetailDto,
@@ -7,7 +7,6 @@ import {
   UpdateRequestDetailDto,
 } from '@core/dto';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { RequestsService } from './requests.service';
 import { TeacherDistributionsService } from './teacher-distributions.service';
 import { StatusService } from './status.service';
@@ -22,7 +21,7 @@ export class RequestDetailsService {
     private requestsService: RequestsService,
     private teacherDistributionsService: TeacherDistributionsService,
     private statusService: StatusService,
-  ) {}
+  ) { }
 
   async create(
     payload: CreateRequestDetailDto,
@@ -34,8 +33,8 @@ export class RequestDetailsService {
     );
 
     newRequestDetail.teacherDistribution = await this.teacherDistributionsService.findOne(
-        payload.teacherDistribution.id,
-      );
+      payload.teacherDistribution.id,
+    );
 
     newRequestDetail.state = await this.statusService.findOne(payload.state.id);
 
@@ -72,7 +71,7 @@ export class RequestDetailsService {
 
     if (!requestDetail) {
       throw new NotFoundException(
-        `El detalle de la solicitud con id:  ${id} no se encontro`,
+        `El detalle de la solicitud con id:${id} no se encontro`,
       );
     }
     return { data: requestDetail };
@@ -85,7 +84,7 @@ export class RequestDetailsService {
     const requestDetail = await this.requestDetailRepository.findOneBy({ id });
     if (!requestDetail) {
       throw new NotFoundException(
-        `El detalle de la solicitud con id:  ${id} no se encontro`,
+        `El detalle de la solicitud con id:${id} no se encontro`,
       );
     }
     requestDetail.request = await this.requestsService.findOne(
@@ -93,8 +92,8 @@ export class RequestDetailsService {
     );
 
     requestDetail.teacherDistribution = await this.teacherDistributionsService.findOne(
-        payload.teacherDistribution.id,
-      );
+      payload.teacherDistribution.id,
+    );
 
     requestDetail.state = await this.statusService.findOne(payload.state.id);
     this.requestDetailRepository.merge(requestDetail, payload);
@@ -109,7 +108,7 @@ export class RequestDetailsService {
 
     if (!requestDetail) {
       throw new NotFoundException(
-        `El detalle de la solicitud con id:  ${id} no se encontro`,
+        `El detalle de la solicitud con id:${id} no se encontro`,
       );
     }
 

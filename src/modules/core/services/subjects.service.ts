@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateSubjectDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { SubjectEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { CareersService } from './careers.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -18,7 +17,7 @@ export class SubjectsService {
     @InjectRepository(SubjectEntity)
     private subjectRepository: Repository<SubjectEntity>,
     private careersService: CareersService,
-  ) {}
+  ) { }
 
   async create(payload: CreateSubjectDto): Promise<ServiceResponseHttpModel> {
     const newSubject = this.subjectRepository.create(payload);
@@ -54,7 +53,7 @@ export class SubjectsService {
 
     if (!subject) {
       throw new NotFoundException(
-        `La asignatura con id:  ${id} no se encontro`,
+        `La asignatura con id:${id} no se encontro`,
       );
     }
     return { data: subject };
@@ -67,7 +66,7 @@ export class SubjectsService {
     const subject = await this.subjectRepository.findOneBy({ id });
     if (!subject) {
       throw new NotFoundException(
-        `La asignatura con id:  ${id} no se encontro`,
+        `La asignatura con id:${id} no se encontro`,
       );
     }
     subject.career = await this.careersService.findOne(payload.career.id);
@@ -81,7 +80,7 @@ export class SubjectsService {
 
     if (!subject) {
       throw new NotFoundException(
-        `La asignatura con id:  ${id} no se encontro`,
+        `La asignatura con id:${id} no se encontro`,
       );
     }
 
@@ -113,6 +112,7 @@ export class SubjectsService {
       where.push({ name: ILike(`%${search}%`) });
       where.push({ theoreticalHours: ILike(`%${search}%`) });
       where.push({ practicalHours: ILike(`%${search}%`) });
+      where.push({ teacher: ILike(`%${search}%`) });
     }
 
     const response = await this.subjectRepository.findAndCount({

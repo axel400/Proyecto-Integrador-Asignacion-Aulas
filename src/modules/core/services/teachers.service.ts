@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateTeacherDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { TeacherEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { StatusService } from './status.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -18,7 +17,7 @@ export class TeachersService {
     @InjectRepository(TeacherEntity)
     private teacherRepository: Repository<TeacherEntity>,
     private statussService: StatusService,
-  ) {}
+  ) { }
 
   async create(payload: CreateTeacherDto): Promise<ServiceResponseHttpModel> {
     const newTeacher = this.teacherRepository.create(payload);
@@ -53,7 +52,7 @@ export class TeachersService {
     });
 
     if (!teacher) {
-      throw new NotFoundException(`El docente con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El docente con id:${id} no se encontro`);
     }
     return { data: teacher };
   }
@@ -64,7 +63,7 @@ export class TeachersService {
   ): Promise<ServiceResponseHttpModel> {
     const teacher = await this.teacherRepository.findOneBy({ id });
     if (!teacher) {
-      throw new NotFoundException(`El docente con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El docente con id:${id} no se encontro`);
     }
     teacher.state = await this.statussService.findOne(payload.state.id);
     this.teacherRepository.merge(teacher, payload);
@@ -76,7 +75,7 @@ export class TeachersService {
     const teacher = await this.teacherRepository.findOneBy({ id });
 
     if (!teacher) {
-      throw new NotFoundException(`El docente con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El docente con id:${id} no se encontro`);
     }
 
     const teacherDeleted = await this.teacherRepository.softRemove(teacher);

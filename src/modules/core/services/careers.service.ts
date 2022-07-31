@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateCareerDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { CareerEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -16,7 +15,7 @@ export class CareersService {
   constructor(
     @InjectRepository(CareerEntity)
     private careerRepository: Repository<CareerEntity>,
-  ) {}
+  ) { }
 
   async create(payload: CreateCareerDto): Promise<ServiceResponseHttpModel> {
     const newCareer = this.careerRepository.create(payload);
@@ -46,7 +45,7 @@ export class CareersService {
     });
 
     if (!career) {
-      throw new NotFoundException(`La carrera con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La carrera con id:${id} no se encontro`);
     }
     return { data: career };
   }
@@ -57,7 +56,7 @@ export class CareersService {
   ): Promise<ServiceResponseHttpModel> {
     const career = await this.careerRepository.findOneBy({ id });
     if (!career) {
-      throw new NotFoundException(`La carrera con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La carrera con id:${id} no se encontro`);
     }
     this.careerRepository.merge(career, payload);
     const careerUpdated = await this.careerRepository.save(career);
@@ -68,7 +67,7 @@ export class CareersService {
     const career = await this.careerRepository.findOneBy({ id });
 
     if (!career) {
-      throw new NotFoundException(`La carrera con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La carrera con id:${id} no se encontro`);
     }
 
     const careerDeleted = await this.careerRepository.softRemove(career);

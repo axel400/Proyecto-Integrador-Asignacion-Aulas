@@ -18,6 +18,9 @@ export class CreateSubjectDto {
   readonly practicalHours: string;
 
   @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly teacher: string;
+
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly career: CareerEntity;
 }
 

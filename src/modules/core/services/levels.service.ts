@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateLevelDto,
@@ -7,9 +7,7 @@ import {
   UpdateLevelDto,
 } from '@core/dto';
 import { LevelEntity } from '@core/entities';
-import {} from '@core/services';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class LevelsService {
   constructor(
     @InjectRepository(LevelEntity)
     private levelRepository: Repository<LevelEntity>,
-  ) {}
+  ) { }
 
   async create(payload: CreateLevelDto): Promise<ServiceResponseHttpModel> {
     const newLevel = this.levelRepository.create(payload);
@@ -47,7 +45,7 @@ export class LevelsService {
     });
 
     if (!level) {
-      throw new NotFoundException(`El nivel con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El nivel con id:${id} no se encontro`);
     }
     return { data: level };
   }
@@ -58,7 +56,7 @@ export class LevelsService {
   ): Promise<ServiceResponseHttpModel> {
     const level = await this.levelRepository.findOneBy({ id });
     if (!level) {
-      throw new NotFoundException(`El nivel con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El nivel con id:${id} no se encontro`);
     }
     this.levelRepository.merge(level, payload);
     const levelUpdated = await this.levelRepository.save(level);
@@ -69,7 +67,7 @@ export class LevelsService {
     const level = await this.levelRepository.findOneBy({ id });
 
     if (!level) {
-      throw new NotFoundException(`El nivel con id:  ${id} no se encontro`);
+      throw new NotFoundException(`El nivel con id:${id} no se encontro`);
     }
 
     const levelDeleted = await this.levelRepository.softRemove(level);

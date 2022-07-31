@@ -21,7 +21,7 @@ export class TimeSettingEntity {
   career: CareerEntity;
 
   @ManyToOne(() => SchoolDayEntity, { nullable: false })
-  @JoinColumn({ name: 'schoolDay_id' })
+  @JoinColumn({ name: 'school_day_id' })
   schoolDay: SchoolDayEntity;
 
   @Column('varchar', {

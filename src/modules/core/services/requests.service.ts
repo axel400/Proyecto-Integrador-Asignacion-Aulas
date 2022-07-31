@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateRequestDto,
@@ -8,7 +8,6 @@ import {
 } from '@core/dto';
 import { RequestEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { SchoolYearsService } from './school-years.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -18,7 +17,7 @@ export class RequestsService {
     @InjectRepository(RequestEntity)
     private requestsRepository: Repository<RequestEntity>,
     private schoolYearsService: SchoolYearsService,
-  ) {}
+  ) { }
 
   async create(payload: CreateRequestDto): Promise<ServiceResponseHttpModel> {
     const newRequest = this.requestsRepository.create(payload);
@@ -55,7 +54,7 @@ export class RequestsService {
     });
 
     if (!request) {
-      throw new NotFoundException(`La solicitud con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La solicitud con id:${id} no se encontro`);
     }
     return { data: request };
   }
@@ -66,7 +65,7 @@ export class RequestsService {
   ): Promise<ServiceResponseHttpModel> {
     const request = await this.requestsRepository.findOneBy({ id });
     if (!request) {
-      throw new NotFoundException(`La solicitud con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La solicitud con id:${id} no se encontro`);
     }
     request.schoolYear = await this.schoolYearsService.findOne(
       payload.schoolYear.id,
@@ -80,7 +79,7 @@ export class RequestsService {
     const request = await this.requestsRepository.findOneBy({ id });
 
     if (!request) {
-      throw new NotFoundException(`La solicitud con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La solicitud con id:${id} no se encontro`);
     }
 
     const requestDeleted = await this.requestsRepository.softRemove(request);

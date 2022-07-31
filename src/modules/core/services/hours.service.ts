@@ -1,9 +1,8 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import { PaginationDto } from '@core/dto';
 import { HourEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { CreateHourDto, UpdateHourDto } from '../dto/hour/hour.dto';
 import { FilterHourDto } from '../dto/hour/hour.filter.dto';
 import { SchedulePositionsService } from './schedule-position.service';
@@ -15,7 +14,7 @@ export class HoursService {
     @InjectRepository(HourEntity)
     private hourRepository: Repository<HourEntity>,
     private schedulePositionsService: SchedulePositionsService,
-  ) {}
+  ) { }
 
   async create(payload: CreateHourDto): Promise<ServiceResponseHttpModel> {
     const newHour = this.hourRepository.create(payload);
@@ -52,7 +51,7 @@ export class HoursService {
     });
 
     if (!hour) {
-      throw new NotFoundException(`La hora con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La hora con id:${id} no se encontro`);
     }
     return { data: hour };
   }
@@ -63,7 +62,7 @@ export class HoursService {
   ): Promise<ServiceResponseHttpModel> {
     const hour = await this.hourRepository.findOneBy({ id });
     if (!hour) {
-      throw new NotFoundException(`La hora con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La hora con id:${id} no se encontro`);
     }
     hour.schedulePosition = await this.schedulePositionsService.findOne(
       payload.schedulePosition.id,
@@ -77,7 +76,7 @@ export class HoursService {
     const hour = await this.hourRepository.findOneBy({ id });
 
     if (!hour) {
-      throw new NotFoundException(`La hora con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La hora con id:${id} no se encontro`);
     }
 
     const hourDeleted = await this.hourRepository.softRemove(hour);

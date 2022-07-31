@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  Column,
 } from 'typeorm';
 import {
   CareerEntity,
@@ -42,6 +43,13 @@ export class CourseEntity {
     (teacherDistribution) => teacherDistribution.course,
   )
   teacherDistributions: TeacherDistributionEntity[];
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Nombre del curso',
+    name: 'name',
+  })
+  name: string;
 
   @CreateDateColumn({
     name: 'created_at',

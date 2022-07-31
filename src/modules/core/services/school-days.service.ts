@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import {
   CreateSchoolDayDto,
@@ -6,10 +6,8 @@ import {
   PaginationDto,
   UpdateSchoolDayDto,
 } from '@core/dto';
-import { ScheduleConfigurationEntity, SchoolDayEntity } from '@core/entities';
-import {} from '@core/services';
+import { SchoolDayEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { RepositoryEnum } from '@shared/enums';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class SchoolDaysService {
   constructor(
     @InjectRepository(SchoolDayEntity)
     private schoolDayRepository: Repository<SchoolDayEntity>,
-  ) {}
+  ) { }
 
   async create(payload: CreateSchoolDayDto): Promise<ServiceResponseHttpModel> {
     const newSchoolDay = this.schoolDayRepository.create(payload);
@@ -49,7 +47,7 @@ export class SchoolDaysService {
     });
 
     if (!schoolDay) {
-      throw new NotFoundException(`La jornada con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La jornada con id:${id} no se encontro`);
     }
     return { data: schoolDay };
   }
@@ -60,7 +58,7 @@ export class SchoolDaysService {
   ): Promise<ServiceResponseHttpModel> {
     const schoolDay = await this.schoolDayRepository.findOneBy({ id });
     if (!schoolDay) {
-      throw new NotFoundException(`La jornada con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La jornada con id:${id} no se encontro`);
     }
     this.schoolDayRepository.merge(schoolDay, payload);
     const schoolDayUpdated = await this.schoolDayRepository.save(schoolDay);
@@ -71,7 +69,7 @@ export class SchoolDaysService {
     const schoolDay = await this.schoolDayRepository.findOneBy({ id });
 
     if (!schoolDay) {
-      throw new NotFoundException(`La jornada con id:  ${id} no se encontro`);
+      throw new NotFoundException(`La jornada con id:${id} no se encontro`);
     }
 
     const schoolDayDeleted = await this.schoolDayRepository.softRemove(

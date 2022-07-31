@@ -54,6 +54,13 @@ export class SubjectEntity {
   })
   practicalHours: string;
 
+  @Column('varchar', {
+    length: 255,
+    comment: 'Docente',
+    name: 'teacher',
+  })
+  teacher: string;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
