@@ -24,9 +24,6 @@ export * from './parallel/parallel.filter.dto';
 export * from './request/request.dto';
 export * from './request/request.filter.dto';
 
-export * from './request-detail/request-detail.dto';
-export * from './request-detail/request-detail.filter.dto';
-
 export * from './schedule-configuration/schedule-configuration-detail.dto';
 export * from './schedule-configuration/schedule-configuration-detail.filter.dto';
 

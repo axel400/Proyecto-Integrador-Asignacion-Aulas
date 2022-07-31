@@ -15,7 +15,7 @@ import {
   TeacherDistributionEntity,
 } from '@core/entities';
 
-@Entity('school_year', { schema: 'core' })
+@Entity('school_year', { schema: 'state_schema' })
 export class SchoolYearEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,7 +29,7 @@ export class SchoolYearEntity {
 
   @OneToMany(
     () => TeacherDistributionEntity,
-    (teacherDistribution) => teacherDistribution.schoolDay,
+    (teacherDistribution) => teacherDistribution.schoolYear,
   )
   teacherDistributions: TeacherDistributionEntity[];
 
@@ -49,7 +49,7 @@ export class SchoolYearEntity {
 
   @Column('varchar', {
     length: 255,
-    comment: 'Fecha final',
+    comment: 'Fecha fin',
     name: 'end_date',
   })
   endDate: Date;

@@ -1,4 +1,4 @@
-import { CourseEntity, StateEntity, SubjectEntity, TeacherDistributionEntity } from '@core/entities';
+import { CourseEntity, RequestEntity, StateEntity, SubjectEntity, TeacherDistributionEntity } from '@core/entities';
 import {
   Entity,
   Column,
@@ -11,7 +11,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-@Entity('teachers', { schema: 'core' })
+@Entity('teachers', { schema: 'state_schema' })
 export class TeacherEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -31,6 +31,9 @@ export class TeacherEntity {
 
   @OneToMany(() => CourseEntity, (course) => course.tutor)
   courses: CourseEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.teacher)
+  requests: RequestEntity[];
 
   @Column('varchar', {
     length: 255,

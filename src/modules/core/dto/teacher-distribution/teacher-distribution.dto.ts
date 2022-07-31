@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 import {
   CourseEntity,
-  SchoolDayEntity,
+  SchoolYearEntity,
   SubjectEntity,
   TeacherEntity,
 } from '@core/entities';
@@ -10,7 +10,7 @@ import { isNotEmptyValidationOptions } from '@shared/validation';
 
 export class CreateTeacherDistributionDto {
   @IsNotEmpty(isNotEmptyValidationOptions())
-  readonly schoolDay: SchoolDayEntity;
+  readonly schoolYear: SchoolYearEntity;
 
   @IsNotEmpty(isNotEmptyValidationOptions())
   readonly subject: SubjectEntity;

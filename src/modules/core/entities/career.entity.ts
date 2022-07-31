@@ -7,7 +7,7 @@ import {
   DeleteDateColumn,
   OneToMany,
 } from 'typeorm';
-import { CourseEntity, SubjectEntity, TimeSettingEntity } from '@core/entities';
+import { CourseEntity, RequestEntity, SubjectEntity, TimeSettingEntity } from '@core/entities';
 
 @Entity('careers', { schema: 'course_schema' })
 export class CareerEntity {
@@ -22,6 +22,9 @@ export class CareerEntity {
 
   @OneToMany(() => CourseEntity, (course) => course.career)
   courses: CourseEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.career)
+  requests: RequestEntity[];
 
   @Column('varchar', {
     length: 255,

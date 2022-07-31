@@ -1,4 +1,4 @@
-import { ScheduleConfigurationEntity } from '@core/entities';
+import { ScheduleConfigurationEntity, StateEntity } from '@core/entities';
 import {
   Entity,
   Column,
@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 import { SchedulePositionEntity } from './schedule-position.entity';
 
-@Entity('hours', { schema: 'core' })
+@Entity('hours', { schema: 'state_schema' })
 export class HourEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,6 +20,10 @@ export class HourEntity {
   @ManyToOne(() => SchedulePositionEntity, { nullable: false })
   @JoinColumn({ name: 'schedulePosition_id' })
   schedulePosition: SchedulePositionEntity;
+
+  @ManyToOne(() => StateEntity, { nullable: false })
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
 
   @OneToMany(
     () => ScheduleConfigurationEntity,

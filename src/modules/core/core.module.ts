@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CareerEntity, ClassroomEntity, ColorEntity, CourseEntity, DayEntity, HourEntity, LevelEntity, LocationEntity, ParallelEntity, RequestDetailEntity, RequestEntity, ScheduleConfigurationEntity, SchedulePositionEntity, SchoolDayEntity, SchoolYearEntity, StateEntity, SubjectEntity, TeacherDistributionEntity, TeacherEntity, TimeSettingEntity } from './entities';
+import { CareerEntity, ClassroomEntity, ColorEntity, CourseEntity, DayEntity, HourEntity, LevelEntity, LocationEntity, ParallelEntity, RequestEntity, ScheduleConfigurationEntity, SchedulePositionEntity, SchoolDayEntity, SchoolYearEntity, StateEntity, SubjectEntity, TeacherDistributionEntity, TeacherEntity, TimeSettingEntity } from './entities';
 import { CareersController } from './controllers/careers.controller';
 import { CareersService } from './services/careers.service';
 import { ClassroomsService } from './services/classrooms.service';
@@ -11,7 +11,6 @@ import { HoursService } from './services/hours.service';
 import { LevelsService } from './services/levels.service';
 import { LocationsService } from './services/locations.service';
 import { ParallelsService } from './services/parallels.service';
-import { RequestDetailsService } from './services/request-details.service';
 import { ScheduleConfigurationsService } from './services/schedule-configurations.service';
 import { RequestsService } from './services/requests.service';
 import { SchedulePositionsService } from './services/schedule-position.service';
@@ -30,7 +29,6 @@ import { HoursController } from './controllers/hours.controller';
 import { LevelsController } from './controllers/levels.controller';
 import { LocationsController } from './controllers/locations.controller';
 import { ParallelsController } from './controllers/parallel.controller';
-import { RequestDetailsController } from './controllers/request-details.controller';
 import { RequestsController } from './controllers/requests.controller';
 import { ScheduleConfigurationsController } from './controllers/schedule-configurations.controller';
 import { SchedulePositionsController } from './controllers/schedule-positions.controller';
@@ -45,7 +43,7 @@ import { TimeSettingsController } from './controllers/time-setting.controller';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([CareerEntity,ClassroomEntity, ColorEntity,CourseEntity, DayEntity, HourEntity,LevelEntity,LocationEntity,ParallelEntity,RequestDetailEntity, RequestEntity,ScheduleConfigurationEntity, SchedulePositionEntity,SchoolDayEntity,SchoolYearEntity,StateEntity, SubjectEntity, TeacherEntity, TeacherDistributionEntity,TimeSettingEntity])],
+  imports: [TypeOrmModule.forFeature([CareerEntity,ClassroomEntity, ColorEntity,CourseEntity, DayEntity, HourEntity,LevelEntity,LocationEntity,ParallelEntity, RequestEntity,ScheduleConfigurationEntity, SchedulePositionEntity,SchoolDayEntity,SchoolYearEntity,StateEntity, SubjectEntity, TeacherEntity, TeacherDistributionEntity,TimeSettingEntity])],
   controllers: [
     CareersController,
     ClassroomsController,
@@ -56,7 +54,6 @@ import { TimeSettingsController } from './controllers/time-setting.controller';
     LevelsController,
     LocationsController,
     ParallelsController,
-    RequestDetailsController,
     RequestsController,
     ScheduleConfigurationsController,
     SchedulePositionsController,
@@ -78,7 +75,6 @@ import { TimeSettingsController } from './controllers/time-setting.controller';
     LevelsService,
     LocationsService,
     ParallelsService,
-    RequestDetailsService,
     RequestsService,
     ScheduleConfigurationsService,
     SchedulePositionsService,
@@ -100,7 +96,6 @@ import { TimeSettingsController } from './controllers/time-setting.controller';
     LevelsService,
     LocationsService,
     ParallelsService,
-    RequestDetailsService,
     RequestsService,
     ScheduleConfigurationsService,
     SchedulePositionsService,

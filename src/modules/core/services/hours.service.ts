@@ -7,6 +7,7 @@ import { CreateHourDto, UpdateHourDto } from '../dto/hour/hour.dto';
 import { FilterHourDto } from '../dto/hour/hour.filter.dto';
 import { SchedulePositionsService } from './schedule-position.service';
 import { InjectRepository } from '@nestjs/typeorm';
+import { StatusService } from './status.service';
 
 @Injectable()
 export class HoursService {
@@ -14,6 +15,7 @@ export class HoursService {
     @InjectRepository(HourEntity)
     private hourRepository: Repository<HourEntity>,
     private schedulePositionsService: SchedulePositionsService,
+    private statusService: StatusService,
   ) { }
 
   async create(payload: CreateHourDto): Promise<ServiceResponseHttpModel> {
@@ -21,6 +23,10 @@ export class HoursService {
 
     newHour.schedulePosition = await this.schedulePositionsService.findOne(
       payload.schedulePosition.id,
+    );
+
+    newHour.state = await this.statusService.findOne(
+      payload.state.id,
     );
 
     const hourCreated = await this.hourRepository.save(newHour);
@@ -36,7 +42,7 @@ export class HoursService {
 
     //All
     const data = await this.hourRepository.findAndCount({
-      relations: ['schedulePosition'],
+      relations: ['schedulePosition','state'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -44,7 +50,7 @@ export class HoursService {
 
   async findOne(id: number): Promise<any> {
     const hour = await this.hourRepository.findOne({
-      relations: ['schedulePosition'],
+      relations: ['schedulePosition','state'],
       where: {
         id,
       },
@@ -64,9 +70,15 @@ export class HoursService {
     if (!hour) {
       throw new NotFoundException(`La hora con id:${id} no se encontro`);
     }
+
     hour.schedulePosition = await this.schedulePositionsService.findOne(
       payload.schedulePosition.id,
     );
+
+    hour.state = await this.statusService.findOne(
+      payload.state.id,
+    );
+
     this.hourRepository.merge(hour, payload);
     const hourUpdated = await this.hourRepository.save(hour);
     return { data: hourUpdated };
@@ -105,7 +117,7 @@ export class HoursService {
     }
 
     const response = await this.hourRepository.findAndCount({
-      relations: ['schedulePosition'],
+      relations: ['schedulePosition','state'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),

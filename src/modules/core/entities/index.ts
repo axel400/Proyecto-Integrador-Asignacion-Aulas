@@ -12,7 +12,6 @@ export * from './parallel.entity';
 export * from './time-setting.entity';
 export * from './teacher-distribution.entity';
 export * from './request.entity';
-export * from './request-detail.entity';
 export * from './location.entity';
 export * from './hour.entity';
 export * from './color.entity';

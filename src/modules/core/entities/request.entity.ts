@@ -9,9 +9,9 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { RequestDetailEntity, ScheduleConfigurationEntity, SchoolYearEntity } from '@core/entities';
+import { CareerEntity, CourseEntity, ScheduleConfigurationEntity, SchoolYearEntity, StateEntity, SubjectEntity, TeacherEntity } from '@core/entities';
 
-@Entity('requests', { schema: 'core' })
+@Entity('requests', { schema: 'state_schema' })
 export class RequestEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,11 +20,25 @@ export class RequestEntity {
   @JoinColumn({ name: 'school_year_id' })
   schoolYear: SchoolYearEntity;
 
-  @OneToMany(
-    () => RequestDetailEntity,
-    (requestDetail) => requestDetail.teacherDistribution,
-  )
-  requestDetails: RequestDetailEntity[];
+  @ManyToOne(() => CareerEntity, { nullable: false })
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @ManyToOne(() => TeacherEntity, { nullable: false })
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: TeacherEntity;
+
+  @ManyToOne(() => CourseEntity, { nullable: false })
+  @JoinColumn({ name: 'course_id' })
+  course: CourseEntity;
+
+  @ManyToOne(() => SubjectEntity, { nullable: false })
+  @JoinColumn({ name: 'subject_id' })
+  subject: SubjectEntity;
+
+  @ManyToOne(() => StateEntity, { nullable: false })
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
 
   @OneToMany(
     () => ScheduleConfigurationEntity,
@@ -48,10 +62,17 @@ export class RequestEntity {
 
   @Column('varchar', {
     length: 255,
-    comment: 'Carrera',
-    name: 'career',
+    comment: 'Fecha inicio',
+    name: 'start_date',
   })
-  career: string;
+  startDate: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Fecha fin',
+    name: 'end_date',
+  })
+  endDate: string;
 
   @CreateDateColumn({
     name: 'created_at',

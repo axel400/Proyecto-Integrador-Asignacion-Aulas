@@ -13,13 +13,14 @@ import { SubjectsService } from './subjects.service';
 import { CoursesService } from './courses.service';
 import { TeachersService } from './teachers.service';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SchoolYearsService } from './school-years.service';
 
 @Injectable()
 export class TeacherDistributionsService {
   constructor(
     @InjectRepository(TeacherDistributionEntity)
     private teacherDistributionRepository: Repository<TeacherDistributionEntity>,
-    private schoolDaysService: SchoolDaysService,
+    private schoolYearsService: SchoolYearsService,
     private subjectsService: SubjectsService,
     private coursesService: CoursesService,
     private teachersService: TeachersService,
@@ -31,8 +32,8 @@ export class TeacherDistributionsService {
     const newTeacherDistribution =
       this.teacherDistributionRepository.create(payload);
 
-    newTeacherDistribution.schoolDay = await this.schoolDaysService.findOne(
-      payload.schoolDay.id,
+    newTeacherDistribution.schoolYear = await this.schoolYearsService.findOne(
+      payload.schoolYear.id,
     );
 
     newTeacherDistribution.subject = await this.subjectsService.findOne(
@@ -58,7 +59,7 @@ export class TeacherDistributionsService {
   ): Promise<ServiceResponseHttpModel> {
     //All
     const data = await this.teacherDistributionRepository.findAndCount({
-      relations: ['schoolDay', 'subject', 'course', 'teacher'],
+      relations: ['schoolYear', 'subject', 'course', 'teacher'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -67,7 +68,7 @@ export class TeacherDistributionsService {
   async findOne(id: number): Promise<any> {
     const teacherDistribution =
       await this.teacherDistributionRepository.findOne({
-        relations: ['schoolDay', 'subject', 'course', 'teacher'],
+        relations: ['schoolYear', 'subject', 'course', 'teacher'],
         where: {
           id,
         },
@@ -92,8 +93,8 @@ export class TeacherDistributionsService {
         `La distribucion de docentes con id:${id} no se encontro`,
       );
     }
-    teacherDistribution.schoolDay = await this.schoolDaysService.findOne(
-      payload.schoolDay.id,
+    teacherDistribution.schoolYear = await this.schoolYearsService.findOne(
+      payload.schoolYear.id,
     );
 
     teacherDistribution.subject = await this.subjectsService.findOne(
@@ -154,7 +155,7 @@ export class TeacherDistributionsService {
     }
 
     const response = await this.teacherDistributionRepository.findAndCount({
-      relations: ['schoolDay', 'subject', 'course', 'teacher'],
+      relations: ['schoolYear', 'subject', 'course', 'teacher'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),

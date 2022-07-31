@@ -1,4 +1,4 @@
-import { CareerEntity, TeacherDistributionEntity, TeacherEntity } from '@core/entities';
+import { CareerEntity, RequestEntity, TeacherDistributionEntity, TeacherEntity } from '@core/entities';
 import {
   Entity,
   Column,
@@ -24,11 +24,11 @@ export class SubjectEntity {
   @JoinColumn({ name: 'teacher_id' })
   teacher: TeacherEntity;
 
-  @OneToMany(
-    () => TeacherDistributionEntity,
-    (teacherDistribution) => teacherDistribution.subject,
-  )
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.subject)
   teacherDistributions: TeacherDistributionEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.subject)
+  requests: RequestEntity[];
 
   @Column('varchar', {
     length: 255,

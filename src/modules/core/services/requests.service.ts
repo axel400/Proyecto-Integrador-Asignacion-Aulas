@@ -10,6 +10,11 @@ import { RequestEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { SchoolYearsService } from './school-years.service';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CareersService } from './careers.service';
+import { TeachersService } from './teachers.service';
+import { CoursesService } from './courses.service';
+import { SubjectsService } from './subjects.service';
+import { StatusService } from './status.service';
 
 @Injectable()
 export class RequestsService {
@@ -17,14 +22,28 @@ export class RequestsService {
     @InjectRepository(RequestEntity)
     private requestsRepository: Repository<RequestEntity>,
     private schoolYearsService: SchoolYearsService,
+    private careersService: CareersService,
+    private teachersService: TeachersService,
+    private coursesService: CoursesService,
+    private subjectsService: SubjectsService,
+    private statusService: StatusService,
   ) { }
 
   async create(payload: CreateRequestDto): Promise<ServiceResponseHttpModel> {
     const newRequest = this.requestsRepository.create(payload);
 
-    newRequest.schoolYear = await this.schoolYearsService.findOne(
-      payload.schoolYear.id,
-    );
+    newRequest.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
+
+    newRequest.career = await this.careersService.findOne(payload.career.id);
+
+    newRequest.teacher = await this.teachersService.findOne(payload.teacher.id);
+
+    newRequest.course = await this.coursesService.findOne(payload.course.id);
+
+    newRequest.subject = await this.subjectsService.findOne(payload.subject.id);
+
+    newRequest.state = await this.statusService.findOne(payload.state.id);
+
 
     const requestCreated = await this.requestsRepository.save(newRequest);
 
@@ -39,7 +58,7 @@ export class RequestsService {
 
     //All
     const data = await this.requestsRepository.findAndCount({
-      relations: ['schoolYear'],
+      relations: ['schoolYear','career','teacher','course','subject','state'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -47,7 +66,7 @@ export class RequestsService {
 
   async findOne(id: number): Promise<any> {
     const request = await this.requestsRepository.findOne({
-      relations: ['schoolYear'],
+      relations: ['schoolYear','career','teacher','course','subject','state'],
       where: {
         id,
       },
@@ -67,9 +86,19 @@ export class RequestsService {
     if (!request) {
       throw new NotFoundException(`La solicitud con id:${id} no se encontro`);
     }
-    request.schoolYear = await this.schoolYearsService.findOne(
-      payload.schoolYear.id,
-    );
+
+    request.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
+
+    request.career = await this.careersService.findOne(payload.career.id);
+
+    request.teacher = await this.teachersService.findOne(payload.teacher.id);
+
+    request.course = await this.coursesService.findOne(payload.course.id);
+
+    request.subject = await this.subjectsService.findOne(payload.subject.id);
+
+    request.state = await this.statusService.findOne(payload.state.id);
+
     this.requestsRepository.merge(request, payload);
     const requestUpdated = await this.requestsRepository.save(request);
     return { data: requestUpdated };
@@ -108,11 +137,12 @@ export class RequestsService {
       where = [];
       where.push({ date: ILike(`%${search}%`) });
       where.push({ totalHoursRequested: ILike(`%${search}%`) });
-      where.push({ career: ILike(`%${search}%`) });
+      where.push({ startDate: ILike(`%${search}%`) });
+      where.push({ endDate: ILike(`%${search}%`) });
     }
 
     const response = await this.requestsRepository.findAndCount({
-      relations: ['schoolYear'],
+      relations: ['schoolYear','career','teacher','course','subject','state'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),

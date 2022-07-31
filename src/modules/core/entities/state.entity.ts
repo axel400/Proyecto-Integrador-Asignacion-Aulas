@@ -1,6 +1,7 @@
 import {
   ClassroomEntity,
-  RequestDetailEntity,
+  HourEntity,
+  RequestEntity,
   ScheduleConfigurationEntity,
   SchoolYearEntity,
   TeacherEntity,
@@ -15,7 +16,7 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('statues', { schema: 'core' })
+@Entity('statues', { schema: 'state_schema' })
 export class StateEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -26,17 +27,17 @@ export class StateEntity {
   @OneToMany(() => TeacherEntity, (teacher) => teacher.state)
   teachers: TeacherEntity[];
 
-  @OneToMany(() => RequestDetailEntity, (requestDetail) => requestDetail.state)
-  requestDetails: RequestDetailEntity[];
-
   @OneToMany(() => ClassroomEntity, (classroom) => classroom.state)
   classrooms: ClassroomEntity[];
 
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.state,
-  )
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.state)
   scheduleConfigurations: ScheduleConfigurationEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.state)
+  requests: RequestEntity[];
+
+  @OneToMany(() => HourEntity, (hour) => hour.state)
+  hours: HourEntity[];
 
   @Column('varchar', {
     length: 255,

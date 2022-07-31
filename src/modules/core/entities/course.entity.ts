@@ -13,6 +13,7 @@ import {
   CareerEntity,
   LevelEntity,
   ParallelEntity,
+  RequestEntity,
   SchoolDayEntity,
   TeacherDistributionEntity,
   TeacherEntity,
@@ -43,11 +44,11 @@ export class CourseEntity {
   @JoinColumn({ name: '	tutor_id' })
   tutor: TeacherEntity;
 
-  @OneToMany(
-    () => TeacherDistributionEntity,
-    (teacherDistribution) => teacherDistribution.course,
-  )
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.course)
   teacherDistributions: TeacherDistributionEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.course)
+  requests: RequestEntity[];
 
   @Column('varchar', {
     length: 255,

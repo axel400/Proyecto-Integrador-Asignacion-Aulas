@@ -10,21 +10,19 @@ import {
 } from 'typeorm';
 import {
   CourseEntity,
-  RequestDetailEntity,
-  ScheduleConfigurationEntity,
-  SchoolDayEntity,
+  SchoolYearEntity,
   SubjectEntity,
   TeacherEntity,
 } from '@core/entities';
 
-@Entity('teacher_distributions', { schema: 'core' })
+@Entity('teacher_distributions', { schema: 'state_schema' })
 export class TeacherDistributionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchoolDayEntity, { nullable: false })
-  @JoinColumn({ name: 'school_day_id' })
-  schoolDay: SchoolDayEntity;
+  @ManyToOne(() => SchoolYearEntity, { nullable: false })
+  @JoinColumn({ name: 'school_year_id' })
+  schoolYear: SchoolYearEntity;
 
   @ManyToOne(() => SubjectEntity, { nullable: false })
   @JoinColumn({ name: 'subject_id' })
@@ -37,12 +35,6 @@ export class TeacherDistributionEntity {
   @ManyToOne(() => TeacherEntity, { nullable: false })
   @JoinColumn({ name: 'teacher_id' })
   teacher: TeacherEntity;
-
-  @OneToMany(
-    () => RequestDetailEntity,
-    (requestDetail) => requestDetail.teacherDistribution,
-  )
-  requestDetails: RequestDetailEntity[];
 
   @CreateDateColumn({
     name: 'created_at',
