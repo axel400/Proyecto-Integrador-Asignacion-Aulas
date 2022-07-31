@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { CareerEntity } from '@core/entities';
+import { CareerEntity, TeacherEntity } from '@core/entities';
 import { isNotEmptyValidationOptions, isStringValidationOptions } from '@shared/validation';
 
 export class CreateSubjectDto {
@@ -15,10 +15,10 @@ export class CreateSubjectDto {
   readonly theoreticalHours: string;
 
   @IsNotEmpty(isNotEmptyValidationOptions())
-  readonly practicalHours: string;
+  readonly laboratoryHours: string;
 
   @IsNotEmpty(isNotEmptyValidationOptions())
-  readonly teacher: string;
+  readonly teacher: TeacherEntity;
 
   @IsNotEmpty(isNotEmptyValidationOptions())
   readonly career: CareerEntity;

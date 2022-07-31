@@ -15,9 +15,10 @@ import {
   ParallelEntity,
   SchoolDayEntity,
   TeacherDistributionEntity,
+  TeacherEntity,
 } from '@core/entities';
 
-@Entity('courses', { schema: 'core' })
+@Entity('courses', { schema: 'course_schema' })
 export class CourseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -37,6 +38,10 @@ export class CourseEntity {
   @ManyToOne(() => CareerEntity, { nullable: false })
   @JoinColumn({ name: '	career_id' })
   career: CareerEntity;
+
+  @ManyToOne(() => TeacherEntity, { nullable: false })
+  @JoinColumn({ name: '	tutor_id' })
+  tutor: TeacherEntity;
 
   @OneToMany(
     () => TeacherDistributionEntity,

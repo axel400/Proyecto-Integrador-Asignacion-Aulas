@@ -6,6 +6,13 @@ export class CreateCareerDto {
   @IsNotEmpty(isNotEmptyValidationOptions())
   @IsString(isStringValidationOptions())
   readonly name: string;
+
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly durationTime: string;
+
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  @IsString(isStringValidationOptions())
+  readonly image: string;
 }
 
 export class UpdateCareerDto extends PartialType(CreateCareerDto) {}

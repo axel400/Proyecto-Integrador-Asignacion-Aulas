@@ -8,6 +8,12 @@ export class CreateTimeSettingDto {
   readonly weeklyHours: string;
 
   @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly hoursUsed: string;
+
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly hoursAvailable: string;
+
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly career: CareerEntity;
 
   @IsNotEmpty(isNotEmptyValidationOptions())

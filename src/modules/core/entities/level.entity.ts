@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { CourseEntity } from '@core/entities';
 
-@Entity('levels', { schema: 'core' })
+@Entity('levels', { schema: 'course_schema' })
 export class LevelEntity {
   @PrimaryGeneratedColumn()
   id: number;

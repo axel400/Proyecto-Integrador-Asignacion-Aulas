@@ -1,4 +1,4 @@
-import { StateEntity, TeacherDistributionEntity } from '@core/entities';
+import { CourseEntity, StateEntity, SubjectEntity, TeacherDistributionEntity } from '@core/entities';
 import {
   Entity,
   Column,
@@ -25,6 +25,12 @@ export class TeacherEntity {
     (teacherDistribution) => teacherDistribution.teacher,
   )
   teacherDistributions: TeacherDistributionEntity[];
+
+  @OneToMany(() => SubjectEntity, (subject) => subject.teacher)
+  subjects: SubjectEntity[];
+
+  @OneToMany(() => CourseEntity, (course) => course.tutor)
+  courses: CourseEntity[];
 
   @Column('varchar', {
     length: 255,

@@ -5,6 +5,7 @@ import {
   LevelEntity,
   ParallelEntity,
   SchoolDayEntity,
+  TeacherEntity,
 } from '@core/entities';
 import { isNotEmptyValidationOptions } from '@shared/validation';
 
@@ -23,6 +24,9 @@ export class CreateCourseDto {
 
   @IsNotEmpty(isNotEmptyValidationOptions())
   readonly career: CareerEntity;
+
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly tutor: TeacherEntity;
 }
 
 export class UpdateCourseDto extends PartialType(CreateCourseDto) {}

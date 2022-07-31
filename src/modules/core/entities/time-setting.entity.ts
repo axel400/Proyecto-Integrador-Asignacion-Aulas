@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { CareerEntity, SchoolDayEntity } from '@core/entities';
 
-@Entity('time_settings', { schema: 'core' })
+@Entity('time_settings', { schema: 'course_schema' })
 export class TimeSettingEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -30,6 +30,20 @@ export class TimeSettingEntity {
     name: 'weekly_hours',
   })
   weeklyHours: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Horas ocupadas',
+    name: 'hours_used',
+  })
+  hoursUsed: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Horas disponibles',
+    name: 'hours_available',
+  })
+  hoursAvailable: string;
 
   @CreateDateColumn({
     name: 'created_at',

@@ -12,8 +12,5 @@ export class FilterSubjectDto extends PaginationDto {
   readonly theoreticalHours: string;
 
   @IsOptional()
-  readonly practicalHours: string;
-
-  @IsOptional()
-  readonly teacher: string;
+  readonly laboratoryHours: string;
 }

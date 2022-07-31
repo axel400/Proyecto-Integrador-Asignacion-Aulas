@@ -95,6 +95,7 @@ export class CareersService {
       page = 0;
       where = [];
       where.push({ name: ILike(`%${search}%`) });
+      where.push({ durationTime: ILike(`%${search}%`) });
     }
 
     const response = await this.careerRepository.findAndCount({

@@ -93,7 +93,6 @@ export class ColorsService {
       page = 0;
       where = [];
       where.push({ code: ILike(`%${search}%`) });
-      where.push({ image: ILike(`%${search}%`) });
     }
 
     const response = await this.colorRepository.findAndCount({

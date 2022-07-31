@@ -5,4 +5,10 @@ export class FilterTimeSettingDto extends PaginationDto {
   @IsString({ message: 'El campo name debe ser un string' })
   @IsOptional()
   readonly weeklyHours: string;
+
+  @IsOptional()
+  readonly hoursUsed: string;
+
+  @IsOptional()
+  readonly hoursAvailable: string;
 }

@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { CourseEntity, SubjectEntity, TimeSettingEntity } from '@core/entities';
 
-@Entity('careers', { schema: 'core' })
+@Entity('careers', { schema: 'course_schema' })
 export class CareerEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,6 +29,20 @@ export class CareerEntity {
     name: 'name',
   })
   name: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Nombre de la carrera',
+    name: 'duration_time',
+  })
+  durationTime: string;
+
+  @Column('varchar', {
+    length: 255,
+    comment: 'Imagen',
+    name: 'image',
+  })
+  image: string;
 
   @CreateDateColumn({
     name: 'created_at',

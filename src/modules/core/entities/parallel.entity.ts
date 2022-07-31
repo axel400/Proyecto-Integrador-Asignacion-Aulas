@@ -9,7 +9,7 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('parallels', { schema: 'core' })
+@Entity('parallels', { schema: 'course_schema' })
 export class ParallelEntity {
   @PrimaryGeneratedColumn()
   id: number;

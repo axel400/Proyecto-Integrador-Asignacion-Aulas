@@ -6,7 +6,6 @@ export enum AppRoles {
 
 export enum AppResource {
   USER = 'USER',
-  STUDENT = 'STUDENT',
 }
 
 export const roles: RolesBuilder = new RolesBuilder();

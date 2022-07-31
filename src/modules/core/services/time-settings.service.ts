@@ -137,6 +137,8 @@ export class TimeSettingsService {
       page = 0;
       where = [];
       where.push({ weeklyHours: ILike(`%${search}%`) });
+      where.push({ hoursUsed: ILike(`%${search}%`) });
+      where.push({ hoursAvailable: ILike(`%${search}%`) });
     }
 
     const response = await this.timeSettingRepository.findAndCount({

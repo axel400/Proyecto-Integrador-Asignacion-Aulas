@@ -49,7 +49,7 @@ export class CoursesService {
 
     //All
     const data = await this.courseRepository.findAndCount({
-      relations: ['level', 'parallel', 'schoolDay', 'career'],
+      relations: ['level', 'parallel', 'schoolDay', 'career','tutor'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -57,7 +57,7 @@ export class CoursesService {
 
   async findOne(id: number): Promise<any> {
     const course = await this.courseRepository.findOne({
-      relations: ['level', 'parallel', 'schoolDay', 'career'],
+      relations: ['level', 'parallel', 'schoolDay', 'career','tutor'],
       where: {
         id,
       },
@@ -124,7 +124,7 @@ export class CoursesService {
     }
 
     const response = await this.courseRepository.findAndCount({
-      relations: ['level', 'parallel', 'schoolDay', 'career'],
+      relations: ['level', 'parallel', 'schoolDay', 'career','tutor'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),

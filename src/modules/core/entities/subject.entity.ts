@@ -1,4 +1,4 @@
-import { CareerEntity, TeacherDistributionEntity } from '@core/entities';
+import { CareerEntity, TeacherDistributionEntity, TeacherEntity } from '@core/entities';
 import {
   Entity,
   Column,
@@ -11,7 +11,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-@Entity('subjects', { schema: 'core' })
+@Entity('subjects', { schema: 'course_schema' })
 export class SubjectEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,6 +19,10 @@ export class SubjectEntity {
   @ManyToOne(() => CareerEntity, { nullable: true })
   @JoinColumn({ name: 'career_id' })
   career: CareerEntity;
+
+  @ManyToOne(() => TeacherEntity, { nullable: true })
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: TeacherEntity;
 
   @OneToMany(
     () => TeacherDistributionEntity,
@@ -50,16 +54,9 @@ export class SubjectEntity {
   @Column('varchar', {
     length: 255,
     comment: 'Horas prácticas',
-    name: 'practical_hours',
+    name: 'laboratory_hours',
   })
-  practicalHours: string;
-
-  @Column('varchar', {
-    length: 255,
-    comment: 'Docente',
-    name: 'teacher',
-  })
-  teacher: string;
+  laboratoryHours: string;
 
   @CreateDateColumn({
     name: 'created_at',
