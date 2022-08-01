@@ -9,9 +9,9 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('colors', { schema: 'schedule_configuration_schema' })
+@Entity('colors', { schema: 'core' })
 export class ColorEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @OneToMany(

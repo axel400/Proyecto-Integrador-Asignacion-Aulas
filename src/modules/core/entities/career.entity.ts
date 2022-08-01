@@ -9,9 +9,9 @@ import {
 } from 'typeorm';
 import { CourseEntity, RequestEntity, SubjectEntity, TimeSettingEntity } from '@core/entities';
 
-@Entity('careers', { schema: 'course_schema' })
+@Entity('careers', { schema: 'core' })
 export class CareerEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @OneToMany(() => SubjectEntity, (subject) => subject.career)

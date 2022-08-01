@@ -9,9 +9,9 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('parallels', { schema: 'course_schema' })
+@Entity('parallels', { schema: 'core' })
 export class ParallelEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @OneToMany(() => CourseEntity, (course) => course.parallel)

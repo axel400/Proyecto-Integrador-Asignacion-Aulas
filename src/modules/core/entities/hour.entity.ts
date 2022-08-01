@@ -12,16 +12,16 @@ import {
 } from 'typeorm';
 import { SchedulePositionEntity } from './schedule-position.entity';
 
-@Entity('hours', { schema: 'state_schema' })
+@Entity('hours', { schema: 'core' })
 export class HourEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchedulePositionEntity, { nullable: false })
+  @ManyToOne(() => SchedulePositionEntity, { nullable: true })
   @JoinColumn({ name: 'schedulePosition_id' })
   schedulePosition: SchedulePositionEntity;
 
-  @ManyToOne(() => StateEntity, { nullable: false })
+  @ManyToOne(() => StateEntity, { nullable: true })
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
@@ -57,7 +57,7 @@ export class HourEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     comment: 'Fecha de eliminacion de la hora',
   })
   deletedAt: Date;

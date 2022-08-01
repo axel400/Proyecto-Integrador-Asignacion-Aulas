@@ -15,12 +15,12 @@ import {
   TeacherDistributionEntity,
 } from '@core/entities';
 
-@Entity('school_year', { schema: 'state_schema' })
+@Entity('school_year', { schema: 'core' })
 export class SchoolYearEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => StateEntity, { nullable: false })
+  @ManyToOne(() => StateEntity, { nullable: true })
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
@@ -73,7 +73,7 @@ export class SchoolYearEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     comment: 'Fecha de eliminacion del año lectivo',
   })
   deletedAt: Date;

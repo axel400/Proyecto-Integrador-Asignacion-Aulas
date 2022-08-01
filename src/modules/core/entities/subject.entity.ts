@@ -11,9 +11,9 @@ import {
   OneToMany,
 } from 'typeorm';
 
-@Entity('subjects', { schema: 'course_schema' })
+@Entity('subjects', { schema: 'core' })
 export class SubjectEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => CareerEntity, { nullable: true })
@@ -38,8 +38,7 @@ export class SubjectEntity {
   code: string;
 
   @Column('varchar', {
-    length: 255,
-    comment: 'Nombre de la materia',
+    length: 255,    comment: 'Nombre de la materia',
     name: 'name',
   })
   name: string;

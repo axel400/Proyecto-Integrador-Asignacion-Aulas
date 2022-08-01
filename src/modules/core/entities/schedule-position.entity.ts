@@ -9,9 +9,9 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('schedule_positions', { schema: 'state_schema' })
+@Entity('schedule_positions', { schema: 'core' })
 export class SchedulePositionEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @OneToMany(() => HourEntity, (hour) => hour.schedulePosition)

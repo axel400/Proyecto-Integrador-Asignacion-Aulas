@@ -11,32 +11,32 @@ import {
 } from 'typeorm';
 import { CareerEntity, CourseEntity, ScheduleConfigurationEntity, SchoolYearEntity, StateEntity, SubjectEntity, TeacherEntity } from '@core/entities';
 
-@Entity('requests', { schema: 'state_schema' })
+@Entity('requests', { schema: 'core' })
 export class RequestEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchoolYearEntity, { nullable: false })
+  @ManyToOne(() => SchoolYearEntity, { nullable: true })
   @JoinColumn({ name: 'school_year_id' })
   schoolYear: SchoolYearEntity;
 
-  @ManyToOne(() => CareerEntity, { nullable: false })
+  @ManyToOne(() => CareerEntity, { nullable: true })
   @JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
-  @ManyToOne(() => TeacherEntity, { nullable: false })
+  @ManyToOne(() => TeacherEntity, { nullable: true })
   @JoinColumn({ name: 'teacher_id' })
   teacher: TeacherEntity;
 
-  @ManyToOne(() => CourseEntity, { nullable: false })
+  @ManyToOne(() => CourseEntity, { nullable: true })
   @JoinColumn({ name: 'course_id' })
   course: CourseEntity;
 
-  @ManyToOne(() => SubjectEntity, { nullable: false })
+  @ManyToOne(() => SubjectEntity, { nullable: true })
   @JoinColumn({ name: 'subject_id' })
   subject: SubjectEntity;
 
-  @ManyToOne(() => StateEntity, { nullable: false })
+  @ManyToOne(() => StateEntity, { nullable: true })
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
@@ -93,7 +93,7 @@ export class RequestEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     comment: 'Fecha de eliminacion de la solicitud',
   })
   deletedAt: Date;

@@ -9,9 +9,9 @@ import {
 } from 'typeorm';
 import { CourseEntity } from '@core/entities';
 
-@Entity('levels', { schema: 'course_schema' })
+@Entity('levels', { schema: 'core' })
 export class LevelEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @OneToMany(() => CourseEntity, (course) => course.level)

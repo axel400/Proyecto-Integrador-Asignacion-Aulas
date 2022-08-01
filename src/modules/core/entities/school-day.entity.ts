@@ -9,9 +9,9 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('school_days', { schema: 'course_schema' })
+@Entity('school_days', { schema: 'core' })
 export class SchoolDayEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @OneToMany(() => CourseEntity, (course) => course.schoolDay)

@@ -11,16 +11,16 @@ import {
 } from 'typeorm';
 import { CareerEntity, SchoolDayEntity } from '@core/entities';
 
-@Entity('time_settings', { schema: 'course_schema' })
+@Entity('time_settings', { schema: 'core' })
 export class TimeSettingEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => CareerEntity, { nullable: false })
+  @ManyToOne(() => CareerEntity, { nullable: true })
   @JoinColumn({ name: 'career_id' })
   career: CareerEntity;
 
-  @ManyToOne(() => SchoolDayEntity, { nullable: false })
+  @ManyToOne(() => SchoolDayEntity, { nullable: true })
   @JoinColumn({ name: 'school_day_id' })
   schoolDay: SchoolDayEntity;
 
@@ -64,7 +64,7 @@ export class TimeSettingEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     comment: 'Fecha de eliminacion de la configuracion de tiempo',
   })
   deletedAt: Date;

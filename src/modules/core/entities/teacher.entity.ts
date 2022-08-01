@@ -11,12 +11,12 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-@Entity('teachers', { schema: 'state_schema' })
+@Entity('teachers', { schema: 'core' })
 export class TeacherEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => StateEntity, { nullable: false })
+  @ManyToOne(() => StateEntity, { nullable: true })
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
@@ -82,7 +82,7 @@ export class TeacherEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     comment: 'Fecha de eliminacion del docente',
   })
   deletedAt: Date;

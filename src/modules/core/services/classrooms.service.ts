@@ -21,16 +21,16 @@ export class ClassroomsService {
     private statusService: StatusService,
   ) { }
 
-  async create(payload: CreateClassroomDto): Promise<ServiceResponseHttpModel> {
+  async create(payload: CreateClassroomDto): Promise<ServiceResponseHttpModel>{
     const newClassroom = this.classroomRepository.create(payload);
 
-    newClassroom.location = await this.locationsService.findOne(
-      payload.location.id,
-    );
+    // newClassroom.location = await this.locationsService.findOne(
+    //   payload.location.id,
+    // );
 
-    newClassroom.state = await this.statusService.findOne(
-      payload.state.id,
-    );
+    // newClassroom.state = await this.statusService.findOne(
+    //   payload.state.id,
+    // );
 
     const classroomCreated = await this.classroomRepository.save(newClassroom);
 

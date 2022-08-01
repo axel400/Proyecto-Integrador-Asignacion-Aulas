@@ -11,16 +11,16 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('classrooms', { schema: 'schedule_configuration_schema' })
+@Entity('classrooms', { schema: 'core' })
 export class ClassroomEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => LocationEntity, { nullable: false })
+  @ManyToOne(() => LocationEntity, { nullable: true })
   @JoinColumn({ name: 'location_id' })
   location: LocationEntity;
 
-  @ManyToOne(() => StateEntity, { nullable: false })
+  @ManyToOne(() => StateEntity, { nullable: true })
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
@@ -63,7 +63,7 @@ export class ClassroomEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     comment: 'Fecha de eliminacion del aula',
   })
   deletedAt: Date;

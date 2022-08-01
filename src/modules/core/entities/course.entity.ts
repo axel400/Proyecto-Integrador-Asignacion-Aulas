@@ -19,28 +19,28 @@ import {
   TeacherEntity,
 } from '@core/entities';
 
-@Entity('courses', { schema: 'course_schema' })
+@Entity('courses', { schema: 'core' })
 export class CourseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => LevelEntity, { nullable: false })
+  @ManyToOne(() => LevelEntity, { nullable: true })
   @JoinColumn({ name: 'level_id' })
   level: LevelEntity;
 
-  @ManyToOne(() => SchoolDayEntity, { nullable: false })
+  @ManyToOne(() => SchoolDayEntity, { nullable: true })
   @JoinColumn({ name: 'school_day_id' })
   schoolDay: SchoolDayEntity;
 
-  @ManyToOne(() => ParallelEntity, { nullable: false })
+  @ManyToOne(() => ParallelEntity, { nullable: true })
   @JoinColumn({ name: '	parallel_id' })
   parallel: ParallelEntity;
 
-  @ManyToOne(() => CareerEntity, { nullable: false })
+  @ManyToOne(() => CareerEntity, { nullable: true })
   @JoinColumn({ name: '	career_id' })
   career: CareerEntity;
 
-  @ManyToOne(() => TeacherEntity, { nullable: false })
+  @ManyToOne(() => TeacherEntity, { nullable: true })
   @JoinColumn({ name: '	tutor_id' })
   tutor: TeacherEntity;
 
@@ -76,7 +76,7 @@ export class CourseEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     comment: 'Fecha de eliminacion del curso',
   })
   deletedAt: Date;

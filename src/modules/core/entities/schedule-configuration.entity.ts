@@ -17,32 +17,32 @@ import {
   StateEntity,
 } from '@core/entities';
 
-@Entity('schedule_configurations', { schema: 'schedule_configuration_schema' })
+@Entity('schedule_configurations', { schema: 'core' })
 export class ScheduleConfigurationEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => ColorEntity, { nullable: false })
+  @ManyToOne(() => ColorEntity, { nullable: true })
   @JoinColumn({ name: 'color_id' })
   color: ColorEntity;
 
-  @ManyToOne(() => DayEntity, { nullable: false })
+  @ManyToOne(() => DayEntity, { nullable: true })
   @JoinColumn({ name: 'day_id' })
   day: DayEntity;
 
-  @ManyToOne(() => HourEntity, { nullable: false })
+  @ManyToOne(() => HourEntity, { nullable: true })
   @JoinColumn({ name: 'hour_id' })
   hour: HourEntity;
 
-  @ManyToOne(() => ClassroomEntity, { nullable: false })
+  @ManyToOne(() => ClassroomEntity, { nullable: true })
   @JoinColumn({ name: 'classroom_id' })
   classroom: ClassroomEntity;
 
-  @ManyToOne(() => StateEntity, { nullable: false })
+  @ManyToOne(() => StateEntity, { nullable: true })
   @JoinColumn({ name: 'state_id' })
   state: StateEntity;
 
-  @ManyToOne(() => RequestEntity, { nullable: false })
+  @ManyToOne(() => RequestEntity, { nullable: true })
   @JoinColumn({ name: 'request_id' })
   request: RequestEntity;
 
@@ -72,7 +72,7 @@ export class ScheduleConfigurationEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     comment: 'Fecha de eliminacion de la configuracion del horario',
   })
   deletedAt: Date;

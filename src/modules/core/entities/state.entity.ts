@@ -16,9 +16,9 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('statues', { schema: 'state_schema' })
+@Entity('statues', { schema: 'core' })
 export class StateEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @OneToMany(() => SchoolYearEntity, (schoolyear) => schoolyear.state)
