@@ -16,20 +16,6 @@ export class ClassroomEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => LocationEntity, { nullable: true })
-  @JoinColumn({ name: 'location_id' })
-  location: LocationEntity;
-
-  @ManyToOne(() => StateEntity, { nullable: true })
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.classroom,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Nombre del aula',
@@ -63,8 +49,18 @@ export class ClassroomEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion del aula',
   })
   deletedAt: Date;
+
+  @ManyToOne(() => LocationEntity, (location) => location.classrooms)
+  @JoinColumn({ name: 'location_id' })
+  location: LocationEntity;
+
+  @ManyToOne(() => StateEntity, (state) => state.classrooms)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.classroom,)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 }

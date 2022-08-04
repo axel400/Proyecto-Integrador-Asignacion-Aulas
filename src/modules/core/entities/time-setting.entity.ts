@@ -16,14 +16,6 @@ export class TimeSettingEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => CareerEntity, { nullable: true })
-  @JoinColumn({ name: 'career_id' })
-  career: CareerEntity;
-
-  @ManyToOne(() => SchoolDayEntity, { nullable: true })
-  @JoinColumn({ name: 'school_day_id' })
-  schoolDay: SchoolDayEntity;
-
   @Column('varchar', {
     length: 255,
     comment: 'Horas semanales',
@@ -64,8 +56,15 @@ export class TimeSettingEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion de la configuracion de tiempo',
   })
   deletedAt: Date;
+
+  @ManyToOne(() => CareerEntity, (career) => career.timeSettings)
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @ManyToOne(() => SchoolDayEntity, (schoolDay) => schoolDay.timeSettings)
+  @JoinColumn({ name: 'school_day_id' })
+  schoolDay: SchoolDayEntity;
 }

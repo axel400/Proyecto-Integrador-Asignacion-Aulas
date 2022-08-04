@@ -40,7 +40,7 @@ export class DaysService {
   async findOne(id: number): Promise<any> {
     const day = await this.dayRepository.findOne({
       where: {
-        id,
+        id:id
       },
     });
 

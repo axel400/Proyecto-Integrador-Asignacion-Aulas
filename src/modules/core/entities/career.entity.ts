@@ -14,18 +14,6 @@ export class CareerEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => SubjectEntity, (subject) => subject.career)
-  subjects: SubjectEntity[];
-
-  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.career)
-  timeSettings: TimeSettingEntity[];
-
-  @OneToMany(() => CourseEntity, (course) => course.career)
-  courses: CourseEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.career)
-  requests: RequestEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Nombre de la carrera',
@@ -66,8 +54,19 @@ export class CareerEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion de la carrera',
   })
   deletedAt: Date;
+
+  @OneToMany(() => SubjectEntity, (subject) => subject.career)
+  subjects: SubjectEntity[];
+
+  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.career)
+  timeSettings: TimeSettingEntity[];
+
+  @OneToMany(() => CourseEntity, (course) => course.career)
+  courses: CourseEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.career)
+  requests: RequestEntity[];
 }

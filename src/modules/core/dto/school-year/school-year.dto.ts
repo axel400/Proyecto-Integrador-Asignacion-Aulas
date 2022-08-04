@@ -5,9 +5,6 @@ import { StateEntity } from '@core/entities';
 
 export class CreateSchoolYearDto {
   @IsNotEmpty(isNotEmptyValidationOptions())
-  readonly state: StateEntity;
-
-  @IsNotEmpty(isNotEmptyValidationOptions())
   @IsString(isStringValidationOptions())
   readonly name: string;
 
@@ -17,6 +14,8 @@ export class CreateSchoolYearDto {
   @IsNotEmpty(isNotEmptyValidationOptions())
   readonly endDate: string;
 
+  @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly state: StateEntity;
 }
 
 export class UpdateSchoolYearDto extends PartialType(CreateSchoolYearDto) {}

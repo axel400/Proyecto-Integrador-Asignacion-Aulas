@@ -26,17 +26,11 @@ export class TimeSettingsService {
   ): Promise<ServiceResponseHttpModel> {
     const newTimeSetting = this.timeSettingRepository.create(payload);
 
-    newTimeSetting.career = await this.careersService.findOne(
-      payload.career.id,
-    );
+    // newTimeSetting.career = await this.careersService.findOne(payload.career.id);
 
-    newTimeSetting.schoolDay = await this.schoolDaysService.findOne(
-      payload.schoolDay.id,
-    );
+    // newTimeSetting.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
 
-    const timeSettingCreated = await this.timeSettingRepository.save(
-      newTimeSetting,
-    );
+    const timeSettingCreated = await this.timeSettingRepository.save(newTimeSetting);
 
     return { data: timeSettingCreated };
   }
@@ -61,7 +55,7 @@ export class TimeSettingsService {
     const timeSetting = await this.timeSettingRepository.findOne({
       relations: ['career', 'schoolDay'],
       where: {
-        id,
+        id: id
       },
     });
 
@@ -83,13 +77,10 @@ export class TimeSettingsService {
         `La configuracion del horario con id:${id} no se encontro`,
       );
     }
-    timeSetting.career = await this.careersService.findOne(
-      payload.career.id,
-    );
+    // timeSetting.career = await this.careersService.findOne(payload.career.id);
 
-    timeSetting.schoolDay = await this.schoolDaysService.findOne(
-      payload.schoolDay.id,
-    );
+    // timeSetting.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
+
     this.timeSettingRepository.merge(timeSetting, payload);
     const timeSettingUpdated = await this.timeSettingRepository.save(
       timeSetting,

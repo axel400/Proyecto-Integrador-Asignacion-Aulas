@@ -16,36 +16,6 @@ export class RequestEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchoolYearEntity, { nullable: true })
-  @JoinColumn({ name: 'school_year_id' })
-  schoolYear: SchoolYearEntity;
-
-  @ManyToOne(() => CareerEntity, { nullable: true })
-  @JoinColumn({ name: 'career_id' })
-  career: CareerEntity;
-
-  @ManyToOne(() => TeacherEntity, { nullable: true })
-  @JoinColumn({ name: 'teacher_id' })
-  teacher: TeacherEntity;
-
-  @ManyToOne(() => CourseEntity, { nullable: true })
-  @JoinColumn({ name: 'course_id' })
-  course: CourseEntity;
-
-  @ManyToOne(() => SubjectEntity, { nullable: true })
-  @JoinColumn({ name: 'subject_id' })
-  subject: SubjectEntity;
-
-  @ManyToOne(() => StateEntity, { nullable: true })
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.request,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Fecha de la solicitud',
@@ -93,8 +63,34 @@ export class RequestEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion de la solicitud',
   })
   deletedAt: Date;
+
+  @ManyToOne(() => SchoolYearEntity, (schoolYear) => schoolYear.requests)
+  @JoinColumn({ name: 'school_year_id' })
+  schoolYear: SchoolYearEntity;
+
+  @ManyToOne(() => CareerEntity, (career) => career.requests)
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @ManyToOne(() => TeacherEntity, (teacher) => teacher.requests)
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: TeacherEntity;
+
+  @ManyToOne(() => CourseEntity, (course) => course.requests)
+  @JoinColumn({ name: 'course_id' })
+  course: CourseEntity;
+
+  @ManyToOne(() => SubjectEntity, (subject) => subject.requests)
+  @JoinColumn({ name: 'subject_id' })
+  subject: SubjectEntity;
+
+  @ManyToOne(() => StateEntity, (state) => state.requests)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.request)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 }

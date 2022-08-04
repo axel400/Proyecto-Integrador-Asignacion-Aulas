@@ -40,7 +40,7 @@ export class StatusService {
   async findOne(id: number): Promise<any> {
     const state = await this.stateRepository.findOne({
       where: {
-        id,
+        id:id
       },
     });
 

@@ -20,22 +20,6 @@ export class TeacherDistributionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchoolYearEntity, { nullable: true })
-  @JoinColumn({ name: 'school_year_id' })
-  schoolYear: SchoolYearEntity;
-
-  @ManyToOne(() => SubjectEntity, { nullable: true })
-  @JoinColumn({ name: 'subject_id' })
-  subject: SubjectEntity;
-
-  @ManyToOne(() => CourseEntity, { nullable: true })
-  @JoinColumn({ name: 'course_id' })
-  course: CourseEntity;
-
-  @ManyToOne(() => TeacherEntity, { nullable: true })
-  @JoinColumn({ name: 'teacher_id' })
-  teacher: TeacherEntity;
-
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
@@ -55,8 +39,23 @@ export class TeacherDistributionEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion de la distribucion de docentes',
   })
   deletedAt: Date;
+
+  @ManyToOne(() => SchoolYearEntity, (schoolYear) => schoolYear.teacherDistributions)
+  @JoinColumn({ name: 'school_year_id' })
+  schoolYear: SchoolYearEntity;
+
+  @ManyToOne(() => SubjectEntity, (subject) => subject.teacherDistributions)
+  @JoinColumn({ name: 'subject_id' })
+  subject: SubjectEntity;
+
+  @ManyToOne(() => CourseEntity, (course) => course.teacherDistributions)
+  @JoinColumn({ name: 'course_id' })
+  course: CourseEntity;
+
+  @ManyToOne(() => TeacherEntity, (teacher) => teacher.teacherDistributions)
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: TeacherEntity;
 }

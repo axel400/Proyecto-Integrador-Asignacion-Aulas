@@ -14,12 +14,6 @@ export class DayEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.day,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Nombre del día',
@@ -46,8 +40,10 @@ export class DayEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion del día',
   })
   deletedAt: Date;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.day)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 }

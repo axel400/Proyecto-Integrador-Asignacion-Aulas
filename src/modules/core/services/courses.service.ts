@@ -30,15 +30,15 @@ export class CoursesService {
   async create(payload: CreateCourseDto): Promise<ServiceResponseHttpModel> {
     const newCourse = this.courseRepository.create(payload);
 
-    newCourse.level = await this.levelsService.findOne(payload.level.id);
+    // newCourse.level = await this.levelsService.findOne(payload.level.id);
 
-    newCourse.parallel = await this.parallelsService.findOne(payload.parallel.id);
+    // newCourse.parallel = await this.parallelsService.findOne(payload.parallel.id);
 
-    newCourse.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
+    // newCourse.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
 
-    newCourse.career = await this.careersService.findOne(payload.career.id);
+    // newCourse.career = await this.careersService.findOne(payload.career.id);
 
-    newCourse.tutor = await this.tutorsService.findOne(payload.tutor.id);
+    // newCourse.tutor = await this.tutorsService.findOne(payload.tutor.id);
 
     const courseCreated = await this.courseRepository.save(newCourse);
 
@@ -63,7 +63,7 @@ export class CoursesService {
     const course = await this.courseRepository.findOne({
       relations: ['level', 'parallel', 'schoolDay', 'career','tutor'],
       where: {
-        id,
+        id:id
       },
     });
 
@@ -81,15 +81,15 @@ export class CoursesService {
     if (!course) {
       throw new NotFoundException(`El curso con id:${id} no se encontro`);
     }
-    course.level = await this.levelsService.findOne(payload.level.id);
+    // course.level = await this.levelsService.findOne(payload.level.id);
 
-    course.parallel = await this.parallelsService.findOne(payload.parallel.id);
+    // course.parallel = await this.parallelsService.findOne(payload.parallel.id);
 
-    course.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
+    // course.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
 
-    course.career = await this.careersService.findOne(payload.career.id);
+    // course.career = await this.careersService.findOne(payload.career.id);
 
-    course.tutor = await this.tutorsService.findOne(payload.tutor.id);
+    // course.tutor = await this.tutorsService.findOne(payload.tutor.id);
 
     this.courseRepository.merge(course, payload);
     const courseUpdated = await this.courseRepository.save(course);

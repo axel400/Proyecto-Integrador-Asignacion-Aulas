@@ -24,32 +24,6 @@ export class CourseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => LevelEntity, { nullable: true })
-  @JoinColumn({ name: 'level_id' })
-  level: LevelEntity;
-
-  @ManyToOne(() => SchoolDayEntity, { nullable: true })
-  @JoinColumn({ name: 'school_day_id' })
-  schoolDay: SchoolDayEntity;
-
-  @ManyToOne(() => ParallelEntity, { nullable: true })
-  @JoinColumn({ name: '	parallel_id' })
-  parallel: ParallelEntity;
-
-  @ManyToOne(() => CareerEntity, { nullable: true })
-  @JoinColumn({ name: '	career_id' })
-  career: CareerEntity;
-
-  @ManyToOne(() => TeacherEntity, { nullable: true })
-  @JoinColumn({ name: '	tutor_id' })
-  tutor: TeacherEntity;
-
-  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.course)
-  teacherDistributions: TeacherDistributionEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.course)
-  requests: RequestEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Nombre del curso',
@@ -76,8 +50,33 @@ export class CourseEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion del curso',
   })
   deletedAt: Date;
+
+  @ManyToOne(() => LevelEntity, (level) => level.courses)
+  @JoinColumn({ name: 'level_id' })
+  level: LevelEntity;
+
+  @ManyToOne(() => SchoolDayEntity, (schoolDay) => schoolDay.courses)
+  @JoinColumn({ name: 'school_day_id' })
+  schoolDay: SchoolDayEntity;
+
+  @ManyToOne(() => ParallelEntity, (parallel) => parallel.courses)
+  @JoinColumn({ name: 'parallel_id' })
+  parallel: ParallelEntity;
+
+  @ManyToOne(() => CareerEntity, (career) => career.courses)
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @ManyToOne(() => TeacherEntity, (tutor) => tutor.courses)
+  @JoinColumn({ name: 'tutor_id' })
+  tutor: TeacherEntity;
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.course)
+  teacherDistributions: TeacherDistributionEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.course)
+  requests: RequestEntity[];
 }

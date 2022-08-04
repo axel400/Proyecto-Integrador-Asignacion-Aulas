@@ -58,7 +58,7 @@ export class ClassroomsService {
     const classroom = await this.classroomRepository.findOne({
       relations: ['location','state'],
       where: {
-        id,
+        id:id
       },
     });
 
@@ -77,13 +77,13 @@ export class ClassroomsService {
       throw new NotFoundException(`El aula con id:${id} no se encontro`);
     }
 
-    classroom.location = await this.locationsService.findOne(
-      payload.location.id,
-    );
+    // classroom.location = await this.locationsService.findOne(
+    //   payload.location.id,
+    // );
 
-    classroom.state = await this.statusService.findOne(
-      payload.state.id,
-    );
+    // classroom.state = await this.statusService.findOne(
+    //   payload.state.id,
+    // );
 
     this.classroomRepository.merge(classroom, payload);
     const classroomUpdated = await this.classroomRepository.save(classroom);

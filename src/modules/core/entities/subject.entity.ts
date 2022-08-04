@@ -16,20 +16,6 @@ export class SubjectEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => CareerEntity, { nullable: true })
-  @JoinColumn({ name: 'career_id' })
-  career: CareerEntity;
-
-  @ManyToOne(() => TeacherEntity, { nullable: true })
-  @JoinColumn({ name: 'teacher_id' })
-  teacher: TeacherEntity;
-
-  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.subject)
-  teacherDistributions: TeacherDistributionEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.subject)
-  requests: RequestEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Codigo de la materia',
@@ -76,8 +62,21 @@ export class SubjectEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion de la materia',
   })
   deletedAt: Date;
+
+  @ManyToOne(() => CareerEntity, (career) => career.subjects)
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @ManyToOne(() => TeacherEntity, (teacher) => teacher.subjects)
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: TeacherEntity;
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.subject)
+  teacherDistributions: TeacherDistributionEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.subject)
+  requests: RequestEntity[];
 }

@@ -14,9 +14,6 @@ export class LocationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => ClassroomEntity, (classroom) => classroom.location)
-  classrooms: ClassroomEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Nombre del edificio',
@@ -43,8 +40,10 @@ export class LocationEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion del edificio',
   })
   deletedAt: Date;
+
+  @OneToMany(() => ClassroomEntity, (classroom) => classroom.location)
+  classrooms: ClassroomEntity[];
 }

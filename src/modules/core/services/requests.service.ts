@@ -32,18 +32,17 @@ export class RequestsService {
   async create(payload: CreateRequestDto): Promise<ServiceResponseHttpModel> {
     const newRequest = this.requestsRepository.create(payload);
 
-    newRequest.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
+    // newRequest.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
 
-    newRequest.career = await this.careersService.findOne(payload.career.id);
+    // newRequest.career = await this.careersService.findOne(payload.career.id);
 
-    newRequest.teacher = await this.teachersService.findOne(payload.teacher.id);
+    // newRequest.teacher = await this.teachersService.findOne(payload.teacher.id);
 
-    newRequest.course = await this.coursesService.findOne(payload.course.id);
+    // newRequest.course = await this.coursesService.findOne(payload.course.id);
 
-    newRequest.subject = await this.subjectsService.findOne(payload.subject.id);
+    // newRequest.subject = await this.subjectsService.findOne(payload.subject.id);
 
-    newRequest.state = await this.statusService.findOne(payload.state.id);
-
+    // newRequest.state = await this.statusService.findOne(payload.state.id);
 
     const requestCreated = await this.requestsRepository.save(newRequest);
 
@@ -68,7 +67,7 @@ export class RequestsService {
     const request = await this.requestsRepository.findOne({
       relations: ['schoolYear','career','teacher','course','subject','state'],
       where: {
-        id,
+        id:id
       },
     });
 
@@ -87,17 +86,17 @@ export class RequestsService {
       throw new NotFoundException(`La solicitud con id:${id} no se encontro`);
     }
 
-    request.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
+    // request.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
 
-    request.career = await this.careersService.findOne(payload.career.id);
+    // request.career = await this.careersService.findOne(payload.career.id);
 
-    request.teacher = await this.teachersService.findOne(payload.teacher.id);
+    // request.teacher = await this.teachersService.findOne(payload.teacher.id);
 
-    request.course = await this.coursesService.findOne(payload.course.id);
+    // request.course = await this.coursesService.findOne(payload.course.id);
 
-    request.subject = await this.subjectsService.findOne(payload.subject.id);
+    // request.subject = await this.subjectsService.findOne(payload.subject.id);
 
-    request.state = await this.statusService.findOne(payload.state.id);
+    // request.state = await this.statusService.findOne(payload.state.id);
 
     this.requestsRepository.merge(request, payload);
     const requestUpdated = await this.requestsRepository.save(request);

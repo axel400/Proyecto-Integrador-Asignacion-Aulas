@@ -21,24 +21,6 @@ export class StateEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => SchoolYearEntity, (schoolyear) => schoolyear.state)
-  schoolyears: SchoolYearEntity[];
-
-  @OneToMany(() => TeacherEntity, (teacher) => teacher.state)
-  teachers: TeacherEntity[];
-
-  @OneToMany(() => ClassroomEntity, (classroom) => classroom.state)
-  classrooms: ClassroomEntity[];
-
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.state)
-  scheduleConfigurations: ScheduleConfigurationEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.state)
-  requests: RequestEntity[];
-
-  @OneToMany(() => HourEntity, (hour) => hour.state)
-  hours: HourEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Nombre del estado',
@@ -65,8 +47,25 @@ export class StateEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion del estado',
   })
   deletedAt: Date;
+
+  @OneToMany(() => SchoolYearEntity, (schoolyear) => schoolyear.state)
+  schoolyears: SchoolYearEntity[];
+
+  @OneToMany(() => TeacherEntity, (teacher) => teacher.state)
+  teachers: TeacherEntity[];
+
+  @OneToMany(() => ClassroomEntity, (classroom) => classroom.state)
+  classrooms: ClassroomEntity[];
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.state)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.state)
+  requests: RequestEntity[];
+
+  @OneToMany(() => HourEntity, (hour) => hour.state)
+  hours: HourEntity[];
 }

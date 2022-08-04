@@ -40,7 +40,7 @@ export class LevelsService {
   async findOne(id: number): Promise<any> {
     const level = await this.levelRepository.findOne({
       where: {
-        id,
+        id:id
       },
     });
 

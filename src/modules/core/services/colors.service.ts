@@ -40,7 +40,7 @@ export class ColorsService {
   async findOne(id: number): Promise<any> {
     const color = await this.colorRepository.findOne({
       where: {
-        id,
+        id:id
       },
     });
 

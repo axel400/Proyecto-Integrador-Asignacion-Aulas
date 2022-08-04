@@ -22,9 +22,7 @@ export class SchedulePositionsService {
   ): Promise<ServiceResponseHttpModel> {
     const newSchedulePosition = this.schedulePositionRepository.create(payload);
 
-    const schedulePositionCreated = await this.schedulePositionRepository.save(
-      newSchedulePosition,
-    );
+    const schedulePositionCreated = await this.schedulePositionRepository.save(newSchedulePosition);
 
     return { data: schedulePositionCreated };
   }
@@ -46,7 +44,7 @@ export class SchedulePositionsService {
   async findOne(id: number): Promise<any> {
     const schedulePosition = await this.schedulePositionRepository.findOne({
       where: {
-        id,
+        id: id
       },
     });
 
@@ -71,9 +69,7 @@ export class SchedulePositionsService {
       );
     }
     this.schedulePositionRepository.merge(schedulePosition, payload);
-    const schedulePositionUpdated = await this.schedulePositionRepository.save(
-      schedulePosition,
-    );
+    const schedulePositionUpdated = await this.schedulePositionRepository.save(schedulePosition);
     return { data: schedulePositionUpdated };
   }
 

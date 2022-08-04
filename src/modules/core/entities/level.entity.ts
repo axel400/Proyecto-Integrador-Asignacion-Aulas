@@ -14,9 +14,6 @@ export class LevelEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => CourseEntity, (course) => course.level)
-  courses: CourseEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Nombre del nivel',
@@ -43,8 +40,10 @@ export class LevelEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion del nivel',
   })
   deletedAt: Date;
+
+  @OneToMany(() => CourseEntity, (course) => course.level)
+  courses: CourseEntity[];
 }

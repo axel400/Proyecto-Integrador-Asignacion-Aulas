@@ -24,9 +24,9 @@ export class SubjectsService {
   async create(payload: CreateSubjectDto): Promise<ServiceResponseHttpModel> {
     const newSubject = this.subjectRepository.create(payload);
 
-    newSubject.career = await this.careersService.findOne(payload.career.id);
+    // newSubject.career = await this.careersService.findOne(payload.career.id);
 
-    newSubject.teacher = await this.teachersService.findOne(payload.teacher.id);
+    // newSubject.teacher = await this.teachersService.findOne(payload.teacher.id);
 
     const subjectCreated = await this.subjectRepository.save(newSubject);
 
@@ -51,7 +51,7 @@ export class SubjectsService {
     const subject = await this.subjectRepository.findOne({
       relations: ['career','teacher'],
       where: {
-        id,
+        id:id
       },
     });
 
@@ -73,9 +73,9 @@ export class SubjectsService {
         `La asignatura con id:${id} no se encontro`,
       );
     }
-    subject.career = await this.careersService.findOne(payload.career.id);
+    // subject.career = await this.careersService.findOne(payload.career.id);
 
-    subject.teacher = await this.teachersService.findOne(payload.teacher.id);
+    // subject.teacher = await this.teachersService.findOne(payload.teacher.id);
 
     this.subjectRepository.merge(subject, payload);
     const subjectUpdated = await this.subjectRepository.save(subject);

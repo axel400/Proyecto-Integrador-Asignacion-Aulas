@@ -14,12 +14,6 @@ export class ColorEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.color,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Codigo del color',
@@ -53,8 +47,10 @@ export class ColorEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion del color',
   })
   deletedAt: Date;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.color)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 }

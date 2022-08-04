@@ -16,25 +16,6 @@ export class TeacherEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => StateEntity, { nullable: true })
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(
-    () => TeacherDistributionEntity,
-    (teacherDistribution) => teacherDistribution.teacher,
-  )
-  teacherDistributions: TeacherDistributionEntity[];
-
-  @OneToMany(() => SubjectEntity, (subject) => subject.teacher)
-  subjects: SubjectEntity[];
-
-  @OneToMany(() => CourseEntity, (course) => course.tutor)
-  courses: CourseEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.teacher)
-  requests: RequestEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Tarjeta de identificacion del docente',
@@ -82,8 +63,23 @@ export class TeacherEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion del docente',
   })
   deletedAt: Date;
+
+  @ManyToOne(() => StateEntity, (state) => state.teachers)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => TeacherDistributionEntity,(teacherDistribution) => teacherDistribution.teacher)
+  teacherDistributions: TeacherDistributionEntity[];
+
+  @OneToMany(() => SubjectEntity, (subject) => subject.teacher)
+  subjects: SubjectEntity[];
+
+  @OneToMany(() => CourseEntity, (course) => course.tutor)
+  courses: CourseEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.teacher)
+  requests: RequestEntity[];
 }

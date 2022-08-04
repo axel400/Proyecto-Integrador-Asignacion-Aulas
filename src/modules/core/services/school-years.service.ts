@@ -24,11 +24,9 @@ export class SchoolYearsService {
   ): Promise<ServiceResponseHttpModel> {
     const newSchoolYear = this.schoolYearRepository.create(payload);
 
-    newSchoolYear.state = await this.statusService.findOne(payload.state.id);
+    //newSchoolYear.state = await this.statusService.findOne(payload.state.id);
 
-    const schoolYearCreated = await this.schoolYearRepository.save(
-      newSchoolYear,
-    );
+    const schoolYearCreated = await this.schoolYearRepository.save(newSchoolYear);
 
     return { data: schoolYearCreated };
   }
@@ -53,7 +51,7 @@ export class SchoolYearsService {
     const schoolYear = await this.schoolYearRepository.findOne({
       relations: ['state'],
       where: {
-        id,
+        id: id
       },
     });
 
@@ -75,7 +73,8 @@ export class SchoolYearsService {
         `El periodo lectivo con id:${id} no se encontro`,
       );
     }
-    schoolYear.state = await this.statusService.findOne(payload.state.id);
+    //schoolYear.state = await this.statusService.findOne(payload.state.id);
+
     this.schoolYearRepository.merge(schoolYear, payload);
     const schoolYearUpdated = await this.schoolYearRepository.save(schoolYear);
     return { data: schoolYearUpdated };

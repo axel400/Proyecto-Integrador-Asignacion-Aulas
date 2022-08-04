@@ -22,7 +22,7 @@ export class TeachersService {
   async create(payload: CreateTeacherDto): Promise<ServiceResponseHttpModel> {
     const newTeacher = this.teacherRepository.create(payload);
 
-    newTeacher.state = await this.statussService.findOne(payload.state.id);
+    //newTeacher.state = await this.statussService.findOne(payload.state.id);
 
     const teacherCreated = await this.teacherRepository.save(newTeacher);
 
@@ -47,7 +47,7 @@ export class TeachersService {
     const teacher = await this.teacherRepository.findOne({
       relations: ['state'],
       where: {
-        id,
+        id:id
       },
     });
 
@@ -65,7 +65,7 @@ export class TeachersService {
     if (!teacher) {
       throw new NotFoundException(`El docente con id:${id} no se encontro`);
     }
-    teacher.state = await this.statussService.findOne(payload.state.id);
+    //teacher.state = await this.statussService.findOne(payload.state.id);
     this.teacherRepository.merge(teacher, payload);
     const teacherUpdated = await this.teacherRepository.save(teacher);
     return { data: teacherUpdated };

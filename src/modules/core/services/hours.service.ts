@@ -21,13 +21,9 @@ export class HoursService {
   async create(payload: CreateHourDto): Promise<ServiceResponseHttpModel> {
     const newHour = this.hourRepository.create(payload);
 
-    newHour.schedulePosition = await this.schedulePositionsService.findOne(
-      payload.schedulePosition.id,
-    );
+    // newHour.schedulePosition = await this.schedulePositionsService.findOne(payload.schedulePosition.id);
 
-    newHour.state = await this.statusService.findOne(
-      payload.state.id,
-    );
+    // newHour.state = await this.statusService.findOne(payload.state.id);
 
     const hourCreated = await this.hourRepository.save(newHour);
 
@@ -42,7 +38,7 @@ export class HoursService {
 
     //All
     const data = await this.hourRepository.findAndCount({
-      relations: ['schedulePosition','state'],
+      relations: ['schedulePosition', 'state'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -50,9 +46,9 @@ export class HoursService {
 
   async findOne(id: number): Promise<any> {
     const hour = await this.hourRepository.findOne({
-      relations: ['schedulePosition','state'],
+      relations: ['schedulePosition', 'state'],
       where: {
-        id,
+        id: id
       },
     });
 
@@ -71,13 +67,9 @@ export class HoursService {
       throw new NotFoundException(`La hora con id:${id} no se encontro`);
     }
 
-    hour.schedulePosition = await this.schedulePositionsService.findOne(
-      payload.schedulePosition.id,
-    );
+    // hour.schedulePosition = await this.schedulePositionsService.findOne(payload.schedulePosition.id);
 
-    hour.state = await this.statusService.findOne(
-      payload.state.id,
-    );
+    // hour.state = await this.statusService.findOne(payload.state.id);
 
     this.hourRepository.merge(hour, payload);
     const hourUpdated = await this.hourRepository.save(hour);
@@ -117,7 +109,7 @@ export class HoursService {
     }
 
     const response = await this.hourRepository.findAndCount({
-      relations: ['schedulePosition','state'],
+      relations: ['schedulePosition', 'state'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),

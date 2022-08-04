@@ -32,24 +32,15 @@ export class TeacherDistributionsService {
     const newTeacherDistribution =
       this.teacherDistributionRepository.create(payload);
 
-    newTeacherDistribution.schoolYear = await this.schoolYearsService.findOne(
-      payload.schoolYear.id,
-    );
+    // newTeacherDistribution.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
 
-    newTeacherDistribution.subject = await this.subjectsService.findOne(
-      payload.subject.id,
-    );
+    // newTeacherDistribution.subject = await this.subjectsService.findOne(payload.subject.id);
 
-    newTeacherDistribution.course = await this.coursesService.findOne(
-      payload.course.id,
-    );
+    // newTeacherDistribution.course = await this.coursesService.findOne(payload.course.id);
 
-    newTeacherDistribution.teacher = await this.teachersService.findOne(
-      payload.teacher.id,
-    );
+    // newTeacherDistribution.teacher = await this.teachersService.findOne(payload.teacher.id);
 
-    const teacherDistributionCreated =
-      await this.teacherDistributionRepository.save(newTeacherDistribution);
+    const teacherDistributionCreated = await this.teacherDistributionRepository.save(newTeacherDistribution);
 
     return { data: teacherDistributionCreated };
   }
@@ -70,7 +61,7 @@ export class TeacherDistributionsService {
       await this.teacherDistributionRepository.findOne({
         relations: ['schoolYear', 'subject', 'course', 'teacher'],
         where: {
-          id,
+          id: id
         },
       });
 
@@ -93,24 +84,16 @@ export class TeacherDistributionsService {
         `La distribucion de docentes con id:${id} no se encontro`,
       );
     }
-    teacherDistribution.schoolYear = await this.schoolYearsService.findOne(
-      payload.schoolYear.id,
-    );
+    // teacherDistribution.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
 
-    teacherDistribution.subject = await this.subjectsService.findOne(
-      payload.subject.id,
-    );
+    // teacherDistribution.subject = await this.subjectsService.findOne(payload.subject.id);
 
-    teacherDistribution.course = await this.coursesService.findOne(
-      payload.course.id,
-    );
+    // teacherDistribution.course = await this.coursesService.findOne(payload.course.id);
 
-    teacherDistribution.teacher = await this.teachersService.findOne(
-      payload.teacher.id,
-    );
+    // teacherDistribution.teacher = await this.teachersService.findOne(payload.teacher.id);
+
     this.teacherDistributionRepository.merge(teacherDistribution, payload);
-    const teacherDistributionUpdated =
-      await this.teacherDistributionRepository.save(teacherDistribution);
+    const teacherDistributionUpdated = await this.teacherDistributionRepository.save(teacherDistribution);
     return { data: teacherDistributionUpdated };
   }
 

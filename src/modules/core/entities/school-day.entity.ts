@@ -14,12 +14,6 @@ export class SchoolDayEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => CourseEntity, (course) => course.schoolDay)
-  courses: CourseEntity[];
-
-  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.schoolDay)
-  timeSettings: TimeSettingEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Nombre de la jornada',
@@ -46,8 +40,13 @@ export class SchoolDayEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion de la jornada',
   })
   deletedAt: Date;
+
+  @OneToMany(() => CourseEntity, (course) => course.schoolDay)
+  courses: CourseEntity[];
+
+  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.schoolDay)
+  timeSettings: TimeSettingEntity[];
 }

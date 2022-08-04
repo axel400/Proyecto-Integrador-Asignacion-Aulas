@@ -40,7 +40,7 @@ export class ParallelsService {
   async findOne(id: number): Promise<any> {
     const parallel = await this.parallelRepository.findOne({
       where: {
-        id,
+        id:id
       },
     });
 

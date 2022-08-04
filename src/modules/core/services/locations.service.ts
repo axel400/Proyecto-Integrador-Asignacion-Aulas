@@ -40,7 +40,7 @@ export class LocationsService {
   async findOne(id: number): Promise<any> {
     const location = await this.locationRepository.findOne({
       where: {
-        id,
+        id:id
       },
     });
 

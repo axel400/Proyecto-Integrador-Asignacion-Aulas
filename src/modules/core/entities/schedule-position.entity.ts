@@ -14,9 +14,6 @@ export class SchedulePositionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => HourEntity, (hour) => hour.schedulePosition)
-  schedulePositions: HourEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Codigo de la posicion del horario',
@@ -43,8 +40,10 @@ export class SchedulePositionEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion de la posicion del horario',
   })
   deletedAt: Date;
+
+  @OneToMany(() => HourEntity, (hour) => hour.schedulePosition)
+  hours: HourEntity[];
 }

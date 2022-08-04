@@ -40,7 +40,7 @@ export class CareersService {
   async findOne(id: number): Promise<any> {
     const career = await this.careerRepository.findOne({
       where: {
-        id,
+        id:id
       },
     });
 

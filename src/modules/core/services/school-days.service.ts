@@ -42,7 +42,7 @@ export class SchoolDaysService {
   async findOne(id: number): Promise<any> {
     const schoolDay = await this.schoolDayRepository.findOne({
       where: {
-        id,
+        id: id
       },
     });
 
@@ -72,9 +72,7 @@ export class SchoolDaysService {
       throw new NotFoundException(`La jornada con id:${id} no se encontro`);
     }
 
-    const schoolDayDeleted = await this.schoolDayRepository.softRemove(
-      schoolDay,
-    );
+    const schoolDayDeleted = await this.schoolDayRepository.softRemove(schoolDay);
 
     return { data: schoolDayDeleted };
   }

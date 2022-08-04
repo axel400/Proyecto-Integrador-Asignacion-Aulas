@@ -17,20 +17,6 @@ export class HourEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => SchedulePositionEntity, { nullable: true })
-  @JoinColumn({ name: 'schedulePosition_id' })
-  schedulePosition: SchedulePositionEntity;
-
-  @ManyToOne(() => StateEntity, { nullable: true })
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(
-    () => ScheduleConfigurationEntity,
-    (scheduleConfiguration) => scheduleConfiguration.hour,
-  )
-  scheduleConfigurations: ScheduleConfigurationEntity[];
-
   @Column('varchar', {
     length: 255,
     comment: 'Hora',
@@ -57,8 +43,18 @@ export class HourEntity {
   @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    nullable: true,
     comment: 'Fecha de eliminacion de la hora',
   })
   deletedAt: Date;
+
+  @ManyToOne(() => SchedulePositionEntity, (schedulePosition) => schedulePosition.hours)
+  @JoinColumn({ name: 'schedulePosition_id' })
+  schedulePosition: SchedulePositionEntity;
+
+  @ManyToOne(() => StateEntity, (state) => state.hours)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => ScheduleConfigurationEntity,(scheduleConfiguration) => scheduleConfiguration.hour)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 }

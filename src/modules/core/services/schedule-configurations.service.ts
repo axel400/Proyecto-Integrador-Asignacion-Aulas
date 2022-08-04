@@ -27,41 +27,26 @@ export class ScheduleConfigurationsService {
     private requestsService: RequestsService,
     private colorsService: ColorsService,
     private statusService: StatusService,
-  ) {}
+  ) { }
 
   async create(
     payload: CreateScheduleConfigurationDto,
   ): Promise<ServiceResponseHttpModel> {
-    const newScheduleConfiguration =
-      this.scheduleConfigurationRepository.create(payload);
+    const newScheduleConfiguration = this.scheduleConfigurationRepository.create(payload);
 
-    newScheduleConfiguration.classroom = await this.classroomsService.findOne(
-      payload.classroom.id,
-    );
+    // newScheduleConfiguration.classroom = await this.classroomsService.findOne(payload.classroom.id);
 
-    newScheduleConfiguration.day = await this.daysService.findOne(
-      payload.day.id,
-    );
+    // newScheduleConfiguration.day = await this.daysService.findOne(payload.day.id);
 
-    newScheduleConfiguration.hour = await this.hoursService.findOne(
-      payload.hour.id,
-    );
+    // newScheduleConfiguration.hour = await this.hoursService.findOne(payload.hour.id);
 
-    newScheduleConfiguration.request =
-      await this.requestsService.findOne(
-        payload.request.id,
-      );
+    // newScheduleConfiguration.request = await this.requestsService.findOne(payload.request.id);
 
-    newScheduleConfiguration.color = await this.colorsService.findOne(
-      payload.color.id,
-    );
+    // newScheduleConfiguration.color = await this.colorsService.findOne(payload.color.id);
 
-    newScheduleConfiguration.state = await this.statusService.findOne(
-      payload.state.id,
-    );
+    // newScheduleConfiguration.state = await this.statusService.findOne(payload.state.id);
 
-    const scheduleConfugurationCreated =
-      await this.scheduleConfigurationRepository.save(newScheduleConfiguration);
+    const scheduleConfugurationCreated = await this.scheduleConfigurationRepository.save(newScheduleConfiguration);
 
     return { data: scheduleConfugurationCreated };
   }
@@ -101,7 +86,7 @@ export class ScheduleConfigurationsService {
           'state',
         ],
         where: {
-          id,
+          id: id
         },
       });
 
@@ -124,33 +109,22 @@ export class ScheduleConfigurationsService {
         `La configuracion del horario con id:${id} no se encontro`,
       );
     }
-    scheduleConfiguration.classroom = await this.classroomsService.findOne(
-      payload.classroom.id,
-    );
+    // scheduleConfiguration.classroom = await this.classroomsService.findOne(payload.classroom.id);
 
-    scheduleConfiguration.day = await this.daysService.findOne(
-      payload.day.id,
-    );
+    // scheduleConfiguration.day = await this.daysService.findOne(payload.day.id);
 
-    scheduleConfiguration.hour = await this.hoursService.findOne(
-      payload.hour.id,
-    );
+    // scheduleConfiguration.hour = await this.hoursService.findOne(payload.hour.id);
 
-    scheduleConfiguration.request =
-      await this.requestsService.findOne(
-        payload.request.id,
-      );
+    // scheduleConfiguration.request = await this.requestsService.findOne(payload.request.id);
 
-    scheduleConfiguration.color = await this.colorsService.findOne(
-      payload.color.id,
-    );
+    // scheduleConfiguration.color = await this.colorsService.findOne(payload.color.id);
 
-    scheduleConfiguration.state = await this.statusService.findOne(
-      payload.state.id,
-    );
+    // scheduleConfiguration.state = await this.statusService.findOne(payload.state.id);
+
     this.scheduleConfigurationRepository.merge(scheduleConfiguration, payload);
-    const scheduleConfigurationUpdated =
-      await this.scheduleConfigurationRepository.save(scheduleConfiguration);
+
+    const scheduleConfigurationUpdated = await this.scheduleConfigurationRepository.save(scheduleConfiguration);
+
     return { data: scheduleConfigurationUpdated };
   }
 
