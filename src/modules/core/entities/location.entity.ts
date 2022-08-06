@@ -1,18 +1,13 @@
 import { ClassroomEntity } from '@core/entities';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity('locations', { schema: 'core' })
 export class LocationEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => ClassroomEntity, (classroom) => classroom.location)
+  classrooms: ClassroomEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -43,7 +38,4 @@ export class LocationEntity {
     comment: 'Fecha de eliminacion del edificio',
   })
   deletedAt: Date;
-
-  @OneToMany(() => ClassroomEntity, (classroom) => classroom.location)
-  classrooms: ClassroomEntity[];
 }

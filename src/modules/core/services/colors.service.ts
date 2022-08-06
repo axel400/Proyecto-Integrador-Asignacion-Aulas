@@ -1,11 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateColorDto,
-  FilterColorDto,
-  PaginationDto,
-  UpdateColorDto,
-} from '@core/dto';
+import { CreateColorDto, FilterColorDto, PaginationDto, UpdateColorDto } from '@core/dto';
 import { ColorEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -38,28 +33,26 @@ export class ColorsService {
   }
 
   async findOne(id: number): Promise<any> {
-    const color = await this.colorRepository.findOne({
-      where: {
-        id:id
-      },
-    });
+    const color = await this.colorRepository.findOne({ where: { id: id } });
 
     if (!color) {
       throw new NotFoundException(`El color con id:${id} no se encontro`);
     }
+
     return { data: color };
   }
 
-  async update(
-    id: number,
-    payload: UpdateColorDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateColorDto): Promise<ServiceResponseHttpModel> {
     const color = await this.colorRepository.findOneBy({ id });
+
     if (!color) {
       throw new NotFoundException(`El color con id:${id} no se encontro`);
     }
+
     this.colorRepository.merge(color, payload);
+
     const colorUpdated = await this.colorRepository.save(color);
+
     return { data: colorUpdated };
   }
 
@@ -77,13 +70,14 @@ export class ColorsService {
 
   async removeAll(payload: ColorEntity[]): Promise<ServiceResponseHttpModel> {
     const colorsDeleted = await this.colorRepository.softRemove(payload);
+
     return { data: colorsDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterColorDto,
-  ): Promise<ServiceResponseHttpModel> {
-    let where: FindOptionsWhere<ColorEntity> | FindOptionsWhere<ColorEntity>[];
+  private async paginateAndFilter(params: FilterColorDto): Promise<ServiceResponseHttpModel> {
+    let where:
+      | FindOptionsWhere<ColorEntity>
+      | FindOptionsWhere<ColorEntity>[];
     where = {};
     let { page, search } = params;
     const { limit } = params;

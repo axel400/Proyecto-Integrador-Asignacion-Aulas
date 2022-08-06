@@ -1,53 +1,31 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository, FindOptionsWhere } from 'typeorm';
-import {
-  CreateTeacherDistributionDto,
-  FilterTeacherDistributionDto,
-  PaginationDto,
-  UpdateTeacherDistributionDto,
-} from '@core/dto';
+import { Repository, FindOptionsWhere, ILike } from 'typeorm';
+import { CreateTeacherDistributionDto, FilterTeacherDistributionDto, PaginationDto, UpdateTeacherDistributionDto } from '@core/dto';
 import { TeacherDistributionEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { SchoolDaysService } from './school-days.service';
-import { SubjectsService } from './subjects.service';
-import { CoursesService } from './courses.service';
-import { TeachersService } from './teachers.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SchoolYearsService } from './school-years.service';
 
 @Injectable()
 export class TeacherDistributionsService {
   constructor(
     @InjectRepository(TeacherDistributionEntity)
     private teacherDistributionRepository: Repository<TeacherDistributionEntity>,
-    private schoolYearsService: SchoolYearsService,
-    private subjectsService: SubjectsService,
-    private coursesService: CoursesService,
-    private teachersService: TeachersService,
   ) { }
 
-  async create(
-    payload: CreateTeacherDistributionDto,
-  ): Promise<ServiceResponseHttpModel> {
-    const newTeacherDistribution =
-      this.teacherDistributionRepository.create(payload);
-
-    // newTeacherDistribution.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
-
-    // newTeacherDistribution.subject = await this.subjectsService.findOne(payload.subject.id);
-
-    // newTeacherDistribution.course = await this.coursesService.findOne(payload.course.id);
-
-    // newTeacherDistribution.teacher = await this.teachersService.findOne(payload.teacher.id);
+  async create(payload: CreateTeacherDistributionDto): Promise<ServiceResponseHttpModel> {
+    const newTeacherDistribution = this.teacherDistributionRepository.create(payload);
 
     const teacherDistributionCreated = await this.teacherDistributionRepository.save(newTeacherDistribution);
 
     return { data: teacherDistributionCreated };
   }
 
-  async findAll(
-    params?: FilterTeacherDistributionDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async findAll(params?: FilterTeacherDistributionDto): Promise<ServiceResponseHttpModel> {
+    // //Pagination & Filter by search
+    if (params.limit > 0 && params.page >= 0) {
+      return await this.paginateAndFilter(params);
+    }
+
     //All
     const data = await this.teacherDistributionRepository.findAndCount({
       relations: ['schoolYear', 'subject', 'course', 'teacher'],
@@ -57,73 +35,51 @@ export class TeacherDistributionsService {
   }
 
   async findOne(id: number): Promise<any> {
-    const teacherDistribution =
-      await this.teacherDistributionRepository.findOne({
-        relations: ['schoolYear', 'subject', 'course', 'teacher'],
-        where: {
-          id: id
-        },
-      });
+    const teacherDistribution = await this.teacherDistributionRepository.findOne({
+      relations: ['schoolYear', 'subject', 'course', 'teacher'],
+      where: { id: id }
+    });
 
     if (!teacherDistribution) {
-      throw new NotFoundException(
-        `La distribucion de docentes con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`La distribucion de docentes con id:${id} no se encontro`);
     }
+
     return { data: teacherDistribution };
   }
 
-  async update(
-    id: number,
-    payload: UpdateTeacherDistributionDto,
-  ): Promise<ServiceResponseHttpModel> {
-    const teacherDistribution =
-      await this.teacherDistributionRepository.findOneBy({ id });
+  async update(id: number, payload: UpdateTeacherDistributionDto): Promise<ServiceResponseHttpModel> {
+    const teacherDistribution = await this.teacherDistributionRepository.findOneBy({ id });
+
     if (!teacherDistribution) {
-      throw new NotFoundException(
-        `La distribucion de docentes con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`La distribucion de docentes con id:${id} no se encontro`);
     }
-    // teacherDistribution.schoolYear = await this.schoolYearsService.findOne(payload.schoolYear.id);
-
-    // teacherDistribution.subject = await this.subjectsService.findOne(payload.subject.id);
-
-    // teacherDistribution.course = await this.coursesService.findOne(payload.course.id);
-
-    // teacherDistribution.teacher = await this.teachersService.findOne(payload.teacher.id);
 
     this.teacherDistributionRepository.merge(teacherDistribution, payload);
+
     const teacherDistributionUpdated = await this.teacherDistributionRepository.save(teacherDistribution);
+
     return { data: teacherDistributionUpdated };
   }
 
   async remove(id: number): Promise<ServiceResponseHttpModel> {
-    const teacherDistribution =
-      await this.teacherDistributionRepository.findOneBy({ id });
+    const teacherDistribution = await this.teacherDistributionRepository.findOneBy({ id });
 
     if (!teacherDistribution) {
-      throw new NotFoundException(
-        `La distribucion de docentes con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`La distribucion de docentes con id:${id} no se encontro`);
     }
 
-    const teacherDistributionDeleted =
-      await this.teacherDistributionRepository.softRemove(teacherDistribution);
+    const teacherDistributionDeleted = await this.teacherDistributionRepository.softRemove(teacherDistribution);
 
     return { data: teacherDistributionDeleted };
   }
 
-  async removeAll(
-    payload: TeacherDistributionEntity[],
-  ): Promise<ServiceResponseHttpModel> {
-    const teacherDistributionsDeleted =
-      await this.teacherDistributionRepository.softRemove(payload);
+  async removeAll(payload: TeacherDistributionEntity[]): Promise<ServiceResponseHttpModel> {
+    const teacherDistributionsDeleted = await this.teacherDistributionRepository.softRemove(payload);
+
     return { data: teacherDistributionsDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterTeacherDistributionDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterTeacherDistributionDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<TeacherDistributionEntity>
       | FindOptionsWhere<TeacherDistributionEntity>[];
@@ -135,6 +91,7 @@ export class TeacherDistributionsService {
       search = search.trim();
       page = 0;
       where = [];
+      where.push({ name: ILike(`%${search}%`) });
     }
 
     const response = await this.teacherDistributionRepository.findAndCount({

@@ -43,7 +43,7 @@ import { TimeSettingsController } from './controllers/time-setting.controller';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([CareerEntity,ClassroomEntity, ColorEntity,CourseEntity, DayEntity, HourEntity,LevelEntity,LocationEntity,ParallelEntity, RequestEntity,ScheduleConfigurationEntity, SchedulePositionEntity,SchoolDayEntity,SchoolYearEntity,StateEntity, SubjectEntity, TeacherEntity, TeacherDistributionEntity,TimeSettingEntity])],
+  imports: [TypeOrmModule.forFeature([CareerEntity, ClassroomEntity, ColorEntity, CourseEntity, DayEntity, HourEntity, LevelEntity, LocationEntity, ParallelEntity, RequestEntity, ScheduleConfigurationEntity, SchedulePositionEntity, SchoolDayEntity, SchoolYearEntity, StateEntity, SubjectEntity, TeacherEntity, TeacherDistributionEntity, TimeSettingEntity])],
   controllers: [
     CareersController,
     ClassroomsController,
@@ -108,4 +108,4 @@ import { TimeSettingsController } from './controllers/time-setting.controller';
     TimeSettingsService,
   ],
 })
-export class CoreModule {}
+export class CoreModule { }

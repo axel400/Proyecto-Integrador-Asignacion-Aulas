@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateClassroomDto, UpdateClassroomDto } from '../dto/classroom/classroom.dto';
@@ -54,9 +41,7 @@ export class ClassroomsController {
     @ApiOperation({ summary: 'Find Classroom' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.classroomsService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class ClassroomsController {
     @ApiOperation({ summary: 'Update Classroom' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateClassroomDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateClassroomDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.classroomsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Classroom was updated`,
@@ -84,10 +67,9 @@ export class ClassroomsController {
     @ApiOperation({ summary: 'Delete Classroom' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.classroomsService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Classroom was deleted`,

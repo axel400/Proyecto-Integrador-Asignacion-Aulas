@@ -1,11 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateCareerDto,
-  UpdateCareerDto,
-  FilterCareerDto,
-  PaginationDto,
-} from '@core/dto';
+import { CreateCareerDto, UpdateCareerDto, FilterCareerDto, PaginationDto } from '@core/dto';
 import { CareerEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -38,28 +33,26 @@ export class CareersService {
   }
 
   async findOne(id: number): Promise<any> {
-    const career = await this.careerRepository.findOne({
-      where: {
-        id:id
-      },
-    });
+    const career = await this.careerRepository.findOne({ where: { id: id } });
 
     if (!career) {
       throw new NotFoundException(`La carrera con id:${id} no se encontro`);
     }
+
     return { data: career };
   }
 
-  async update(
-    id: number,
-    payload: UpdateCareerDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateCareerDto): Promise<ServiceResponseHttpModel> {
     const career = await this.careerRepository.findOneBy({ id });
+
     if (!career) {
       throw new NotFoundException(`La carrera con id:${id} no se encontro`);
     }
+
     this.careerRepository.merge(career, payload);
+
     const careerUpdated = await this.careerRepository.save(career);
+
     return { data: careerUpdated };
   }
 
@@ -77,12 +70,11 @@ export class CareersService {
 
   async removeAll(payload: CareerEntity[]): Promise<ServiceResponseHttpModel> {
     const careersDeleted = await this.careerRepository.softRemove(payload);
+
     return { data: careersDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterCareerDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterCareerDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<CareerEntity>
       | FindOptionsWhere<CareerEntity>[];

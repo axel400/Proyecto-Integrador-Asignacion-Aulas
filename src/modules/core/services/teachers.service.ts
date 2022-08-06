@@ -1,14 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateTeacherDto,
-  FilterTeacherDto,
-  PaginationDto,
-  UpdateTeacherDto,
-} from '@core/dto';
+import { CreateTeacherDto, FilterTeacherDto, PaginationDto, UpdateTeacherDto } from '@core/dto';
 import { TeacherEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { StatusService } from './status.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -16,13 +10,10 @@ export class TeachersService {
   constructor(
     @InjectRepository(TeacherEntity)
     private teacherRepository: Repository<TeacherEntity>,
-    private statussService: StatusService,
   ) { }
 
   async create(payload: CreateTeacherDto): Promise<ServiceResponseHttpModel> {
     const newTeacher = this.teacherRepository.create(payload);
-
-    //newTeacher.state = await this.statussService.findOne(payload.state.id);
 
     const teacherCreated = await this.teacherRepository.save(newTeacher);
 
@@ -46,28 +37,27 @@ export class TeachersService {
   async findOne(id: number): Promise<any> {
     const teacher = await this.teacherRepository.findOne({
       relations: ['state'],
-      where: {
-        id:id
-      },
+      where: { id: id }
     });
 
     if (!teacher) {
       throw new NotFoundException(`El docente con id:${id} no se encontro`);
     }
+
     return { data: teacher };
   }
 
-  async update(
-    id: number,
-    payload: UpdateTeacherDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateTeacherDto): Promise<ServiceResponseHttpModel> {
     const teacher = await this.teacherRepository.findOneBy({ id });
+
     if (!teacher) {
       throw new NotFoundException(`El docente con id:${id} no se encontro`);
     }
-    //teacher.state = await this.statussService.findOne(payload.state.id);
+
     this.teacherRepository.merge(teacher, payload);
+
     const teacherUpdated = await this.teacherRepository.save(teacher);
+
     return { data: teacherUpdated };
   }
 
@@ -85,12 +75,11 @@ export class TeachersService {
 
   async removeAll(payload: TeacherEntity[]): Promise<ServiceResponseHttpModel> {
     const teachersDeleted = await this.teacherRepository.softRemove(payload);
+
     return { data: teachersDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterTeacherDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterTeacherDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<TeacherEntity>
       | FindOptionsWhere<TeacherEntity>[];

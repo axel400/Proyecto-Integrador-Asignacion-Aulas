@@ -1,11 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateLevelDto,
-  FilterLevelDto,
-  PaginationDto,
-  UpdateLevelDto,
-} from '@core/dto';
+import { CreateLevelDto, FilterLevelDto, PaginationDto, UpdateLevelDto } from '@core/dto';
 import { LevelEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,27 +34,27 @@ export class LevelsService {
 
   async findOne(id: number): Promise<any> {
     const level = await this.levelRepository.findOne({
-      where: {
-        id:id
-      },
+      where: { id: id }
     });
 
     if (!level) {
       throw new NotFoundException(`El nivel con id:${id} no se encontro`);
     }
+
     return { data: level };
   }
 
-  async update(
-    id: number,
-    payload: UpdateLevelDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateLevelDto): Promise<ServiceResponseHttpModel> {
     const level = await this.levelRepository.findOneBy({ id });
+
     if (!level) {
       throw new NotFoundException(`El nivel con id:${id} no se encontro`);
     }
+
     this.levelRepository.merge(level, payload);
+
     const levelUpdated = await this.levelRepository.save(level);
+
     return { data: levelUpdated };
   }
 
@@ -77,13 +72,14 @@ export class LevelsService {
 
   async removeAll(payload: LevelEntity[]): Promise<ServiceResponseHttpModel> {
     const levelsDeleted = await this.levelRepository.softRemove(payload);
+
     return { data: levelsDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterLevelDto,
-  ): Promise<ServiceResponseHttpModel> {
-    let where: FindOptionsWhere<LevelEntity> | FindOptionsWhere<LevelEntity>[];
+  private async paginateAndFilter(params: FilterLevelDto): Promise<ServiceResponseHttpModel> {
+    let where:
+      | FindOptionsWhere<LevelEntity>
+      | FindOptionsWhere<LevelEntity>[];
     where = {};
     let { page, search } = params;
     const { limit } = params;

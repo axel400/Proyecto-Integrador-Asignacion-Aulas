@@ -1,20 +1,21 @@
 import { LocationEntity, ScheduleConfigurationEntity, StateEntity } from '@core/entities';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-  JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity('classrooms', { schema: 'core' })
 export class ClassroomEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => LocationEntity, (location) => location.classrooms)
+  @JoinColumn({ name: 'location_id' })
+  location: LocationEntity;
+
+  @ManyToOne(() => StateEntity, (state) => state.classrooms)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.classroom,)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -52,15 +53,4 @@ export class ClassroomEntity {
     comment: 'Fecha de eliminacion del aula',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => LocationEntity, (location) => location.classrooms)
-  @JoinColumn({ name: 'location_id' })
-  location: LocationEntity;
-
-  @ManyToOne(() => StateEntity, (state) => state.classrooms)
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.classroom,)
-  scheduleConfigurations: ScheduleConfigurationEntity[];
 }

@@ -6,7 +6,7 @@ import { ResponseHttpModel } from '@shared/models';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-  ) {}
+  ) { }
 
   @Get()
   getHello(): string {

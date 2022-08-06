@@ -1,20 +1,18 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { CareerEntity, SchoolDayEntity } from '@core/entities';
 
 @Entity('time_settings', { schema: 'core' })
 export class TimeSettingEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => CareerEntity, (career) => career.timeSettings)
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @ManyToOne(() => SchoolDayEntity, (schoolDay) => schoolDay.timeSettings)
+  @JoinColumn({ name: 'school_day_id' })
+  schoolDay: SchoolDayEntity;
 
   @Column('varchar', {
     length: 255,
@@ -59,12 +57,4 @@ export class TimeSettingEntity {
     comment: 'Fecha de eliminacion de la configuracion de tiempo',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => CareerEntity, (career) => career.timeSettings)
-  @JoinColumn({ name: 'career_id' })
-  career: CareerEntity;
-
-  @ManyToOne(() => SchoolDayEntity, (schoolDay) => schoolDay.timeSettings)
-  @JoinColumn({ name: 'school_day_id' })
-  schoolDay: SchoolDayEntity;
 }

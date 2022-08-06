@@ -1,11 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateSchedulePositionDto,
-  FilterSchedulePositionDto,
-  PaginationDto,
-  UpdateSchedulePositionDto,
-} from '@core/dto';
+import { CreateSchedulePositionDto, FilterSchedulePositionDto, PaginationDto, UpdateSchedulePositionDto } from '@core/dto';
 import { SchedulePositionEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,9 +12,7 @@ export class SchedulePositionsService {
     private schedulePositionRepository: Repository<SchedulePositionEntity>,
   ) { }
 
-  async create(
-    payload: CreateSchedulePositionDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async create(payload: CreateSchedulePositionDto): Promise<ServiceResponseHttpModel> {
     const newSchedulePosition = this.schedulePositionRepository.create(payload);
 
     const schedulePositionCreated = await this.schedulePositionRepository.save(newSchedulePosition);
@@ -27,9 +20,7 @@ export class SchedulePositionsService {
     return { data: schedulePositionCreated };
   }
 
-  async findAll(
-    params?: FilterSchedulePositionDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async findAll(params?: FilterSchedulePositionDto): Promise<ServiceResponseHttpModel> {
     //Pagination & Filter by search
     if (params.limit > 0 && params.page >= 0) {
       return await this.paginateAndFilter(params);
@@ -43,64 +34,48 @@ export class SchedulePositionsService {
 
   async findOne(id: number): Promise<any> {
     const schedulePosition = await this.schedulePositionRepository.findOne({
-      where: {
-        id: id
-      },
+      where: { id: id }
     });
 
     if (!schedulePosition) {
-      throw new NotFoundException(
-        `La posicion del horario con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`La posicion del horario con id:${id} no se encontro`);
     }
     return { data: schedulePosition };
   }
 
-  async update(
-    id: number,
-    payload: UpdateSchedulePositionDto,
-  ): Promise<ServiceResponseHttpModel> {
-    const schedulePosition = await this.schedulePositionRepository.findOneBy({
-      id,
-    });
+  async update(id: number, payload: UpdateSchedulePositionDto): Promise<ServiceResponseHttpModel> {
+    const schedulePosition = await this.schedulePositionRepository.findOneBy({ id });
+
     if (!schedulePosition) {
-      throw new NotFoundException(
-        `La posicion del horario con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`La posicion del horario con id:${id} no se encontro`);
     }
+
     this.schedulePositionRepository.merge(schedulePosition, payload);
+
     const schedulePositionUpdated = await this.schedulePositionRepository.save(schedulePosition);
+
     return { data: schedulePositionUpdated };
   }
 
   async remove(id: number): Promise<ServiceResponseHttpModel> {
-    const schedulePosition = await this.schedulePositionRepository.findOneBy({
-      id,
-    });
+    const schedulePosition = await this.schedulePositionRepository.findOneBy({ id });
 
     if (!schedulePosition) {
-      throw new NotFoundException(
-        `La posicion del horario con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`La posicion del horario con id:${id} no se encontro`);
     }
 
-    const schedulePositionDeleted =
-      await this.schedulePositionRepository.softRemove(schedulePosition);
+    const schedulePositionDeleted = await this.schedulePositionRepository.softRemove(schedulePosition);
 
     return { data: schedulePositionDeleted };
   }
 
-  async removeAll(
-    payload: SchedulePositionEntity[],
-  ): Promise<ServiceResponseHttpModel> {
-    const schedulePositionsDeleted =
-      await this.schedulePositionRepository.softRemove(payload);
+  async removeAll(payload: SchedulePositionEntity[]): Promise<ServiceResponseHttpModel> {
+    const schedulePositionsDeleted = await this.schedulePositionRepository.softRemove(payload);
+
     return { data: schedulePositionsDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterSchedulePositionDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterSchedulePositionDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<SchedulePositionEntity>
       | FindOptionsWhere<SchedulePositionEntity>[];

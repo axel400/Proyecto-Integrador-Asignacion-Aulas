@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateStateDto, UpdateStateDto } from '../dto/state/state.dto';
@@ -54,9 +41,7 @@ export class StatusController {
     @ApiOperation({ summary: 'Find State' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.statusService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class StatusController {
     @ApiOperation({ summary: 'Update State' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateStateDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateStateDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.statusService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `State was updated`,
@@ -84,10 +67,9 @@ export class StatusController {
     @ApiOperation({ summary: 'Delete State' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.statusService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `State was deleted`,

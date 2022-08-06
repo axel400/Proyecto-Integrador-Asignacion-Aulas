@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateTeacherDto, UpdateTeacherDto } from '../dto/teacher/teacher.dto';
@@ -54,9 +41,7 @@ export class TeachersController {
     @ApiOperation({ summary: 'Find Teacher' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.teachersService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class TeachersController {
     @ApiOperation({ summary: 'Update Teacher' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateTeacherDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateTeacherDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.teachersService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Teacher was updated`,
@@ -84,10 +67,9 @@ export class TeachersController {
     @ApiOperation({ summary: 'Delete Teacher' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.teachersService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Teacher was deleted`,

@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateColorDto, UpdateColorDto } from '../dto/color/color.dto';
@@ -54,9 +41,7 @@ export class ColorsController {
     @ApiOperation({ summary: 'Find Color' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.colorsService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class ColorsController {
     @ApiOperation({ summary: 'Update Color' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateColorDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateColorDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.colorsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Color was updated`,
@@ -84,10 +67,9 @@ export class ColorsController {
     @ApiOperation({ summary: 'Delete Color' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.colorsService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Color was deleted`,

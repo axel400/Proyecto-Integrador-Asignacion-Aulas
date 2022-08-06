@@ -1,15 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateTimeSettingDto,
-  FilterTimeSettingDto,
-  PaginationDto,
-  UpdateTimeSettingDto,
-} from '@core/dto';
+import { CreateTimeSettingDto, FilterTimeSettingDto, PaginationDto, UpdateTimeSettingDto } from '@core/dto';
 import { TimeSettingEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { CareersService } from './careers.service';
-import { SchoolDaysService } from './school-days.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -17,27 +10,17 @@ export class TimeSettingsService {
   constructor(
     @InjectRepository(TimeSettingEntity)
     private timeSettingRepository: Repository<TimeSettingEntity>,
-    private careersService: CareersService,
-    private schoolDaysService: SchoolDaysService,
   ) { }
 
-  async create(
-    payload: CreateTimeSettingDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async create(payload: CreateTimeSettingDto): Promise<ServiceResponseHttpModel> {
     const newTimeSetting = this.timeSettingRepository.create(payload);
-
-    // newTimeSetting.career = await this.careersService.findOne(payload.career.id);
-
-    // newTimeSetting.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
 
     const timeSettingCreated = await this.timeSettingRepository.save(newTimeSetting);
 
     return { data: timeSettingCreated };
   }
 
-  async findAll(
-    params?: FilterTimeSettingDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async findAll(params?: FilterTimeSettingDto): Promise<ServiceResponseHttpModel> {
     //Pagination & Filter by search
     if (params.limit > 0 && params.page >= 0) {
       return await this.paginateAndFilter(params);
@@ -54,37 +37,27 @@ export class TimeSettingsService {
   async findOne(id: number): Promise<any> {
     const timeSetting = await this.timeSettingRepository.findOne({
       relations: ['career', 'schoolDay'],
-      where: {
-        id: id
-      },
+      where: { id: id },
     });
 
     if (!timeSetting) {
-      throw new NotFoundException(
-        `La configuracion del horario con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`La configuracion del horario con id:${id} no se encontro`);
     }
+
     return { data: timeSetting };
   }
 
-  async update(
-    id: number,
-    payload: UpdateTimeSettingDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateTimeSettingDto): Promise<ServiceResponseHttpModel> {
     const timeSetting = await this.timeSettingRepository.findOneBy({ id });
-    if (!timeSetting) {
-      throw new NotFoundException(
-        `La configuracion del horario con id:${id} no se encontro`,
-      );
-    }
-    // timeSetting.career = await this.careersService.findOne(payload.career.id);
 
-    // timeSetting.schoolDay = await this.schoolDaysService.findOne(payload.schoolDay.id);
+    if (!timeSetting) {
+      throw new NotFoundException(`La configuracion del horario con id:${id} no se encontro`);
+    }
 
     this.timeSettingRepository.merge(timeSetting, payload);
-    const timeSettingUpdated = await this.timeSettingRepository.save(
-      timeSetting,
-    );
+
+    const timeSettingUpdated = await this.timeSettingRepository.save(timeSetting);
+
     return { data: timeSettingUpdated };
   }
 
@@ -92,30 +65,21 @@ export class TimeSettingsService {
     const timeSetting = await this.timeSettingRepository.findOneBy({ id });
 
     if (!timeSetting) {
-      throw new NotFoundException(
-        `La configuracion del horario con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`La configuracion del horario con id:${id} no se encontro`);
     }
 
-    const timeSettingDeleted = await this.timeSettingRepository.softRemove(
-      timeSetting,
-    );
+    const timeSettingDeleted = await this.timeSettingRepository.softRemove(timeSetting);
 
     return { data: timeSettingDeleted };
   }
 
-  async removeAll(
-    payload: TimeSettingEntity[],
-  ): Promise<ServiceResponseHttpModel> {
-    const timeSettingsDeleted = await this.timeSettingRepository.softRemove(
-      payload,
-    );
+  async removeAll(payload: TimeSettingEntity[]): Promise<ServiceResponseHttpModel> {
+    const timeSettingsDeleted = await this.timeSettingRepository.softRemove(payload);
+
     return { data: timeSettingsDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterTimeSettingDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterTimeSettingDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<TimeSettingEntity>
       | FindOptionsWhere<TimeSettingEntity>[];

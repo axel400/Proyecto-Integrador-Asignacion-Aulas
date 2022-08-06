@@ -1,11 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateLocationDto,
-  FilterLocationDto,
-  PaginationDto,
-  UpdateLocationDto,
-} from '@core/dto';
+import { CreateLocationDto, FilterLocationDto, PaginationDto, UpdateLocationDto } from '@core/dto';
 import { LocationEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,27 +34,27 @@ export class LocationsService {
 
   async findOne(id: number): Promise<any> {
     const location = await this.locationRepository.findOne({
-      where: {
-        id:id
-      },
+      where: { id: id }
     });
 
     if (!location) {
       throw new NotFoundException(`La ubicacion con id:${id} no se encontro`);
     }
+
     return { data: location };
   }
 
-  async update(
-    id: number,
-    payload: UpdateLocationDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateLocationDto): Promise<ServiceResponseHttpModel> {
     const location = await this.locationRepository.findOneBy({ id });
+
     if (!location) {
       throw new NotFoundException(`La ubicacion con id:${id} no se encontro`);
     }
+
     this.locationRepository.merge(location, payload);
+
     const locationUpdated = await this.locationRepository.save(location);
+
     return { data: locationUpdated };
   }
 
@@ -75,16 +70,13 @@ export class LocationsService {
     return { data: locationDeleted };
   }
 
-  async removeAll(
-    payload: LocationEntity[],
-  ): Promise<ServiceResponseHttpModel> {
+  async removeAll(payload: LocationEntity[]): Promise<ServiceResponseHttpModel> {
     const locationsDeleted = await this.locationRepository.softRemove(payload);
+
     return { data: locationsDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterLocationDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterLocationDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<LocationEntity>
       | FindOptionsWhere<LocationEntity>[];

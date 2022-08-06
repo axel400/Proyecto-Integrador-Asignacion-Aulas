@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateScheduleConfigurationDto, UpdateScheduleConfigurationDto } from '../dto/schedule-configuration/schedule-configuration-detail.dto';
@@ -54,9 +41,7 @@ export class ScheduleConfigurationsController {
     @ApiOperation({ summary: 'Find schedule-configuration' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.scheduleConfigurationsService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class ScheduleConfigurationsController {
     @ApiOperation({ summary: 'Update schedule-configuration' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateScheduleConfigurationDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateScheduleConfigurationDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.scheduleConfigurationsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Schedule-configuration was updated`,
@@ -84,10 +67,9 @@ export class ScheduleConfigurationsController {
     @ApiOperation({ summary: 'Delete schedule-configuration' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.scheduleConfigurationsService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Schedule-configuration was deleted`,

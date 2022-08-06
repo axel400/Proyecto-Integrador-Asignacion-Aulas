@@ -1,20 +1,23 @@
-import { CourseEntity, RequestEntity, StateEntity, SubjectEntity, TeacherDistributionEntity } from '@core/entities';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { CourseEntity, StateEntity, SubjectEntity, TeacherDistributionEntity } from '@core/entities';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity('teachers', { schema: 'core' })
 export class TeacherEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => StateEntity, (state) => state.teachers)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.teacher)
+  teacherDistributions: TeacherDistributionEntity[];
+
+  @OneToMany(() => SubjectEntity, (subject) => subject.teacher)
+  subjects: SubjectEntity[];
+
+  @OneToMany(() => CourseEntity, (course) => course.tutor)
+  courses: CourseEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -66,20 +69,4 @@ export class TeacherEntity {
     comment: 'Fecha de eliminacion del docente',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => StateEntity, (state) => state.teachers)
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(() => TeacherDistributionEntity,(teacherDistribution) => teacherDistribution.teacher)
-  teacherDistributions: TeacherDistributionEntity[];
-
-  @OneToMany(() => SubjectEntity, (subject) => subject.teacher)
-  subjects: SubjectEntity[];
-
-  @OneToMany(() => CourseEntity, (course) => course.tutor)
-  courses: CourseEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.teacher)
-  requests: RequestEntity[];
 }

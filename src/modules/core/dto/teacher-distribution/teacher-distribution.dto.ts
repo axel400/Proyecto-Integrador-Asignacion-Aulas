@@ -10,6 +10,9 @@ import { isNotEmptyValidationOptions } from '@shared/validation';
 
 export class CreateTeacherDistributionDto {
   @IsNotEmpty(isNotEmptyValidationOptions())
+  readonly name: string;
+  
+  @IsNotEmpty(isNotEmptyValidationOptions())
   readonly schoolYear: SchoolYearEntity;
 
   @IsNotEmpty(isNotEmptyValidationOptions())

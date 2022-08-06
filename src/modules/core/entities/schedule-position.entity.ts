@@ -1,18 +1,13 @@
 import { HourEntity } from '@core/entities';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity('schedule_positions', { schema: 'core' })
 export class SchedulePositionEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => HourEntity, (hour) => hour.schedulePosition)
+  hours: HourEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -43,7 +38,4 @@ export class SchedulePositionEntity {
     comment: 'Fecha de eliminacion de la posicion del horario',
   })
   deletedAt: Date;
-
-  @OneToMany(() => HourEntity, (hour) => hour.schedulePosition)
-  hours: HourEntity[];
 }

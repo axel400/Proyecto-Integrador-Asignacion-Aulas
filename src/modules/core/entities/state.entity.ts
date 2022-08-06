@@ -1,25 +1,28 @@
-import {
-  ClassroomEntity,
-  HourEntity,
-  RequestEntity,
-  ScheduleConfigurationEntity,
-  SchoolYearEntity,
-  TeacherEntity,
-} from '@core/entities';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { ClassroomEntity, HourEntity, RequestEntity, ScheduleConfigurationEntity, SchoolYearEntity, TeacherEntity } from '@core/entities';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity('statues', { schema: 'core' })
 export class StateEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => SchoolYearEntity, (schoolyear) => schoolyear.state)
+  schoolyears: SchoolYearEntity[];
+
+  @OneToMany(() => TeacherEntity, (teacher) => teacher.state)
+  teachers: TeacherEntity[];
+
+  @OneToMany(() => ClassroomEntity, (classroom) => classroom.state)
+  classrooms: ClassroomEntity[];
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.state)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.state)
+  requests: RequestEntity[];
+
+  @OneToMany(() => HourEntity, (hour) => hour.state)
+  hours: HourEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -50,22 +53,4 @@ export class StateEntity {
     comment: 'Fecha de eliminacion del estado',
   })
   deletedAt: Date;
-
-  @OneToMany(() => SchoolYearEntity, (schoolyear) => schoolyear.state)
-  schoolyears: SchoolYearEntity[];
-
-  @OneToMany(() => TeacherEntity, (teacher) => teacher.state)
-  teachers: TeacherEntity[];
-
-  @OneToMany(() => ClassroomEntity, (classroom) => classroom.state)
-  classrooms: ClassroomEntity[];
-
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.state)
-  scheduleConfigurations: ScheduleConfigurationEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.state)
-  requests: RequestEntity[];
-
-  @OneToMany(() => HourEntity, (hour) => hour.state)
-  hours: HourEntity[];
 }

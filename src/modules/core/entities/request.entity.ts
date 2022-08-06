@@ -1,20 +1,25 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-import { CareerEntity, CourseEntity, ScheduleConfigurationEntity, SchoolYearEntity, StateEntity, SubjectEntity, TeacherEntity } from '@core/entities';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { CareerEntity, ScheduleConfigurationEntity, StateEntity, TeacherDistributionEntity } from '@core/entities';
 
 @Entity('requests', { schema: 'core' })
 export class RequestEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => CareerEntity, (career) => career.requests)
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @ManyToOne(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.requests)
+  @JoinColumn({ name: 'teacher_distribution_id' })
+  teacherDistribution: TeacherDistributionEntity;
+
+  @ManyToOne(() => StateEntity, (state) => state.requests)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.request)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -66,31 +71,4 @@ export class RequestEntity {
     comment: 'Fecha de eliminacion de la solicitud',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => SchoolYearEntity, (schoolYear) => schoolYear.requests)
-  @JoinColumn({ name: 'school_year_id' })
-  schoolYear: SchoolYearEntity;
-
-  @ManyToOne(() => CareerEntity, (career) => career.requests)
-  @JoinColumn({ name: 'career_id' })
-  career: CareerEntity;
-
-  @ManyToOne(() => TeacherEntity, (teacher) => teacher.requests)
-  @JoinColumn({ name: 'teacher_id' })
-  teacher: TeacherEntity;
-
-  @ManyToOne(() => CourseEntity, (course) => course.requests)
-  @JoinColumn({ name: 'course_id' })
-  course: CourseEntity;
-
-  @ManyToOne(() => SubjectEntity, (subject) => subject.requests)
-  @JoinColumn({ name: 'subject_id' })
-  subject: SubjectEntity;
-
-  @ManyToOne(() => StateEntity, (state) => state.requests)
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.request)
-  scheduleConfigurations: ScheduleConfigurationEntity[];
 }

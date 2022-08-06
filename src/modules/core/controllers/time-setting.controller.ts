@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateTimeSettingDto, UpdateTimeSettingDto } from '../dto/time-setting/time-setting.dto';
@@ -54,9 +41,7 @@ export class TimeSettingsController {
     @ApiOperation({ summary: 'Find Time-settings' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.timeSettingsService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class TimeSettingsController {
     @ApiOperation({ summary: 'Update Time-settings' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateTimeSettingDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateTimeSettingDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.timeSettingsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Time-settings was updated`,
@@ -84,10 +67,9 @@ export class TimeSettingsController {
     @ApiOperation({ summary: 'Delete Time-settings' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.timeSettingsService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Time-settings was deleted`,

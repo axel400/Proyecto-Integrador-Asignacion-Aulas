@@ -37,10 +37,6 @@ import { roles } from './app.roles';
   controllers: [AppController],
   providers: [
     AppService,
-    // {
-    //   provide: APP_FILTER,
-    //   useClass: AllExceptionsFilter,
-    // },
   ],
 })
-export class AppModule {}
+export class AppModule { }

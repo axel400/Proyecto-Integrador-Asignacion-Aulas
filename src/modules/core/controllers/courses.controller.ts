@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateCourseDto, UpdateCourseDto } from '../dto/course/course.dto';
@@ -54,9 +41,7 @@ export class CoursesController {
     @ApiOperation({ summary: 'Find Course' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.coursesService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class CoursesController {
     @ApiOperation({ summary: 'Update Course' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateCourseDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateCourseDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.coursesService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Course was updated`,
@@ -84,10 +67,9 @@ export class CoursesController {
     @ApiOperation({ summary: 'Delete Course' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.coursesService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Course was deleted`,

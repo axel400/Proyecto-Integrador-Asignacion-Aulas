@@ -1,11 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateDayDto,
-  FilterDayDto,
-  PaginationDto,
-  UpdateDayDto,
-} from '@core/dto';
+import { CreateDayDto, FilterDayDto, PaginationDto, UpdateDayDto } from '@core/dto';
 import { DayEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,27 +34,27 @@ export class DaysService {
 
   async findOne(id: number): Promise<any> {
     const day = await this.dayRepository.findOne({
-      where: {
-        id:id
-      },
+      where: { id: id }
     });
 
     if (!day) {
       throw new NotFoundException(`El dia con id:${id} no se encontro`);
     }
+
     return { data: day };
   }
 
-  async update(
-    id: number,
-    payload: UpdateDayDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateDayDto): Promise<ServiceResponseHttpModel> {
     const day = await this.dayRepository.findOneBy({ id });
+
     if (!day) {
       throw new NotFoundException(`El dia con id:${id} no se encontro`);
     }
+
     this.dayRepository.merge(day, payload);
+
     const dayUpdated = await this.dayRepository.save(day);
+
     return { data: dayUpdated };
   }
 
@@ -77,13 +72,14 @@ export class DaysService {
 
   async removeAll(payload: DayEntity[]): Promise<ServiceResponseHttpModel> {
     const daysDeleted = await this.dayRepository.softRemove(payload);
+
     return { data: daysDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterDayDto,
-  ): Promise<ServiceResponseHttpModel> {
-    let where: FindOptionsWhere<DayEntity> | FindOptionsWhere<DayEntity>[];
+  private async paginateAndFilter(params: FilterDayDto): Promise<ServiceResponseHttpModel> {
+    let where:
+      | FindOptionsWhere<DayEntity>
+      | FindOptionsWhere<DayEntity>[];
     where = {};
     let { page, search } = params;
     const { limit } = params;

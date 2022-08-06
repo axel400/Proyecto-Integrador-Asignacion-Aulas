@@ -1,16 +1,5 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
+    Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
@@ -54,9 +43,7 @@ export class SchedulePositionsController {
     @ApiOperation({ summary: 'Find schedule-position' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.schedulePositionsService.findOne(id);
 
         return {
@@ -69,11 +56,9 @@ export class SchedulePositionsController {
     @ApiOperation({ summary: 'Update schedule-positions' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateSchedulePositionDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateSchedulePositionDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.schedulePositionsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Schedule-positions was updated`,
@@ -84,10 +69,9 @@ export class SchedulePositionsController {
     @ApiOperation({ summary: 'Delete schedule-position' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.schedulePositionsService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Schedule-position was deleted`,

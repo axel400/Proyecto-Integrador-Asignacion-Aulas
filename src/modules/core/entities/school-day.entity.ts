@@ -1,18 +1,16 @@
 import { CourseEntity, TimeSettingEntity } from '@core/entities';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity('school_days', { schema: 'core' })
 export class SchoolDayEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => CourseEntity, (course) => course.schoolDay)
+  courses: CourseEntity[];
+
+  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.schoolDay)
+  timeSettings: TimeSettingEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -43,10 +41,4 @@ export class SchoolDayEntity {
     comment: 'Fecha de eliminacion de la jornada',
   })
   deletedAt: Date;
-
-  @OneToMany(() => CourseEntity, (course) => course.schoolDay)
-  courses: CourseEntity[];
-
-  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.schoolDay)
-  timeSettings: TimeSettingEntity[];
 }

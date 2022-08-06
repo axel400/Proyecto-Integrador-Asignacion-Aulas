@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateHourDto, UpdateHourDto } from '../dto/hour/hour.dto';
@@ -54,9 +41,7 @@ export class HoursController {
     @ApiOperation({ summary: 'Find Hour' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.hoursService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class HoursController {
     @ApiOperation({ summary: 'Update Hour' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateHourDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateHourDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.hoursService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Hour was updated`,
@@ -84,10 +67,9 @@ export class HoursController {
     @ApiOperation({ summary: 'Delete Hour' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.hoursService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Hour was deleted`,

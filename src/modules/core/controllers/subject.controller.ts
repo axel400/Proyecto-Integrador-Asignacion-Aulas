@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateSubjectDto, UpdateSubjectDto } from '../dto/subject/subject.dto';
@@ -54,9 +41,7 @@ export class subjectsController {
     @ApiOperation({ summary: 'Find Subject' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.subjectsService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class subjectsController {
     @ApiOperation({ summary: 'Update Subject' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateSubjectDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateSubjectDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.subjectsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Subject was updated`,
@@ -84,10 +67,9 @@ export class subjectsController {
     @ApiOperation({ summary: 'Delete Subject' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.subjectsService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Subject was deleted`,

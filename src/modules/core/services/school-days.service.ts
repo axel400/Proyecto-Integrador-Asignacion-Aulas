@@ -1,11 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateSchoolDayDto,
-  FilterSchoolDayDto,
-  PaginationDto,
-  UpdateSchoolDayDto,
-} from '@core/dto';
+import { CreateSchoolDayDto, FilterSchoolDayDto, PaginationDto, UpdateSchoolDayDto } from '@core/dto';
 import { SchoolDayEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -25,9 +20,7 @@ export class SchoolDaysService {
     return { data: schoolDayCreated };
   }
 
-  async findAll(
-    params?: FilterSchoolDayDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async findAll(params?: FilterSchoolDayDto): Promise<ServiceResponseHttpModel> {
     //Pagination & Filter by search
     if (params.limit > 0 && params.page >= 0) {
       return await this.paginateAndFilter(params);
@@ -41,27 +34,27 @@ export class SchoolDaysService {
 
   async findOne(id: number): Promise<any> {
     const schoolDay = await this.schoolDayRepository.findOne({
-      where: {
-        id: id
-      },
+      where: { id: id }
     });
 
     if (!schoolDay) {
       throw new NotFoundException(`La jornada con id:${id} no se encontro`);
     }
+
     return { data: schoolDay };
   }
 
-  async update(
-    id: number,
-    payload: UpdateSchoolDayDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateSchoolDayDto): Promise<ServiceResponseHttpModel> {
     const schoolDay = await this.schoolDayRepository.findOneBy({ id });
+
     if (!schoolDay) {
       throw new NotFoundException(`La jornada con id:${id} no se encontro`);
     }
+
     this.schoolDayRepository.merge(schoolDay, payload);
+
     const schoolDayUpdated = await this.schoolDayRepository.save(schoolDay);
+
     return { data: schoolDayUpdated };
   }
 
@@ -77,18 +70,13 @@ export class SchoolDaysService {
     return { data: schoolDayDeleted };
   }
 
-  async removeAll(
-    payload: SchoolDayEntity[],
-  ): Promise<ServiceResponseHttpModel> {
-    const schoolDaysDeleted = await this.schoolDayRepository.softRemove(
-      payload,
-    );
+  async removeAll(payload: SchoolDayEntity[]): Promise<ServiceResponseHttpModel> {
+    const schoolDaysDeleted = await this.schoolDayRepository.softRemove(payload);
+
     return { data: schoolDaysDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterSchoolDayDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterSchoolDayDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<SchoolDayEntity>
       | FindOptionsWhere<SchoolDayEntity>[];

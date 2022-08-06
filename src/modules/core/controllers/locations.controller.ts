@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateLocationDto, UpdateLocationDto } from '../dto/location/location.dto';
@@ -54,9 +41,7 @@ export class LocationsController {
     @ApiOperation({ summary: 'Find Location' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.locationsService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class LocationsController {
     @ApiOperation({ summary: 'Update Location' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateLocationDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateLocationDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.locationsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Location was updated`,
@@ -84,10 +67,9 @@ export class LocationsController {
     @ApiOperation({ summary: 'Delete Location' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.locationsService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Location was deleted`,

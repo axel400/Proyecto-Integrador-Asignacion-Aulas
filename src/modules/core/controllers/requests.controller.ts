@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateRequestDto, UpdateRequestDto } from '../dto/request/request.dto';
@@ -54,9 +41,7 @@ export class RequestsController {
     @ApiOperation({ summary: 'Find Request' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.requestsService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class RequestsController {
     @ApiOperation({ summary: 'Update Request' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateRequestDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateRequestDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.requestsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Request was updated`,
@@ -84,10 +67,9 @@ export class RequestsController {
     @ApiOperation({ summary: 'Delete Request' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.requestsService.remove(id);
+
         return {
             data: serviceResponse.data,
             message: `Request was deleted`,

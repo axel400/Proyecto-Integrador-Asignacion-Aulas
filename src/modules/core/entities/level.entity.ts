@@ -1,18 +1,13 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { CourseEntity } from '@core/entities';
 
 @Entity('levels', { schema: 'core' })
 export class LevelEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => CourseEntity, (course) => course.level)
+  courses: CourseEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -43,7 +38,4 @@ export class LevelEntity {
     comment: 'Fecha de eliminacion del nivel',
   })
   deletedAt: Date;
-
-  @OneToMany(() => CourseEntity, (course) => course.level)
-  courses: CourseEntity[];
 }

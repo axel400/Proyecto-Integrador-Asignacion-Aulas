@@ -1,21 +1,22 @@
 import { ScheduleConfigurationEntity, StateEntity } from '@core/entities';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { SchedulePositionEntity } from './schedule-position.entity';
 
 @Entity('hours', { schema: 'core' })
 export class HourEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => SchedulePositionEntity, (schedulePosition) => schedulePosition.hours)
+  @JoinColumn({ name: 'schedulePosition_id' })
+  schedulePosition: SchedulePositionEntity;
+
+  @ManyToOne(() => StateEntity, (state) => state.hours)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => ScheduleConfigurationEntity, (scheduleConfiguration) => scheduleConfiguration.hour)
+  scheduleConfigurations: ScheduleConfigurationEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -46,15 +47,4 @@ export class HourEntity {
     comment: 'Fecha de eliminacion de la hora',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => SchedulePositionEntity, (schedulePosition) => schedulePosition.hours)
-  @JoinColumn({ name: 'schedulePosition_id' })
-  schedulePosition: SchedulePositionEntity;
-
-  @ManyToOne(() => StateEntity, (state) => state.hours)
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(() => ScheduleConfigurationEntity,(scheduleConfiguration) => scheduleConfiguration.hour)
-  scheduleConfigurations: ScheduleConfigurationEntity[];
 }

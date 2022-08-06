@@ -1,18 +1,22 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 import { CourseEntity, RequestEntity, SubjectEntity, TimeSettingEntity } from '@core/entities';
 
 @Entity('careers', { schema: 'core' })
 export class CareerEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => SubjectEntity, (subject) => subject.career)
+  subjects: SubjectEntity[];
+
+  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.career)
+  timeSettings: TimeSettingEntity[];
+
+  @OneToMany(() => CourseEntity, (course) => course.career)
+  courses: CourseEntity[];
+
+  @OneToMany(() => RequestEntity, (request) => request.career)
+  requests: RequestEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -57,16 +61,4 @@ export class CareerEntity {
     comment: 'Fecha de eliminacion de la carrera',
   })
   deletedAt: Date;
-
-  @OneToMany(() => SubjectEntity, (subject) => subject.career)
-  subjects: SubjectEntity[];
-
-  @OneToMany(() => TimeSettingEntity, (timeSetting) => timeSetting.career)
-  timeSettings: TimeSettingEntity[];
-
-  @OneToMany(() => CourseEntity, (course) => course.career)
-  courses: CourseEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.career)
-  requests: RequestEntity[];
 }

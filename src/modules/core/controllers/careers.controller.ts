@@ -1,17 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Patch,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CareersService } from '../services/careers.service';
@@ -54,9 +41,7 @@ export class CareersController {
   @ApiOperation({ summary: 'Find Career' })
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async findOne(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<ResponseHttpModel> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
     const serviceResponse = await this.careersService.findOne(id);
 
     return {
@@ -69,11 +54,9 @@ export class CareersController {
   @ApiOperation({ summary: 'Update Career' })
   @Put(':id')
   @HttpCode(HttpStatus.CREATED)
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateCareerDto,
-  ): Promise<ResponseHttpModel> {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateCareerDto): Promise<ResponseHttpModel> {
     const serviceResponse = await this.careersService.update(id, payload);
+
     return {
       data: serviceResponse.data,
       message: `Career was updated`,
@@ -84,10 +67,9 @@ export class CareersController {
   @ApiOperation({ summary: 'Delete Career' })
   @Delete(':id')
   @HttpCode(HttpStatus.CREATED)
-  async remove(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<ResponseHttpModel> {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
     const serviceResponse = await this.careersService.remove(id);
+
     return {
       data: serviceResponse.data,
       message: `Career was deleted`,

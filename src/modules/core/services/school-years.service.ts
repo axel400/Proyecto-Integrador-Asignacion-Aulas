@@ -1,14 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateSchoolYearDto,
-  FilterSchoolYearDto,
-  PaginationDto,
-  UpdateSchoolYearDto,
-} from '@core/dto';
+import { CreateSchoolYearDto, FilterSchoolYearDto, PaginationDto, UpdateSchoolYearDto } from '@core/dto';
 import { SchoolYearEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { StatusService } from './status.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -16,24 +10,17 @@ export class SchoolYearsService {
   constructor(
     @InjectRepository(SchoolYearEntity)
     private schoolYearRepository: Repository<SchoolYearEntity>,
-    private statusService: StatusService,
   ) { }
 
-  async create(
-    payload: CreateSchoolYearDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async create(payload: CreateSchoolYearDto): Promise<ServiceResponseHttpModel> {
     const newSchoolYear = this.schoolYearRepository.create(payload);
-
-    //newSchoolYear.state = await this.statusService.findOne(payload.state.id);
 
     const schoolYearCreated = await this.schoolYearRepository.save(newSchoolYear);
 
     return { data: schoolYearCreated };
   }
 
-  async findAll(
-    params?: FilterSchoolYearDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async findAll(params?: FilterSchoolYearDto): Promise<ServiceResponseHttpModel> {
     //Pagination & Filter by search
     if (params.limit > 0 && params.page >= 0) {
       return await this.paginateAndFilter(params);
@@ -50,9 +37,7 @@ export class SchoolYearsService {
   async findOne(id: number): Promise<any> {
     const schoolYear = await this.schoolYearRepository.findOne({
       relations: ['state'],
-      where: {
-        id: id
-      },
+      where: { id: id }
     });
 
     if (!schoolYear) {
@@ -60,23 +45,21 @@ export class SchoolYearsService {
         `El periodo lectivo con id:${id} no se encontro`,
       );
     }
+
     return { data: schoolYear };
   }
 
-  async update(
-    id: number,
-    payload: UpdateSchoolYearDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateSchoolYearDto): Promise<ServiceResponseHttpModel> {
     const schoolYear = await this.schoolYearRepository.findOneBy({ id });
+
     if (!schoolYear) {
-      throw new NotFoundException(
-        `El periodo lectivo con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`El periodo lectivo con id:${id} no se encontro`);
     }
-    //schoolYear.state = await this.statusService.findOne(payload.state.id);
 
     this.schoolYearRepository.merge(schoolYear, payload);
+
     const schoolYearUpdated = await this.schoolYearRepository.save(schoolYear);
+
     return { data: schoolYearUpdated };
   }
 
@@ -84,9 +67,7 @@ export class SchoolYearsService {
     const schoolYear = await this.schoolYearRepository.findOneBy({ id });
 
     if (!schoolYear) {
-      throw new NotFoundException(
-        `El periodo lectivo con id:${id} no se encontro`,
-      );
+      throw new NotFoundException(`El periodo lectivo con id:${id} no se encontro`);
     }
 
     const schoolYearDeleted = await this.schoolYearRepository.softRemove(
@@ -96,18 +77,13 @@ export class SchoolYearsService {
     return { data: schoolYearDeleted };
   }
 
-  async removeAll(
-    payload: SchoolYearEntity[],
-  ): Promise<ServiceResponseHttpModel> {
-    const schoolYearsDeleted = await this.schoolYearRepository.softRemove(
-      payload,
-    );
+  async removeAll(payload: SchoolYearEntity[]): Promise<ServiceResponseHttpModel> {
+    const schoolYearsDeleted = await this.schoolYearRepository.softRemove(payload);
+
     return { data: schoolYearsDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterSchoolYearDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterSchoolYearDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<SchoolYearEntity>
       | FindOptionsWhere<SchoolYearEntity>[];

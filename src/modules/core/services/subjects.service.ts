@@ -1,32 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateSubjectDto,
-  FilterSubjectDto,
-  PaginationDto,
-  UpdateSubjectDto,
-} from '@core/dto';
+import { CreateSubjectDto, FilterSubjectDto, PaginationDto, UpdateSubjectDto } from '@core/dto';
 import { SubjectEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
-import { CareersService } from './careers.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TeachersService } from './teachers.service';
 
 @Injectable()
 export class SubjectsService {
   constructor(
     @InjectRepository(SubjectEntity)
     private subjectRepository: Repository<SubjectEntity>,
-    private careersService: CareersService,
-    private teachersService: TeachersService,
   ) { }
 
   async create(payload: CreateSubjectDto): Promise<ServiceResponseHttpModel> {
     const newSubject = this.subjectRepository.create(payload);
-
-    // newSubject.career = await this.careersService.findOne(payload.career.id);
-
-    // newSubject.teacher = await this.teachersService.findOne(payload.teacher.id);
 
     const subjectCreated = await this.subjectRepository.save(newSubject);
 
@@ -41,7 +28,7 @@ export class SubjectsService {
 
     //All
     const data = await this.subjectRepository.findAndCount({
-      relations: ['career','teacher'],
+      relations: ['career', 'teacher'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -49,10 +36,8 @@ export class SubjectsService {
 
   async findOne(id: number): Promise<any> {
     const subject = await this.subjectRepository.findOne({
-      relations: ['career','teacher'],
-      where: {
-        id:id
-      },
+      relations: ['career', 'teacher'],
+      where: { id: id },
     });
 
     if (!subject) {
@@ -122,7 +107,7 @@ export class SubjectsService {
     }
 
     const response = await this.subjectRepository.findAndCount({
-      relations: ['career','teacher'],
+      relations: ['career', 'teacher'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),

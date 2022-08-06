@@ -1,24 +1,17 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-import {
-  RequestEntity,
-  StateEntity,
-  TeacherDistributionEntity,
-} from '@core/entities';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { StateEntity, TeacherDistributionEntity } from '@core/entities';
 
 @Entity('school_year', { schema: 'core' })
 export class SchoolYearEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => StateEntity, (state) => state.schoolyears)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.schoolYear)
+  teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -63,14 +56,4 @@ export class SchoolYearEntity {
     comment: 'Fecha de eliminacion del año lectivo',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => StateEntity, (state) => state.schoolyears)
-  @JoinColumn({ name: 'state_id' })
-  state: StateEntity;
-
-  @OneToMany(() => RequestEntity, (request) => request.schoolYear)
-  requests: RequestEntity[];
-
-  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.schoolYear)
-  teacherDistributions: TeacherDistributionEntity[];
 }

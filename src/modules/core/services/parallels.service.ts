@@ -1,11 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, FindOptionsWhere, ILike } from 'typeorm';
-import {
-  CreateParallelDto,
-  FilterParallelDto,
-  PaginationDto,
-  UpdateParallelDto,
-} from '@core/dto';
+import { CreateParallelDto, FilterParallelDto, PaginationDto, UpdateParallelDto } from '@core/dto';
 import { ParallelEntity } from '@core/entities';
 import { ServiceResponseHttpModel } from '@shared/models';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,27 +34,27 @@ export class ParallelsService {
 
   async findOne(id: number): Promise<any> {
     const parallel = await this.parallelRepository.findOne({
-      where: {
-        id:id
-      },
+      where: { id: id }
     });
 
     if (!parallel) {
       throw new NotFoundException(`El paralelo con id:${id} no se encontro`);
     }
+
     return { data: parallel };
   }
 
-  async update(
-    id: number,
-    payload: UpdateParallelDto,
-  ): Promise<ServiceResponseHttpModel> {
+  async update(id: number, payload: UpdateParallelDto): Promise<ServiceResponseHttpModel> {
     const parallel = await this.parallelRepository.findOneBy({ id });
+
     if (!parallel) {
       throw new NotFoundException(`El paralelo con id:${id} no se encontro`);
     }
+
     this.parallelRepository.merge(parallel, payload);
+
     const parallelUpdated = await this.parallelRepository.save(parallel);
+
     return { data: parallelUpdated };
   }
 
@@ -75,16 +70,13 @@ export class ParallelsService {
     return { data: parallelDeleted };
   }
 
-  async removeAll(
-    payload: ParallelEntity[],
-  ): Promise<ServiceResponseHttpModel> {
+  async removeAll(payload: ParallelEntity[]): Promise<ServiceResponseHttpModel> {
     const parallelsDeleted = await this.parallelRepository.softRemove(payload);
+
     return { data: parallelsDeleted };
   }
 
-  private async paginateAndFilter(
-    params: FilterParallelDto,
-  ): Promise<ServiceResponseHttpModel> {
+  private async paginateAndFilter(params: FilterParallelDto): Promise<ServiceResponseHttpModel> {
     let where:
       | FindOptionsWhere<ParallelEntity>
       | FindOptionsWhere<ParallelEntity>[];

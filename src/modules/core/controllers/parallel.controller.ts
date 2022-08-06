@@ -1,17 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put,
-    Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ResponseHttpModel } from '@shared/models';
 import { CreateParallelDto, UpdateParallelDto } from '../dto/parallel/parallel.dto';
@@ -54,9 +41,7 @@ export class ParallelsController {
     @ApiOperation({ summary: 'Find Parallel' })
     @Get(':id')
     @HttpCode(HttpStatus.OK)
-    async findOne(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.parallelsService.findOne(id);
 
         return {
@@ -69,11 +54,9 @@ export class ParallelsController {
     @ApiOperation({ summary: 'Update Parallel' })
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() payload: UpdateParallelDto,
-    ): Promise<ResponseHttpModel> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateParallelDto): Promise<ResponseHttpModel> {
         const serviceResponse = await this.parallelsService.update(id, payload);
+
         return {
             data: serviceResponse.data,
             message: `Parallel was updated`,
@@ -84,10 +67,9 @@ export class ParallelsController {
     @ApiOperation({ summary: 'Delete Parallel' })
     @Delete(':id')
     @HttpCode(HttpStatus.CREATED)
-    async remove(
-        @Param('id', ParseIntPipe) id: number,
-    ): Promise<ResponseHttpModel> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseHttpModel> {
         const serviceResponse = await this.parallelsService.remove(id);
+        
         return {
             data: serviceResponse.data,
             message: `Parallel was deleted`,

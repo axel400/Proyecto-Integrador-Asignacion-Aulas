@@ -1,28 +1,33 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-  JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  Column,
-} from 'typeorm';
-import {
-  CareerEntity,
-  LevelEntity,
-  ParallelEntity,
-  RequestEntity,
-  SchoolDayEntity,
-  TeacherDistributionEntity,
-  TeacherEntity,
-} from '@core/entities';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, Column } from 'typeorm';
+import { CareerEntity, LevelEntity, ParallelEntity, SchoolDayEntity, TeacherDistributionEntity, TeacherEntity } from '@core/entities';
 
 @Entity('courses', { schema: 'core' })
 export class CourseEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => LevelEntity, (level) => level.courses)
+  @JoinColumn({ name: 'level_id' })
+  level: LevelEntity;
+
+  @ManyToOne(() => SchoolDayEntity, (schoolDay) => schoolDay.courses)
+  @JoinColumn({ name: 'school_day_id' })
+  schoolDay: SchoolDayEntity;
+
+  @ManyToOne(() => ParallelEntity, (parallel) => parallel.courses)
+  @JoinColumn({ name: 'parallel_id' })
+  parallel: ParallelEntity;
+
+  @ManyToOne(() => CareerEntity, (career) => career.courses)
+  @JoinColumn({ name: 'career_id' })
+  career: CareerEntity;
+
+  @ManyToOne(() => TeacherEntity, (tutor) => tutor.courses)
+  @JoinColumn({ name: 'tutor_id' })
+  tutor: TeacherEntity;
+
+  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.course)
+  teacherDistributions: TeacherDistributionEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -53,30 +58,4 @@ export class CourseEntity {
     comment: 'Fecha de eliminacion del curso',
   })
   deletedAt: Date;
-
-  @ManyToOne(() => LevelEntity, (level) => level.courses)
-  @JoinColumn({ name: 'level_id' })
-  level: LevelEntity;
-
-  @ManyToOne(() => SchoolDayEntity, (schoolDay) => schoolDay.courses)
-  @JoinColumn({ name: 'school_day_id' })
-  schoolDay: SchoolDayEntity;
-
-  @ManyToOne(() => ParallelEntity, (parallel) => parallel.courses)
-  @JoinColumn({ name: 'parallel_id' })
-  parallel: ParallelEntity;
-
-  @ManyToOne(() => CareerEntity, (career) => career.courses)
-  @JoinColumn({ name: 'career_id' })
-  career: CareerEntity;
-
-  @ManyToOne(() => TeacherEntity, (tutor) => tutor.courses)
-  @JoinColumn({ name: 'tutor_id' })
-  tutor: TeacherEntity;
-
-  @OneToMany(() => TeacherDistributionEntity, (teacherDistribution) => teacherDistribution.course)
-  teacherDistributions: TeacherDistributionEntity[];
-
-  @OneToMany(() => RequestEntity, (request) => request.course)
-  requests: RequestEntity[];
 }

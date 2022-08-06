@@ -1,18 +1,13 @@
 import { CourseEntity } from '@core/entities';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity('parallels', { schema: 'core' })
 export class ParallelEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => CourseEntity, (course) => course.parallel)
+  courses: CourseEntity[];
 
   @Column('varchar', {
     length: 255,
@@ -43,7 +38,4 @@ export class ParallelEntity {
     comment: 'Fecha de eliminacion del paralelo',
   })
   deletedAt: Date;
-
-  @OneToMany(() => CourseEntity, (course) => course.parallel)
-  courses: CourseEntity[];
 }
