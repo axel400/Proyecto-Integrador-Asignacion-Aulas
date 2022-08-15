@@ -28,7 +28,7 @@ export class RequestsService {
 
     //All
     const data = await this.requestsRepository.findAndCount({
-      relations: ['career', 'teacherDistribution', 'state'],
+      relations: ['career', 'teacherDistribution', 'teacherDistribution.schoolYear', 'teacherDistribution.subject', 'teacherDistribution.course','teacherDistribution.teacher','state'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -36,7 +36,7 @@ export class RequestsService {
 
   async findOne(id: number): Promise<any> {
     const request = await this.requestsRepository.findOne({
-      relations: ['career', 'teacherDistribution', 'state'],
+      relations: ['career', 'teacherDistribution', 'teacherDistribution.schoolYear', 'teacherDistribution.subject', 'teacherDistribution.course','teacherDistribution.teacher','state'],
       where: { id: id }
     });
 
@@ -98,7 +98,7 @@ export class RequestsService {
     }
 
     const response = await this.requestsRepository.findAndCount({
-      relations: ['career', 'teacherDistribution', 'state'],
+      relations: ['career', 'teacherDistribution', 'teacherDistribution.schoolYear', 'teacherDistribution.subject', 'teacherDistribution.course','teacherDistribution.teacher','state'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),

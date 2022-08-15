@@ -18,10 +18,6 @@ export const databaseProviders = [
         password,
         database,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        // entities: [UserEntity, StudentEntity, CatalogueEntity],
-        // migrations: ['src/database/migrations/*.ts'],
-        // migrationsTableName: 'migrations',
-        dropSchema: true,
         synchronize: true,
       });
 
