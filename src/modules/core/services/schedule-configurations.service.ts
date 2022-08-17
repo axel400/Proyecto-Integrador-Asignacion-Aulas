@@ -28,7 +28,7 @@ export class ScheduleConfigurationsService {
 
     //All
     const data = await this.scheduleConfigurationRepository.findAndCount({
-      relations: ['classroom', 'day', 'hour', 'request', 'color', 'state'],
+      relations: ['classroom', 'day', 'hour', 'color', 'state', 'request','request.career','request.state','request.teacherDistribution','request.teacherDistribution.schoolYear','request.teacherDistribution.subject','request.teacherDistribution.course','request.teacherDistribution.teacher'],
     });
 
     return { pagination: { totalItems: data[1], limit: 10 }, data: data[0] };
@@ -36,7 +36,7 @@ export class ScheduleConfigurationsService {
 
   async findOne(id: number): Promise<any> {
     const scheduleConfiguration = await this.scheduleConfigurationRepository.findOne({
-      relations: ['classroom', 'day', 'hour', 'request', 'color', 'state'],
+      relations: ['classroom', 'day', 'hour', 'color', 'state', 'request','request.career','request.state','request.teacherDistribution','request.teacherDistribution.schoolYear','request.teacherDistribution.subject','request.teacherDistribution.course','request.teacherDistribution.teacher'],
       where: { id: id }
     });
 
@@ -97,7 +97,7 @@ export class ScheduleConfigurationsService {
     }
 
     const response = await this.scheduleConfigurationRepository.findAndCount({
-      relations: ['classroom', 'day', 'hour', 'request', 'color', 'state'],
+      relations: ['classroom', 'day', 'hour', 'color', 'state', 'request','request.career','request.state','request.teacherDistribution','request.teacherDistribution.schoolYear','request.teacherDistribution.subject','request.teacherDistribution.course','request.teacherDistribution.teacher'],
       where,
       take: limit,
       skip: PaginationDto.getOffset(limit, page),
